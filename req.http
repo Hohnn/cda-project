@@ -1,0 +1,49 @@
+GET http://localhost:5000/api/rooms
+
+###
+
+POST http://localhost:5000/private/api/rooms?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjYxZDVjOTc0ZjU1YmIwNDg4YzlmNmYwYSIsImVtYWlsIjoidGVzdDJAdGVzdC5jb20ifSwiaWF0IjoxNjQxNDczNTgxfQ.hEY5lXe5EXMitNVT0c9zdesYW3v7XMbVuYeY-Tst71c HTTP/1.1
+content-type: application/json
+
+{
+  "name": "Secret room"
+}
+
+###
+
+GET http://localhost:5000/api/rooms/5fa025e6a1da8a6194838d5f
+
+###
+
+PATCH http://localhost:5000/api/rooms/5fa025e6a1da8a6194838d5f HTTP/1.1
+content-type: application/json
+
+{
+  "name": "Basique"
+}
+
+###
+
+POST http://localhost:5000/signup HTTP/1.1
+content-type: application/json
+
+{
+  "email": "test2@test.com",
+  "password": "test"
+}
+
+###
+
+POST http://localhost:5000/login HTTP/1.1
+content-type: application/json
+
+{
+  "email": "test2@test.com",
+  "password": "test"
+}
+
+###
+
+GET http://localhost:5000/private/secret?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjYxZDVjOTc0ZjU1YmIwNDg4YzlmNmYwYSIsImVtYWlsIjoidGVzdDJAdGVzdC5jb20ifSwiaWF0IjoxNjQxNDczNTgxfQ.hEY5lXe5EXMitNVT0c9zdesYW3v7XMbVuYeY-Tst71c
+
+
