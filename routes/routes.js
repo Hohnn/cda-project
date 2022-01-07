@@ -5,9 +5,31 @@ import jwt from 'jsonwebtoken'
 import passport from 'passport';
 import { catchErrors } from '../helpers.js'
 import {
-  getRooms,
-  getRoom
-} from '../controllers/roomControllers.js'
+  getRoles,
+  getRole,
+  addRole,
+  updateRole,
+  deleteRole
+} from '../controllers/roleControllers.js'
+import {
+  getUsers,
+  getUser,
+  addUser,
+  deleteUser,
+  updateUser
+} from '../controllers/userControllers.js'
+import {
+  getAllCategories,
+  getCategory,
+  addCategory,
+  deleteCategory,
+  updateCategory
+} from '../controllers/categoryControllers.js'
+import {
+  getAllProcessStates,
+  getProcessState,
+  addProcessState
+} from '../controllers/processStateControllers.js'
 
 // Path avec ES module
 import path, { dirname } from 'path'
@@ -17,9 +39,35 @@ const __dirname = dirname(__filename)
 
 const router = express.Router() // création du router
 
-router.get('/api/rooms', catchErrors(getRooms)) // route pour récupérer toutes les rooms
+// router.get('/api/rooms', catchErrors(getRooms)) // route pour récupérer toutes les rooms
 
-router.get('/api/rooms/:id', catchErrors(getRoom)) // route pour récupérer une room
+// router.get('/api/rooms/:id', catchErrors(getRoom)) // route pour récupérer une room
+
+// route User
+router.get('/api/users', catchErrors(getUsers))
+router.get('/api/users/:id', catchErrors(getUser))
+router.post('/api/users', catchErrors(addUser))
+router.patch('/api/users/:id', catchErrors(updateUser))
+router.delete('/api/users/:id', catchErrors(deleteUser))
+
+// route Role
+router.get('/api/roles', catchErrors(getRoles))
+router.get('/api/roles/:id', catchErrors(getRole))
+router.post('/api/roles', catchErrors(addRole))
+router.patch('/api/roles/:id', catchErrors(updateRole))
+router.delete('/api/roles/:id', catchErrors(deleteRole))
+
+// route Role
+router.get('/api/categories', catchErrors(getAllCategories))
+router.get('/api/categories/:id', catchErrors(getCategory))
+router.post('/api/categories', catchErrors(addCategory))
+router.patch('/api/categories/:id', catchErrors(updateCategory))
+router.delete('/api/categories/:id', catchErrors(deleteCategory))
+
+// route ProcessState
+router.get('/api/ps', catchErrors(getAllProcessStates))
+router.get('/api/ps/:id', catchErrors(getProcessState))
+router.post('/api/ps', catchErrors(addProcessState))
 
 //authentification
 router.post('/signup', 

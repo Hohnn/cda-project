@@ -10,7 +10,54 @@ const UserSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true
-    }
+    },
+    firstName_u: {
+        type: String,
+        required: true
+    },
+    lastName_u: {
+        type: String,
+        required: true
+    },
+    company_u: {
+        type: String,
+        required: true
+    },
+    siret_u: {
+        type: String,
+        required: false
+    },
+    address_u: {
+        type: String,
+        required: false
+    },
+    phone_u: {
+        type: String,
+        required: true
+    },
+    role_id: {
+        type: String,
+        required: false
+    },
+    createBy_id: {
+        type: String,
+        required: false
+    },
+    createAt_u: {
+        type: Date,
+        required: true,
+        default: Date.now
+    },
+    updateBy_id: {
+        type: String,
+        required: false
+    },
+    updateAt_u: {
+        type: Date,
+        required: true,
+        default: Date.now
+    }  
+
 })
 
 // Pré Hook - Avant l'enregistrement dans la base de données
@@ -32,4 +79,4 @@ UserSchema.methods.isValidPassword = async function (password) {
 
 const UserModel = mongoose.model('User', UserSchema)
 
-export default UserModel
+export default UserModel 

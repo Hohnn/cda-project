@@ -1,4 +1,4 @@
-GET http://localhost:5000/api/rooms
+GET http://localhost:5000/api/users
 
 ###
 
@@ -24,12 +24,30 @@ content-type: application/json
 
 ###
 
-POST http://localhost:5000/signup HTTP/1.1
+POST http://localhost:5000/api/users HTTP/1.1
 content-type: application/json
 
 {
-  "email": "test2@test.com",
-  "password": "test"
+    "password": "test",
+    "firstName_u": "test",
+    "lastName_u": "test",
+    "company_u": "test",
+    "siret_u": "test",
+    "address_u": "test",
+    "phone_u": "0256457898",
+    "email": "jean-bateee@hotmail.fr",
+    "role_id": "61d859ce6d4d8a47389c6caf"
+}  
+
+###
+
+POST http://localhost:5000/api/roles HTTP/1.1
+content-type: application/json
+
+{
+    "name_r": "client",
+    "description_r": "client de l'entreprise",
+    "key_r": "3"
 }
 
 ###
@@ -46,4 +64,18 @@ content-type: application/json
 
 GET http://localhost:5000/private/secret?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjYxZDVjOTc0ZjU1YmIwNDg4YzlmNmYwYSIsImVtYWlsIjoidGVzdDJAdGVzdC5jb20ifSwiaWF0IjoxNjQxNDczNTgxfQ.hEY5lXe5EXMitNVT0c9zdesYW3v7XMbVuYeY-Tst71c
 
+###
+
+POST http://localhost:5000/api/roles HTTP/1.1
+content-type: application/json
+
+{    
+  "name_r": "Directeur",
+  "description_r": "Propriétaire de l'entreprise"
+}
+
+###
+
+DELETE http://localhost:5000/api/users/61d854ea9b65dc42501b08bc HTTP/1.1
+content-type: application/json
 
