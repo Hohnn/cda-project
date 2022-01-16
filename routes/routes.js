@@ -30,6 +30,14 @@ import {
   getProcessState,
   addProcessState
 } from '../controllers/processStateControllers.js'
+import {
+  getDronesTest,
+  addDrone,
+  getAllDrones,
+  getDrone,
+  updateDrone,
+  deleteDrone
+} from '../controllers/droneControllers.js'
 
 // Path avec ES module
 import path, { dirname } from 'path'
@@ -39,9 +47,25 @@ const __dirname = dirname(__filename)
 
 const router = express.Router() // création du router
 
-// router.get('/api/rooms', catchErrors(getRooms)) // route pour récupérer toutes les rooms
+// Page d'accueil de l'app, affiche index.html
+router.get('/', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../client/index.html'))
+})
 
-// router.get('/api/rooms/:id', catchErrors(getRoom)) // route pour récupérer une room
+// TEST !!! Lien vers la page products
+router.get('/products', getDronesTest)
+
+// ROUTE DRONES
+// READ ALL DRONES
+router.get('/api/drones', catchErrors(getAllDrones))
+// READ ONE DRONE
+router.get('/api/drones/:id', catchErrors(getDrone))
+// CREATE
+router.post('/api/drone', catchErrors(addDrone))
+// UPDATE
+router.patch('/api/drones/:id', catchErrors(updateDrone))
+// DELETE
+router.delete('/api/drones/:id', catchErrors(deleteDrone))
 
 // route User
 router.get('/api/users', catchErrors(getUsers))
