@@ -7,7 +7,7 @@ const __dirname = dirname(__filename)
 
 // TEST !!! Renvoie sur la page products
 export const getDronesTest = (req, res) => {
-    res.sendFile(path.resolve(__dirname, '../client/product.html'))
+    res.sendFile(path.resolve(__dirname, '../client/build/product.html'))
 }
 
 // CREATE
