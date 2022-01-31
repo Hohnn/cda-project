@@ -69,8 +69,9 @@ router.delete('/api/v1/drones/:id', catchErrors(deleteDrone))
 
 // route User
 router.get('/api/v1/users', catchErrors(getUsers))
-router.get('/api/v1/users/:id', catchErrors(getUser))
 router.post('/api/v1/users', catchErrors(addUser))
+
+router.get('/api/v1/users/:id', catchErrors(getUser))
 router.patch('/api/v1/users/:id', catchErrors(updateUser))
 router.delete('/api/v1/users/:id', catchErrors(deleteUser))
 
@@ -81,7 +82,7 @@ router.post('/api/v1/roles', catchErrors(addRole))
 router.patch('/api/v1/roles/:id', catchErrors(updateRole))
 router.delete('/api/v1/roles/:id', catchErrors(deleteRole))
 
-// route Role
+// route categrory
 router.get('/api/v1/categories', catchErrors(getAllCategories))
 router.get('/api/v1/categories/:id', catchErrors(getCategory))
 router.post('/api/v1/categories', catchErrors(addCategory))

@@ -29,3 +29,21 @@ export const updateUser = async (req, res) => {
   await user.save()
   res.send(user)
 }
+
+export const getUserById = (req, res, next, id) => {
+  userModel
+    .findById(id)
+    .populate('following','_id name')
+    .populate('followers','_id name')
+    .select('name email created about following followers')
+    .exec((err, user) => {
+        if(err || !user){
+            return res.status(400).json({
+                error: "User not found"
+            });
+        }
+        // on ajoute l'objet profile contenant les infos de l'utilisateur dans la requête
+        req.profile = user ;
+        next();
+    });
+};
