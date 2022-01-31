@@ -57,41 +57,41 @@ router.get('/products', getDronesTest)
 
 // ROUTE DRONES
 // READ ALL DRONES
-router.get('/api/drones', catchErrors(getAllDrones))
+router.get('/api/v1/drones', catchErrors(getAllDrones))
 // READ ONE DRONE
-router.get('/api/drones/:id', catchErrors(getDrone))
+router.get('/api/v1/drones/:id', catchErrors(getDrone))
 // CREATE
-router.post('/api/drone', catchErrors(addDrone))
+router.post('/api/v1/drone', catchErrors(addDrone))
 // UPDATE
-router.patch('/api/drones/:id', catchErrors(updateDrone))
+router.patch('/api/v1/drones/:id', catchErrors(updateDrone))
 // DELETE
-router.delete('/api/drones/:id', catchErrors(deleteDrone))
+router.delete('/api/v1/drones/:id', catchErrors(deleteDrone))
 
 // route User
-router.get('/api/users', catchErrors(getUsers))
-router.get('/api/users/:id', catchErrors(getUser))
-router.post('/api/users', catchErrors(addUser))
-router.patch('/api/users/:id', catchErrors(updateUser))
-router.delete('/api/users/:id', catchErrors(deleteUser))
+router.get('/api/v1/users', catchErrors(getUsers))
+router.get('/api/v1/users/:id', catchErrors(getUser))
+router.post('/api/v1/users', catchErrors(addUser))
+router.patch('/api/v1/users/:id', catchErrors(updateUser))
+router.delete('/api/v1/users/:id', catchErrors(deleteUser))
 
 // route Role
-router.get('/api/roles', catchErrors(getRoles))
-router.get('/api/roles/:id', catchErrors(getRole))
-router.post('/api/roles', catchErrors(addRole))
-router.patch('/api/roles/:id', catchErrors(updateRole))
-router.delete('/api/roles/:id', catchErrors(deleteRole))
+router.get('/api/v1/roles', catchErrors(getRoles))
+router.get('/api/v1/roles/:id', catchErrors(getRole))
+router.post('/api/v1/roles', catchErrors(addRole))
+router.patch('/api/v1/roles/:id', catchErrors(updateRole))
+router.delete('/api/v1/roles/:id', catchErrors(deleteRole))
 
 // route Role
-router.get('/api/categories', catchErrors(getAllCategories))
-router.get('/api/categories/:id', catchErrors(getCategory))
-router.post('/api/categories', catchErrors(addCategory))
-router.patch('/api/categories/:id', catchErrors(updateCategory))
-router.delete('/api/categories/:id', catchErrors(deleteCategory))
+router.get('/api/v1/categories', catchErrors(getAllCategories))
+router.get('/api/v1/categories/:id', catchErrors(getCategory))
+router.post('/api/v1/categories', catchErrors(addCategory))
+router.patch('/api/v1/categories/:id', catchErrors(updateCategory))
+router.delete('/api/v1/categories/:id', catchErrors(deleteCategory))
 
 // route ProcessState
-router.get('/api/ps', catchErrors(getAllProcessStates))
-router.get('/api/ps/:id', catchErrors(getProcessState))
-router.post('/api/ps', catchErrors(addProcessState))
+router.get('/api/v1/ps', catchErrors(getAllProcessStates))
+router.get('/api/v1/ps/:id', catchErrors(getProcessState))
+router.post('/api/v1/ps', catchErrors(addProcessState))
 
 //authentification
 router.post('/signup', 

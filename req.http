@@ -1,4 +1,4 @@
-GET http://localhost:5000/api/users
+GET http://localhost:5000/api/v1/users
 
 ###
 
@@ -24,24 +24,24 @@ content-type: application/json
 
 ###
 
-POST http://localhost:5000/api/users HTTP/1.1
+POST http://localhost:5000/api/v1/users HTTP/1.1
 content-type: application/json
 
 {
-    "password": "test",
-    "firstName_u": "test",
-    "lastName_u": "test",
-    "company_u": "test",
-    "siret_u": "test",
-    "address_u": "test",
-    "phone_u": "0256457898",
-    "email": "jean-bateee@hotmail.fr",
+    "password": "testtheo",
+    "firstName_u": "testtheo",
+    "lastName_u": "testtheo",
+    "company_u": "testtheo",
+    "siret_u": "testtheo",
+    "address_u": "testtheo",
+    "phone_u": "0214761476",
+    "email": "theo@hotmail.fr",
     "role_id": "61d859ce6d4d8a47389c6caf"
 }  
 
 ###
 
-POST http://localhost:5000/api/roles HTTP/1.1
+POST http://localhost:5000/api/v1/roles HTTP/1.1
 content-type: application/json
 
 {
@@ -66,7 +66,7 @@ GET http://localhost:5000/private/secret?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXV
 
 ###
 
-POST http://localhost:5000/api/roles HTTP/1.1
+POST http://localhost:5000/api/v1/roles HTTP/1.1
 content-type: application/json
 
 {    
@@ -76,16 +76,16 @@ content-type: application/json
 
 ###
 
-DELETE http://localhost:5000/api/users/61d854ea9b65dc42501b08bc HTTP/1.1
+DELETE http://localhost:5000/api/v1/users/61d854ea9b65dc42501b08bc HTTP/1.1
 content-type: application/json
 
 ### CREATE A NEW DRONE IN DATABASE
 
-POST http://localhost:5000/api/drone/ HTTP/1.1
+POST http://localhost:5000/api/v1/drone/ HTTP/1.1
 Content-Type: application/json
 
 {
-    "name": "DJI ALLTEST",
+    "name": "DJI ALLTESTTheo",
     "category": "Pro",
     "description": "New",
     "pricePerDay": "690"
@@ -93,17 +93,17 @@ Content-Type: application/json
 
 ### GET ALL DRONES
 
-GET http://localhost:5000/api/drones/ HTTP/1.1
+GET http://localhost:5000/api/v1/drones/ HTTP/1.1
 Content-Type: application/json
 
 ### GET ONE DRONE
 
-GET http://localhost:5000/api/drones/61f263fd7568824e10a31023 HTTP/1.1
+GET http://localhost:5000/api/v1/drones/61f263fd7568824e10a31023 HTTP/1.1
 Content-Type: application/json
 
 ### PATCH A DRONE
 
-PATCH http://localhost:5000/api/drones/61f263fd7568824e10a31023 HTTP/1.1
+PATCH http://localhost:5000/api/v1/drones/61f263fd7568824e10a31023 HTTP/1.1
 Content-Type: application/json
 
 {
@@ -115,5 +115,5 @@ Content-Type: application/json
 
 ### DELETE A DRONE
 
-DELETE http://localhost:5000/api/drones/61e445fa4779be494c770f99 HTTP/1.1
+DELETE http://localhost:5000/api/v1/drones/61f7a09663f9a55f20056916 HTTP/1.1
 Content-Type: application/json
