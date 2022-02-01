@@ -48,24 +48,83 @@ const __dirname = dirname(__filename)
 const router = express.Router() // création du router
 
 // Page d'accueil de l'app, affiche index.html
-router.get('/', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '../client/index.html'))
-})
+// router.get('/', (req, res) => {
+//   res.sendFile(path.resolve(__dirname, '../client/index.html'))
+// })
 
 // TEST !!! Lien vers la page products
-router.get('/products', getDronesTest)
+router.get('/products', catchErrors(getDronesTest))
 
-// ROUTE DRONES
-// READ ALL DRONES
-router.get('/api/v1/drones', catchErrors(getAllDrones))
-// READ ONE DRONE
-router.get('/api/v1/drones/:id', catchErrors(getDrone))
-// CREATE
-router.post('/api/v1/drone', catchErrors(addDrone))
-// UPDATE
-router.patch('/api/v1/drones/:id', catchErrors(updateDrone))
-// DELETE
-router.delete('/api/v1/drones/:id', catchErrors(deleteDrone))
+//#region User
+
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     UserModel:
+ *       type: object
+ *       required:
+ *         - email
+ *         - password 
+ *         - firstName_u
+ *         - lastName_u 
+ *         - company_u 
+ *         - phone_u
+ *         - createAt_u
+ *         - updateAt_u
+ *       properties:
+ *         id:
+ *           type: string
+ *           description: The Auto-generated id of a user
+ *         email:
+ *           type: string
+ *           description: The email of the user
+ *         password:
+ *           type: string
+ *           description: The password of the user
+ *         firstName_u:
+ *           type: string
+ *           description: The firstname of the user
+ *         lastName_u:
+ *           type: string
+ *           description: The lastname of the user
+ *         company_u:
+ *           type: string
+ *           description: The company name of the user
+ *         phone_u:
+ *           type: string
+ *           description: The phone number of the user
+ *         address_u:
+ *           type: string
+ *           description: The address of the user
+ *         role_id:
+ *           type: string
+ *           description: The role id of the user
+ *         createdBy_id:
+ *           type: string
+ *           description: The creating id parent of the user
+ *         createAt_u:
+ *           type: date
+ *           description: The date of user creation
+ *         updateBy_id:
+ *           type: string
+ *           description: The id of updated user's collection
+ *         updateAt_u :
+ *           type: date
+ *           description: The updating date of the user collection
+ *       example:
+ *         email: "email@email.com"
+ *         password: "$2b$10$Z/agMC5a1HRh9y3HuhXrROXlyW0.lHhqvDEyb9393aozy3TFFfPLq"
+ *         lastName_u: "Doe"
+ *         firstname_u: "John"
+ *         company_u: "Evil Corp."
+ *         phone_u: "0123456789"
+ *         createAt_u: 2022-01-01
+ *         updateAt_u: 2022-01-01
+ *
+ */
+
+//#endregion
 
 // route User
 router.get('/api/v1/users', catchErrors(getUsers))
@@ -73,6 +132,13 @@ router.get('/api/v1/users/:id', catchErrors(getUser))
 router.post('/api/v1/users', catchErrors(addUser))
 router.patch('/api/v1/users/:id', catchErrors(updateUser))
 router.delete('/api/v1/users/:id', catchErrors(deleteUser))
+
+router.get('/api/v1/drones', catchErrors(getAllDrones))
+.post('/api/v1/drones', catchErrors(addDrone))
+.get('/api/v1/drones/:id', catchErrors(getDrone))
+.patch('/api/v1/drones/:id', catchErrors(updateDrone))
+.delete('/api/v1/drones/:id', catchErrors(deleteDrone))
+
 
 // route Role
 router.get('/api/v1/roles', catchErrors(getRoles))
@@ -104,7 +170,7 @@ passport.authenticate(
     })
   })
 
-/* router.get('/*', (req, res) => {
+/*  router.get('/* ', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/build/index.html'))
 }) */
 
