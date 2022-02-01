@@ -24,7 +24,8 @@ import {
   getCategory,
   addCategory,
   deleteCategory,
-  updateCategory
+  updateCategory,
+  getCategoryById
 } from '../controllers/categoryControllers.js'
 import {
   getAllProcessStates,
@@ -32,12 +33,13 @@ import {
   addProcessState
 } from '../controllers/processStateControllers.js'
 import {
-  getDronesTest,
   addDrone,
   getAllDrones,
   getDrone,
   updateDrone,
-  deleteDrone
+  deleteDrone,
+  getDroneById,
+  getDroneByCategory
 } from '../controllers/droneControllers.js'
 
 // Path avec ES module
@@ -48,27 +50,25 @@ const __dirname = dirname(__filename)
 
 const router = express.Router() // création du router
 
-// TEST !!! Page d'accueil pour affichier index.html
-router.get('/', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '../client/index.html'))
-})
-
-// TEST !!! Lien vers la page products
-router.get('/products', getDronesTest)
-
 // ROUTES DRONES
 router.get('/api/v1/drones', catchErrors(getAllDrones))
 router.get('/api/v1/drones/:idDrone', catchErrors(getDrone))
+router.get('/api/v1/drones/category/:idCategory', catchErrors(getDroneByCategory))
 router.post('/api/v1/drones', catchErrors(addDrone))
 router.patch('/api/v1/drones/:idDrone', catchErrors(updateDrone))
 router.delete('/api/v1/drones/:idDrone', catchErrors(deleteDrone))
 
+router.param("idDrone", catchErrors(getDroneById));
+router.param("idCategory", catchErrors(getCategoryById));
+
 // ROUTES USERS
 router.get('/api/v1/users', catchErrors(getUsers))
-router.get('/api/v1/users/:idUser', catchErrors(getUserById))
+router.get('/api/v1/users/:idUser', catchErrors(getUser))
 router.post('/api/v1/users', catchErrors(addUser))
 router.patch('/api/v1/users/:idUser', catchErrors(updateUser))
 router.delete('/api/v1/users/:idUser', catchErrors(deleteUser))
+
+router.param("idUser", getUserById);  // sera exécuté avant toute autre route qui contiendrait :userId
 
 // ROUTES ROLES
 router.get('/api/v1/roles', catchErrors(getRoles))

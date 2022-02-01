@@ -41,8 +41,8 @@ const UserSchema = new mongoose.Schema({
         ref: 'Role'
     }, 
     createBy_id: {
-        type: String,
-        required: false
+        type: Schema.Types.ObjectId,
+        ref: 'User'
     },
     createAt_u: {
         type: Date,
@@ -50,8 +50,8 @@ const UserSchema = new mongoose.Schema({
         default: Date.now
     },
     updateBy_id: {
-        type: String,
-        required: false
+        type: Schema.Types.ObjectId,
+        ref: 'User'
     },
     updateAt_u: {
         type: Date,

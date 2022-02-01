@@ -30,3 +30,20 @@ export const deleteCategory = async (req, res) => {
 	}
 	res.status(200).send('Drone supprimé avec succès')
 }
+
+export const getCategoryById = async (req, res, next, id) => {
+    await CategoryModel
+      .findById(req.params.idCategory)
+      .exec((err, category) => {
+          console.log(category)
+          if(err || !category){
+              return res.status(400).json({
+                  error: "User not found"
+              });
+          }
+		  console.log(category);
+          // on ajoute l'objet profile contenant les infos de l'utilisateur dans la requête
+          req.categoryProfile = category;
+          next();
+      });
+  };
