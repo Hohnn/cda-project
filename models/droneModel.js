@@ -9,19 +9,19 @@ const DroneShema = new mongoose.Schema({
     },
     category:{
         type: String,
-        require: true,
+        require: false,
         trim: true,
         lowercase: true
     },
     description:{
         type: String,
-        require: true,
+        require: false,
         trim: true,
         lowercase: true
     },
     pricePerDay:{
         type: Number,
-        require: true,
+        require: false,
         trim: true,
         lowercase: true
     }
