@@ -47,7 +47,7 @@ const __dirname = dirname(__filename)
 
 const router = express.Router() // création du router
 
-// Page d'accueil de l'app, affiche index.html
+// TEST !!! Page d'accueil pour affichier index.html
 router.get('/', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../client/index.html'))
 })
@@ -55,43 +55,38 @@ router.get('/', (req, res) => {
 // TEST !!! Lien vers la page products
 router.get('/products', getDronesTest)
 
-// ROUTE DRONES
-// READ ALL DRONES
-router.get('/api/drones', catchErrors(getAllDrones))
-// READ ONE DRONE
-router.get('/api/drones/:id', catchErrors(getDrone))
-// CREATE
-router.post('/api/drone', catchErrors(addDrone))
-// UPDATE
-router.patch('/api/drones/:id', catchErrors(updateDrone))
-// DELETE
-router.delete('/api/drones/:id', catchErrors(deleteDrone))
+// ROUTES DRONES
+router.get('/api/v1/drones', catchErrors(getAllDrones))
+router.get('/api/v1/drones/:idDrone', catchErrors(getDrone))
+router.post('/api/v1/drones', catchErrors(addDrone))
+router.patch('/api/v1/drones/:idDrone', catchErrors(updateDrone))
+router.delete('/api/v1/drones/:idDrone', catchErrors(deleteDrone))
 
-// route User
-router.get('/api/users', catchErrors(getUsers))
-router.get('/api/users/:id', catchErrors(getUser))
-router.post('/api/users', catchErrors(addUser))
-router.patch('/api/users/:id', catchErrors(updateUser))
-router.delete('/api/users/:id', catchErrors(deleteUser))
+// ROUTES USERS
+router.get('/api/v1/users', catchErrors(getUsers))
+router.get('/api/v1/users/:idUser', catchErrors(getUser))
+router.post('/api/v1/users', catchErrors(addUser))
+router.patch('/api/v1/users/:idUser', catchErrors(updateUser))
+router.delete('/api/v1/users/:idUser', catchErrors(deleteUser))
 
-// route Role
-router.get('/api/roles', catchErrors(getRoles))
-router.get('/api/roles/:id', catchErrors(getRole))
-router.post('/api/roles', catchErrors(addRole))
-router.patch('/api/roles/:id', catchErrors(updateRole))
-router.delete('/api/roles/:id', catchErrors(deleteRole))
+// ROUTES ROLES
+router.get('/api/v1/roles', catchErrors(getRoles))
+router.get('/api/v1/roles/:idRole', catchErrors(getRole))
+router.post('/api/v1/roles', catchErrors(addRole))
+router.patch('/api/v1/roles/:idRole', catchErrors(updateRole))
+router.delete('/api/v1/roles/:idRole', catchErrors(deleteRole))
 
-// route Role
-router.get('/api/categories', catchErrors(getAllCategories))
-router.get('/api/categories/:id', catchErrors(getCategory))
-router.post('/api/categories', catchErrors(addCategory))
-router.patch('/api/categories/:id', catchErrors(updateCategory))
-router.delete('/api/categories/:id', catchErrors(deleteCategory))
+// ROUTES CATEGORIES
+router.get('/api/v1/categories', catchErrors(getAllCategories))
+router.get('/api/v1/categories/:idCategory', catchErrors(getCategory))
+router.post('/api/v1/categories', catchErrors(addCategory))
+router.patch('/api/v1/categories/:idCategory', catchErrors(updateCategory))
+router.delete('/api/v1/categories/:idCategory', catchErrors(deleteCategory))
 
-// route ProcessState
-router.get('/api/ps', catchErrors(getAllProcessStates))
-router.get('/api/ps/:id', catchErrors(getProcessState))
-router.post('/api/ps', catchErrors(addProcessState))
+// ROUTES ProcessState
+router.get('/api/v1/ps', catchErrors(getAllProcessStates))
+router.get('/api/v1/ps/:idProcessSate', catchErrors(getProcessState))
+router.post('/api/v1/ps', catchErrors(addProcessState))
 
 //authentification
 router.post('/signup', 
@@ -103,9 +98,5 @@ passport.authenticate(
         user: req.user
     })
   })
-
-/* router.get('/*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/build/index.html'))
-}) */
 
 export default router

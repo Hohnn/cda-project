@@ -1,84 +1,209 @@
-GET http://localhost:5000/api/users
+### GET ALL USERS
+
+GET http://localhost:5000/api/v1/users/ HTTP/1.1
+content-type: application/json
 
 ###
 
-POST http://localhost:5000/private/api/rooms?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjYxZDVjOTc0ZjU1YmIwNDg4YzlmNmYwYSIsImVtYWlsIjoidGVzdDJAdGVzdC5jb20ifSwiaWF0IjoxNjQxNDczNTgxfQ.hEY5lXe5EXMitNVT0c9zdesYW3v7XMbVuYeY-Tst71c HTTP/1.1
+### GET ONE USER
+
+GET http://localhost:5000/api/v1/users/61f7a05d9dcfc214b81302cd HTTP/1.1
+content-type: application/json
+
+###
+
+### CREATE USER
+
+POST http://localhost:5000/api/v1/users/ HTTP/1.1
 content-type: application/json
 
 {
-  "name": "Secret room"
-}
-
-###
-
-GET http://localhost:5000/api/rooms/5fa025e6a1da8a6194838d5f
-
-###
-
-PATCH http://localhost:5000/api/rooms/5fa025e6a1da8a6194838d5f HTTP/1.1
-content-type: application/json
-
-{
-  "name": "Basique"
-}
-
-###
-
-POST http://localhost:5000/api/users HTTP/1.1
-content-type: application/json
-
-{
-    "password": "test",
-    "firstName_u": "test",
-    "lastName_u": "test",
-    "company_u": "test",
-    "siret_u": "test",
-    "address_u": "test",
-    "phone_u": "0256457898",
-    "email": "jean-bateee@hotmail.fr",
+    "password": "passwordtest",
+    "firstName_u": "posttheo",
+    "lastName_u": "posttheo",
+    "company_u": "posttheo",
+    "siret_u": "posttheo",
+    "address_u": "postelehavre",
+    "phone_u": "0214761476",
+    "email": "postth@hotmail.fr",
     "role_id": "61d859ce6d4d8a47389c6caf"
-}  
-
-###
-
-POST http://localhost:5000/api/roles HTTP/1.1
-content-type: application/json
-
-{
-    "name_r": "client",
-    "description_r": "client de l'entreprise",
-    "key_r": "3"
 }
 
 ###
+
+### PATCH USER
+PATCH http://localhost:5000/api/v1/users/61f7dafd6301b33554b5da05 HTTP/1.1
+content-type: application/json
+
+{
+    "password": "passwordtest",
+    "firstName_u": "updatetheo",
+    "lastName_u": "updatetheo",
+    "company_u": "updatetheo",
+    "siret_u": "updatetheo",
+    "address_u": "updatetheo",
+    "phone_u": "0214761476",
+    "email": "theoupdate@hotmail.fr",
+    "role_id": "61d859ce6d4d8a47389c6caf"
+}
+
+###
+
+### DELETE USER
+DELETE http://localhost:5000/api/v1/users/61f7dafd6301b33554b5da05 HTTP/1.1
+content-type: application/json
+
+###
+
+### GET ALL CATEGORIES
+
+GET http://localhost:5000/api/v1/categories/ HTTP/1.1
+content-type: application/json
+
+###
+
+### GET ONE CATEGORY
+
+GET http://localhost:5000/api/v1/categories/61f7de6c85047e33dc40bee0 HTTP/1.1
+content-type: application/json
+
+###
+
+### CREATE CATEGORY
+
+POST http://localhost:5000/api/v1/categories/ HTTP/1.1
+content-type: application/json
+
+{
+    "name_cat": "First Category TEST",
+    "description_cat": "Category TEST",
+    "key_cat": "1"
+}
+
+###
+
+### PATCH CATEGORY
+
+PATCH http://localhost:5000/api/v1/categories/61f7de6c85047e33dc40bee0 HTTP/1.1
+content-type: application/json
+
+{
+    "name_cat": "Update Category TEST",
+    "description_cat": "Update Category TEST",
+    "key_cat": "1"
+}
+
+###
+
+### DELETE CATEGORY
+
+DELETE http://localhost:5000/api/v1/categories/61f7de6c85047e33dc40bee0 HTTP/1.1
+content-type: application/json
+
+###
+
+### GET ALL ROLES
+
+GET http://localhost:5000/api/v1/roles/ HTTP/1.1
+content-type: application/json
+
+###
+
+### GET ONE DRONE
+
+GET http://localhost:5000/api/v1/roles/61d859366d4d8a47389c6cab HTTP/1.1
+content-type: application/json
+
+###
+
+### CREATE ROLE
+
+POST http://localhost:5000/api/v1/roles HTTP/1.1
+content-type: application/json
+
+{
+    "name_r": "DEVTEST",
+    "description_r": "DeveloppeurTEST",
+    "key_r": "4"
+}
+
+###
+
+### PATCH ROLE
+
+PATCH http://localhost:5000/api/v1/roles/61f7d8ea5a62ae13580c2dfe HTTP/1.1
+content-type: application/json
+
+{
+    "name_r": "DEV TESTEUR",
+    "description_r": "Developpeur pour un test",
+    "key_r": "4"
+}
+
+###
+
+### DELETE ROLE
+
+DELETE http://localhost:5000/api/v1/roles/61f7d8ea5a62ae13580c2dfe HTTP/1.1
+content-type: application/json
+
+###
+
+### GET ALL DRONES
+
+GET http://localhost:5000/api/v1/drones/ HTTP/1.1
+Content-Type: application/json
+
+###
+
+### GET ONE DRONE
+
+GET http://localhost:5000/api/v1/drones/61f79fe09dcfc214b81302ca HTTP/1.1
+Content-Type: application/json
+
+###
+
+### CREATE DRONE
+
+POST http://localhost:5000/api/v1/drones/ HTTP/1.1
+Content-Type: application/json
+
+{
+    "name": "DJIDJI ABRAMS",
+    "category": "Profesionnel",
+    "description": "New Super 8",
+    "pricePerDay": "320"
+}
+
+###
+
+### PATCH DRONE
+
+PATCH http://localhost:5000/api/v1/drones/61f263fd7568824e10a31023 HTTP/1.1
+Content-Type: application/json
+
+{
+    "name": "DJI TODELETE",
+    "category": "Noob",
+    "description": "New Price for this drone",
+    "pricePerDay": "200"
+}
+
+###
+
+### DELETE DRONE
+
+DELETE http://localhost:5000/api/v1/drones/61f263fd7568824e10a31023 HTTP/1.1
+Content-Type: application/json
+
+###
+
+### LOGIN
 
 POST http://localhost:5000/login HTTP/1.1
 content-type: application/json
 
-{
-  "email": "test2@test.com",
-  "password": "test"
-}
-
-###
-
-GET http://localhost:5000/private/secret?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjYxZDVjOTc0ZjU1YmIwNDg4YzlmNmYwYSIsImVtYWlsIjoidGVzdDJAdGVzdC5jb20ifSwiaWF0IjoxNjQxNDczNTgxfQ.hEY5lXe5EXMitNVT0c9zdesYW3v7XMbVuYeY-Tst71c
-
-###
-
-POST http://localhost:5000/api/roles HTTP/1.1
-content-type: application/json
-
-{    
-  "name_r": "Directeur",
-  "description_r": "Propriétaire de l'entreprise"
-}
-
-###
-
-DELETE http://localhost:5000/api/users/61d854ea9b65dc42501b08bc HTTP/1.1
-content-type: application/json
-
+<<<<<<< HEAD
 
 
 ###
@@ -88,4 +213,9 @@ content-type: application/json
 
 {    
   "name": "test drone"
+=======
+{
+  "email": "test2@test.com",
+  "password": "test"
+>>>>>>> 6fb2966f9ac4f3c41a7a91101a6a362dbd6fac0a
 }

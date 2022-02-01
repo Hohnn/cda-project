@@ -19,7 +19,7 @@ mongoose.connect(process.env.MONGODB, { // connection à la base de données
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useFindAndModify: false,
-  useCeatIndex: true
+  useCreateIndex: true
 })
 
 app.use( // middleware pour les routes privées
