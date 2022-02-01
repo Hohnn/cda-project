@@ -16,7 +16,8 @@ import {
   getUser,
   addUser,
   deleteUser,
-  updateUser
+  updateUser,
+  getUserById
 } from '../controllers/userControllers.js'
 import {
   getAllCategories,
@@ -64,7 +65,7 @@ router.delete('/api/v1/drones/:idDrone', catchErrors(deleteDrone))
 
 // ROUTES USERS
 router.get('/api/v1/users', catchErrors(getUsers))
-router.get('/api/v1/users/:idUser', catchErrors(getUser))
+router.get('/api/v1/users/:idUser', catchErrors(getUserById))
 router.post('/api/v1/users', catchErrors(addUser))
 router.patch('/api/v1/users/:idUser', catchErrors(updateUser))
 router.delete('/api/v1/users/:idUser', catchErrors(deleteUser))

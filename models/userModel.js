@@ -1,6 +1,7 @@
 import mongoose from 'mongoose'
 import bcrypt from 'bcrypt'
 
+const Schema = mongoose.Schema
 const UserSchema = new mongoose.Schema({
     email: {
         type: String,
@@ -35,10 +36,10 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    role_id: {
-        type: String,
-        required: false
-    },
+    role_id: { // type en id et ref en nom de la collection
+        type: Schema.Types.ObjectId,
+        ref: 'Role'
+    }, 
     createBy_id: {
         type: String,
         required: false
