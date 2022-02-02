@@ -6,6 +6,7 @@ import './auth/auth.js'
 dotenv.config()
 import privateRoutes from './routes/privateRoutes.js'
 import passport from 'passport'
+import cors from 'cors'
 
 const PORT = process.env.PORT || 5000 // variable d'enviroment pour le port
 
@@ -27,6 +28,8 @@ app.use( // middleware pour les routes privées
   passport.authenticate('jwt', { session: false }),
   privateRoutes 
 )
+
+app.use(cors())
 
 app.use(routes) // middleware pour les routes publiques
 
