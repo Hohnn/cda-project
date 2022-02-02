@@ -10,7 +10,6 @@ const ProcessSateSchema = new mongoose.Schema({
         type: String,
         required: true
     }
-
 })
 
 const ProcessStateModel = mongoose.model('ProcessState', ProcessSateSchema)

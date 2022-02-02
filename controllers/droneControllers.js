@@ -47,6 +47,7 @@ export const getDroneById = async (req, res, next, id) => {
     await DroneModel
       .findById(req.params.idDrone)
       .populate('category_id')
+      .populate('processState_id')
       .exec((err, drone) => {
           console.log(drone)
           if(err || !drone){

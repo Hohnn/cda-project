@@ -23,6 +23,10 @@ const DroneShema = new mongoose.Schema({
         require: true,
         trim: true,
         lowercase: true
+    },
+    processState_id:{
+        type: Schema.Types.ObjectId,
+        ref: 'ProcessState'
     }
 })
 
