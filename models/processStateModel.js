@@ -6,7 +6,7 @@ const ProcessSateSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    description: {
+    description_ps: {
         type: String,
         required: true
     }

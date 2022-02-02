@@ -30,20 +30,22 @@ export const deleteUser = async (req, res) => {
 	res.status(200).send()
 }
 
-export const getUserById = (req, res, next, id) => {
-  userModel
-    .findById(id)
-    .populate('following','_id name')
-    .populate('followers','_id name')
-    .select('name email created about following followers')
+export const getUserById = async (req, res, next, id) => {
+  await userModel
+    .findById(req.params.idUser)
+    .populate('role_id')
+    .populate('createBy_id')
+    .populate('updateBy_id')
     .exec((err, user) => {
+        console.log(user)
         if(err || !user){
             return res.status(400).json({
                 error: "User not found"
             });
         }
+        console.log('The author is %s', user.role_id.key_r);
         // on ajoute l'objet profile contenant les infos de l'utilisateur dans la requête
-        req.profile = user ;
+        req.profile = user;
         next();
     });
 };
