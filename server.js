@@ -10,7 +10,7 @@ import passport from 'passport'
 const PORT = process.env.PORT || 5000 // variable d'enviroment pour le port
 
 const app = express() // création de l'application express
- 
+
 app.use(express.json()) // middleware pour les requêtes json
 
 app.use(express.static('client/build')) // middleware pour les fichiers statiques ( les fichiers de build seront accessibles depuis la racine du serveur)
