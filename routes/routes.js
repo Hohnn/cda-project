@@ -30,7 +30,9 @@ import {
 import {
   getAllProcessStates,
   getProcessState,
-  addProcessState
+  addProcessState,
+  updateProcessState,
+  deleteProcessState
 } from '../controllers/processStateControllers.js'
 import {
   addDrone,
@@ -41,6 +43,14 @@ import {
   getDroneById,
   getDroneByCategory
 } from '../controllers/droneControllers.js'
+import {
+  addOrder,
+  getAllOrders,
+  getOrder,
+  updateOrder,
+  deleteOrder,
+  getOrderById
+} from '../controllers/OrderControllers.js'
 
 // Path avec ES module
 import path, { dirname } from 'path'
@@ -68,7 +78,7 @@ router.post('/api/v1/users', catchErrors(addUser))
 router.patch('/api/v1/users/:idUser', catchErrors(updateUser))
 router.delete('/api/v1/users/:idUser', catchErrors(deleteUser))
 
-router.param("idUser", getUserById);  // sera exécuté avant toute autre route qui contiendrait :userId
+router.param("idUser", getUserById); // sera exécuté avant toute autre route qui contiendrait :userId
 
 // ROUTES ROLES
 router.get('/api/v1/roles', catchErrors(getRoles))
@@ -78,24 +88,45 @@ router.patch('/api/v1/roles/:idRole', catchErrors(updateRole))
 router.delete('/api/v1/roles/:idRole', catchErrors(deleteRole))
 
 // ROUTES CATEGORIES
-router.get('/api/v1/categories', catchErrors(getAllCategories))
-router.get('/api/v1/categories/:idCategory', catchErrors(getCategory))
-router.post('/api/v1/categories', catchErrors(addCategory))
-router.patch('/api/v1/categories/:idCategory', catchErrors(updateCategory))
-router.delete('/api/v1/categories/:idCategory', catchErrors(deleteCategory))
+router.get('/api/v1/category', catchErrors(getAllCategories))
+router.get('/api/v1/category/:idCategory', catchErrors(getCategory))
+router.post('/api/v1/category', catchErrors(addCategory))
+router.patch('/api/v1/category/:idCategory', catchErrors(updateCategory))
+router.delete('/api/v1/category/:idCategory', catchErrors(deleteCategory))
 
 // ROUTES ProcessState
 router.get('/api/v1/ps', catchErrors(getAllProcessStates))
-router.get('/api/v1/ps/:idProcessSate', catchErrors(getProcessState))
+router.get('/api/v1/ps/:idPs', catchErrors(getProcessState))
 router.post('/api/v1/ps', catchErrors(addProcessState))
+router.patch('/api/v1/ps/:idPs', catchErrors(updateProcessState))
+router.delete('/api/v1/ps/:idPs', catchErrors(deleteProcessState))
+
+//ORDERS
+router.get('/api/v1/orders', catchErrors(getAllOrders))
+router.get('/api/v1/orders/:idOrder', catchErrors(getOrder))
+router.post('/api/v1/orders', catchErrors(addOrder))
+router.patch('/api/v1/orders/:idOrder', catchErrors(updateOrder))
+router.delete('/api/v1/orders/:idOrder', catchErrors(deleteOrder))
+
+router.param("idOrder", getOrderById);
+
+
 
 //authentification
-router.post('/signup', 
-passport.authenticate(
+router.post('/api/v1/signup', passport.authenticate(
   'signup', { session: false }),
     async (req, res, next) => {
     res.json({
         message: 'Signup success',
+        user: req.user
+    })
+  })
+
+router.get('/api/v1/login', passport.authenticate(
+  'login'),
+    async (req, res, next) => {
+    res.json({
+        message: 'login success',
         user: req.user
     })
   })
