@@ -4,8 +4,7 @@
   "description": "Tuto Node pour Hardcoders",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "watch": "nodemon server.js"
+    "start": "node server.js"
   },
   "author": "anthowelc",
   "license": "ISC",
