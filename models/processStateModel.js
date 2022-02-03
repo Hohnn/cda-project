@@ -9,6 +9,11 @@ const ProcessSateSchema = new mongoose.Schema({
     description_ps: {
         type: String,
         required: true
+    },
+    key_ps: {
+        type: Number,
+        required: true,
+        unique: true
     }
 })
 
