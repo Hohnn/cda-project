@@ -62,7 +62,10 @@ const router = express.Router() // création du router
 
 router.param("idDrone", catchErrors(getDroneById))
 .param("idCategory", catchErrors(getCategoryById))
-
+.get('/', (_, res) => {
+  res.redirect('/api-docs')
+  })
+  
 //#region User
 /**
  * @swagger
@@ -822,7 +825,6 @@ router.get('/api/v1/roles', catchErrors(getRoles))
  */
 .delete('/api/v1/categories/:idCategory', catchErrors(deleteCategory))
 //#endregion
-
 
 //#region ProcessState
 
