@@ -3,7 +3,6 @@ import routes from './routes/routes.js'
 import dotenv from 'dotenv'
 import './auth/auth.js'
 dotenv.config()
-import privateRoutes from './routes/privateRoutes.js'
 import passport from 'passport'
 import mongoose from 'mongoose'
 import swaggerUI from 'swagger-ui-express'
@@ -18,7 +17,8 @@ const options = {
     info: {
       title: "SkyDrone API",
       version: "1.0.0",
-      description: "API du projet SkyDrone"
+      description: "This is the SkyDrone project API.",
+      termsOfService: "https://skydrone-api.herokuapp.com/terms"    
     },
     servers: [
       {
@@ -45,12 +45,6 @@ mongoose.connect(process.env.MONGODB, { // connection à la base de données
   useFindAndModify: false,
   useCreateIndex: true
 })
-
-app.use( // middleware pour les routes privées
-  '/private', 
-  passport.authenticate('jwt', { session: false }),
-  privateRoutes 
-)
 
 app.use(routes) // middleware pour les routes publiques
 

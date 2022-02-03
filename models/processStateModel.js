@@ -1,5 +1,4 @@
 import mongoose from 'mongoose'
-import bcrypt from 'bcrypt'
 
 const ProcessSateSchema = new mongoose.Schema({
     name_ps: {
@@ -9,6 +8,11 @@ const ProcessSateSchema = new mongoose.Schema({
     description: {
         type: String,
         required: true
+    },
+    key_ps: {
+        type: Number,
+        required: true,
+        unique: true
     }
 
 })
