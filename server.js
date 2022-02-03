@@ -8,6 +8,7 @@ import mongoose from 'mongoose'
 import swaggerUI from 'swagger-ui-express'
 import swaggerJsDoc from 'swagger-jsdoc'
 import cors from 'cors'
+import privateRoutes from './routes/privateRoutes.js'
 
 const PORT = process.env.PORT || 5000 // variable d'enviroment pour le port
 

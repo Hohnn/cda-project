@@ -29,13 +29,6 @@ export const getDroneByCategory = async (req, res) => {
     res.send(drone)
 }
 
-export const getDroneByCategory = async (req, res) => {
-    const drone = await DroneModel
-    .find({ category_id: req.categoryProfile._id })
-    .populate('category_id')
-    res.send(drone)
-}
-
 // UPDATE
 export const updateDrone = async (req, res) => {
     const drone = await DroneModel.findByIdAndUpdate(req.params.idDrone, req.body)
