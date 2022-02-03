@@ -16,29 +16,41 @@ import {
   getUser,
   addUser,
   deleteUser,
-  updateUser
+  updateUser,
+  getUserById
 } from '../controllers/userControllers.js'
 import {
   getAllCategories,
   getCategory,
   addCategory,
   deleteCategory,
-  updateCategory
+  updateCategory,
+  getCategoryById
 } from '../controllers/categoryControllers.js'
 import {
   getAllProcessStates,
   getProcessState,
-  addProcessState
+  addProcessState,
+  updateProcessState,
+  deleteProcessState
 } from '../controllers/processStateControllers.js'
 import {
-  getDronesTest,
   addDrone,
   getAllDrones,
   getDrone,
   updateDrone,
   deleteDrone,
+  getDroneById,
   getDroneByCategory
 } from '../controllers/droneControllers.js'
+import {
+  addOrder,
+  getAllOrders,
+  getOrder,
+  updateOrder,
+  deleteOrder,
+  getOrderById
+} from '../controllers/OrderControllers.js'
 
 // Path avec ES module
 import path, { dirname } from 'path'
@@ -48,13 +60,8 @@ const __dirname = dirname(__filename)
 
 const router = express.Router() // création du router
 
-// Page d'accueil de l'app, affiche index.html
-// router.get('/', (req, res) => {
-//   res.sendFile(path.resolve(__dirname, '../client/index.html'))
-// })
-
-// TEST !!! Lien vers la page products
-router.get('/products', catchErrors(getDronesTest))
+router.param("idDrone", catchErrors(getDroneById))
+router.param("idCategory", catchErrors(getCategoryById))
 
 //#region User
 /**
@@ -912,8 +919,13 @@ passport.authenticate(
     })
   })
 
-/*  router.get('/* ', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/build/index.html'))
-}) */
+router.get('/api/v1/login', passport.authenticate(
+  'login'),
+    async (req, res, next) => {
+    res.json({
+        message: 'login success',
+        user: req.user
+    })
+  })
 
 export default router
