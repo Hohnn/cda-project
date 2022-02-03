@@ -108,7 +108,7 @@ router.post('/api/v1/orders', catchErrors(addOrder))
 router.patch('/api/v1/orders/:idOrder', catchErrors(updateOrder))
 router.delete('/api/v1/orders/:idOrder', catchErrors(deleteOrder))
 
-router.param("idOrder", catchErrors(getOrderById));
+router.param("idOrder", getOrderById);
 
 
 
@@ -123,7 +123,7 @@ router.post('/api/v1/signup', passport.authenticate(
   })
 
 router.get('/api/v1/login', passport.authenticate(
-  'login', { session: false }),
+  'login'),
     async (req, res, next) => {
     res.json({
         message: 'login success',

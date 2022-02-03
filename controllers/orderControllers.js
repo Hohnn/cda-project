@@ -18,8 +18,8 @@ export const getAllOrders = async (req, res) => {
 }
 
 export const getOrder = async (req, res) => {
-    const order = await OrderModel.find({ _id: req.orderProfile._id })
-    res.send(req.orderProfile)
+   /*  const order = await OrderModel.find({ _id: req.params.idOrder })
+    res.send(req.orderProfile) */
 }
 
 export const getOrderByCategory = async (req, res) => {
@@ -43,9 +43,9 @@ export const deleteOrder = async (req, res) => {
     res.status(200).send()
 }
 
-export const getOrderById = async (req, res, next, id) => {
-    await OrderModel
-      .findById(req.params.idOrder)
+export const getOrderById = (req, res, next, id) => {
+    OrderModel
+      .findById(id)
       .populate('user_id', '-password -__v')
       .populate('drone_id', '-__v')
       .populate('createdBy_o', '-password -__v')
@@ -60,6 +60,7 @@ export const getOrderById = async (req, res, next, id) => {
         // on ajoute l'objet profile contenant les infos de l'utilisateur dans la requête
         req.orderProfile = order
         next()
+        res.send(order)
         })
 
   };
