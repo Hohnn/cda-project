@@ -18,8 +18,8 @@ export const getAllDrones = async (req, res) => {
 }
 
 export const getDrone = async (req, res) => {
-    const drone = await DroneModel.find({ _id: req.params.idDrone })
-    res.send(drone)
+    /* const drone = await DroneModel.find({ _id: req.params.idDrone })
+    res.send(drone) */
 }
 
 export const getDroneByCategory = async (req, res) => {
@@ -50,7 +50,6 @@ export const getDroneById = async (req, res, next, id) => {
       .populate('category_id')
       .populate('processState_id')
       .exec((err, drone) => {
-          console.log(drone)
           if(err || !drone){
               return res.status(400).json({
                   error: "User not found"
@@ -59,5 +58,6 @@ export const getDroneById = async (req, res, next, id) => {
           // on ajoute l'objet profile contenant les infos de l'utilisateur dans la requête
           req.droneProfile = drone;
           next();
+          res.json(drone)
       });
   };

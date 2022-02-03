@@ -62,7 +62,7 @@ const router = express.Router() // création du router
 
 router.param("idDrone", catchErrors(getDroneById))
 .param("idCategory", catchErrors(getCategoryById))
-.param("idUser", getUserById)
+
 //#region User
 /**
  * @swagger
@@ -197,7 +197,15 @@ router.param("idDrone", catchErrors(getDroneById))
  *       400:
  *         description: Invalid username/password supplied
  */
-.get('/api/v1/login', catchErrors())
+.get('/api/v1/login', passport.authenticate(
+  'login'),
+    async (req, res, next) => {
+    res.json({
+        message: 'login success',
+        user: req.user
+    })
+  })
+
 /**
  * @swagger
  * /api/v1/users/logout:
@@ -215,12 +223,12 @@ router.param("idDrone", catchErrors(getDroneById))
 
 /**
  * @swagger
- * /api/v1/users/{id}:
+ * /api/v1/users/{idUser}:
  *   get:
  *     summary: Return the user by id
  *     tags: [User]
  *     parameters:
- *       - name: id
+ *       - name: idUser
  *         in: path
  *         description: The user id
  *         required: true
@@ -237,17 +245,17 @@ router.param("idDrone", catchErrors(getDroneById))
  *       404:
  *         description: The user was not found
  */
- .get('/api/v1/users/:id', catchErrors(getUser))
-
+ .get('/api/v1/users/:idUser', catchErrors(getUser))
+ .param("idUser", getUserById)
 /**
  * @swagger
- * /api/v1/users/{id}:
+ * /api/v1/users/{idUser}:
  *   patch:
  *     summary: Update a user by id
  *     tags: [User]
  *     parameters:
  *       - in: path
- *         name: id
+ *         name: idUser
  *         schema:
  *           type: ObjectId
  *         required: true
@@ -270,7 +278,7 @@ router.param("idDrone", catchErrors(getDroneById))
  *       500:
  *         description: Some server error
  */
-.patch('/api/v1/users/:id', catchErrors(updateUser))
+.patch('/api/v1/users/:idUser', catchErrors(updateUser))
 
 
 /**
@@ -299,13 +307,13 @@ router.param("idDrone", catchErrors(getDroneById))
 
 /**
  * @swagger
- * /api/v1/users/{id}:
+ * /api/v1/users/{idUser}:
  *   delete:
  *     summary: Delete a user by id
  *     tags: [User]
  *     parameters:
  *       - in: path
- *         name: id
+ *         name: idUser
  *         schema: 
  *           type: ObjectId
  *         required: true
@@ -320,7 +328,7 @@ router.param("idDrone", catchErrors(getDroneById))
  *       404:
  *         description: The user is not found
  */
-.delete('/api/v1/users/:id', catchErrors(deleteUser))
+.delete('/api/v1/users/:idUser', catchErrors(deleteUser))
 
 //#endregion
 
@@ -374,7 +382,7 @@ router.param("idDrone", catchErrors(getDroneById))
 
 /**
  * @swagger
- * /api/v1/drones/category/{idCategory}:
+ * /api/v1/drones/categories/{idCategory}:
  *   get:
  *     summary: Return the list of drones by category
  *     tags: [Drone]
@@ -397,7 +405,7 @@ router.param("idDrone", catchErrors(getDroneById))
  *       404:
  *         description: Category not found
  */
-.get('/api/v1/drones/category/:idCategory', catchErrors(getDroneByCategory))
+.get('/api/v1/drones/categories/:idCategory', catchErrors(getDroneByCategory))
 
 /**
  * @swagger
@@ -426,12 +434,12 @@ router.param("idDrone", catchErrors(getDroneById))
 
 /**
  * @swagger
- * /api/v1/drones/{id}:
+ * /api/v1/drones/{idDrone}:
  *   get:
  *     summary: Return the drone by id
  *     tags: [Drone]
  *     parameters:
- *       - name: id
+ *       - name: idDrone
  *         in: path
  *         description: The drone id
  *         required: true
@@ -448,17 +456,17 @@ router.param("idDrone", catchErrors(getDroneById))
  *       404:
  *         description: The drone was not found
  */
-.get('/api/v1/drones/:id', catchErrors(getDrone))
+.get('/api/v1/drones/:idDrone', catchErrors(getDrone))
 
 /**
  * @swagger
- * /api/v1/drones/{id}:
+ * /api/v1/drones/{idDrone}:
  *   patch:
  *     summary: Update a drone by id
  *     tags: [Drone]
  *     parameters:
  *       - in: path
- *         name: id
+ *         name: idDrone
  *         schema:
  *           type: ObjectId
  *         required: true
@@ -481,17 +489,17 @@ router.param("idDrone", catchErrors(getDroneById))
  *       500:
  *         description: Some server error
  */
-.patch('/api/v1/drones/:id', catchErrors(updateDrone))
+.patch('/api/v1/drones/:idDrone', catchErrors(updateDrone))
 
 /**
  * @swagger
- * /api/v1/drones/{id}:
+ * /api/v1/drones/{idDrone}:
  *   delete:
  *     summary: Delete a drone by id
  *     tags: [Drone]
  *     parameters:
  *       - in: path
- *         name: id
+ *         name: idDrone
  *         schema: 
  *           type: ObjectId
  *         required: true
@@ -506,7 +514,7 @@ router.param("idDrone", catchErrors(getDroneById))
  *       404:
  *         description: The drone is not found
  */
-.delete('/api/v1/drones/:id', catchErrors(deleteDrone))
+.delete('/api/v1/drones/:idDrone', catchErrors(deleteDrone))
 //#endregion
 
 //#region Role
@@ -555,12 +563,12 @@ router.get('/api/v1/roles', catchErrors(getRoles))
 
 /**
  * @swagger
- * /api/v1/roles/{id}:
+ * /api/v1/roles/{idRole}:
  *   get:
  *     summary: Return the role by id
  *     tags: [Role]
  *     parameters:
- *       - name: id
+ *       - name: idRole
  *         in: path
  *         description: The role id
  *         required: true
@@ -577,7 +585,7 @@ router.get('/api/v1/roles', catchErrors(getRoles))
  *       404:
  *         description: The role was not found
  */
-.get('/api/v1/roles/:id', catchErrors(getRole))
+.get('/api/v1/roles/:idRole', catchErrors(getRole))
 
 /**
  * @swagger
@@ -605,13 +613,13 @@ router.get('/api/v1/roles', catchErrors(getRoles))
 
 /**
  * @swagger
- * /api/v1/roles/{id}:
+ * /api/v1/roles/{idRole}:
  *   patch:
  *     summary: Update a role by id
  *     tags: [Role]
  *     parameters:
  *       - in: path
- *         name: id
+ *         name: idRole
  *         schema:
  *           type: ObjectId
  *         required: true
@@ -634,17 +642,17 @@ router.get('/api/v1/roles', catchErrors(getRoles))
  *       500:
  *         description: Some server error
  */
-.patch('/api/v1/roles/:id', catchErrors(updateRole))
+.patch('/api/v1/roles/:idRole', catchErrors(updateRole))
 
 /**
  * @swagger
- * /api/v1/roles/{id}:
+ * /api/v1/roles/{idRole}:
  *   delete:
  *     summary: Delete a role by id
  *     tags: [Role]
  *     parameters:
  *       - in: path
- *         name: id
+ *         name: idRole
  *         schema: 
  *           type: ObjectId
  *         required: true
@@ -659,7 +667,7 @@ router.get('/api/v1/roles', catchErrors(getRoles))
  *       404:
  *         description: The role is not found
  */
-.delete('/api/v1/roles/:id', catchErrors(deleteRole))
+.delete('/api/v1/roles/:idRole', catchErrors(deleteRole))
 //#endregion
 
 //#region 
@@ -708,12 +716,12 @@ router.get('/api/v1/roles', catchErrors(getRoles))
 
 /**
  * @swagger
- * /api/v1/categories/{id}:
+ * /api/v1/categories/{idCategory}:
  *   get:
  *     summary: Return a category by id
  *     tags: [Categories]
  *     parameters:
- *       - name: id
+ *       - name: idCategory
  *         in: path
  *         description: The category id
  *         required: true
@@ -730,7 +738,7 @@ router.get('/api/v1/roles', catchErrors(getRoles))
  *       404:
  *         description: The category was not found
  */
-.get('/api/v1/categories/:id', catchErrors(getCategory))
+.get('/api/v1/categories/:idCategory', catchErrors(getCategory))
 
 /**
  * @swagger
@@ -758,13 +766,13 @@ router.get('/api/v1/roles', catchErrors(getRoles))
 
 /**
  * @swagger
- * /api/v1/categories/{id}:
+ * /api/v1/categories/{idCategory}:
  *   patch:
  *     summary: Update a category by id
  *     tags: [Categories]
  *     parameters:
  *       - in: path
- *         name: id
+ *         name: idCategory
  *         schema:
  *           type: ObjectId
  *         required: true
@@ -787,17 +795,17 @@ router.get('/api/v1/roles', catchErrors(getRoles))
  *       500:
  *         description: Some server error
  */
-.patch('/api/v1/categories/:id', catchErrors(updateCategory))
+.patch('/api/v1/categories/:idCategory', catchErrors(updateCategory))
 
 /**
  * @swagger
- * /api/v1/categories/{id}:
+ * /api/v1/categories/{idCategory}:
  *   delete:
  *     summary: Delete a category by id
  *     tags: [Role]
  *     parameters:
  *       - in: path
- *         name: id
+ *         name: idCategory
  *         schema: 
  *           type: ObjectId
  *         required: true
@@ -812,7 +820,7 @@ router.get('/api/v1/roles', catchErrors(getRoles))
  *       404:
  *         description: The category is not found
  */
-.delete('/api/v1/categories/:id', catchErrors(deleteCategory))
+.delete('/api/v1/categories/:idCategory', catchErrors(deleteCategory))
 //#endregion
 
 
@@ -859,12 +867,12 @@ router.get('/api/v1/roles', catchErrors(getRoles))
 
 /**
  * @swagger
- * /api/v1/ps/{id}:
+ * /api/v1/ps/{idPs}:
  *   get:
  *     summary: Return a process state by id
  *     tags: [Process State]
  *     parameters:
- *       - name: id
+ *       - name: idPs
  *         in: path
  *         description: The process state id
  *         required: true
@@ -881,7 +889,7 @@ router.get('/api/v1/roles', catchErrors(getRoles))
  *       404:
  *         description: The category was not found
  */
-.get('/api/v1/ps/:id', catchErrors(getProcessState))
+.get('/api/v1/ps/:idPs', catchErrors(getProcessState))
 
 /**
  * @swagger
@@ -931,13 +939,5 @@ passport.authenticate(
     })
   })
 
-router.get('/api/v1/login', passport.authenticate(
-  'login'),
-    async (req, res, next) => {
-    res.json({
-        message: 'login success',
-        user: req.user
-    })
-  })
 
 export default router
