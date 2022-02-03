@@ -61,8 +61,8 @@ const __dirname = dirname(__filename)
 const router = express.Router() // création du router
 
 router.param("idDrone", catchErrors(getDroneById))
-router.param("idCategory", catchErrors(getCategoryById))
-
+.param("idCategory", catchErrors(getCategoryById))
+.param("idUser", getUserById)
 //#region User
 /**
  * @swagger
@@ -907,6 +907,18 @@ router.get('/api/v1/roles', catchErrors(getRoles))
  */
 .post('/api/v1/ps', catchErrors(addProcessState))
 //#endregion
+
+.patch('/api/v1/ps/:idPs', catchErrors(updateProcessState))
+.delete('/api/v1/ps/:idPs', catchErrors(deleteProcessState))
+
+//ORDERS
+.get('/api/v1/orders', catchErrors(getAllOrders))
+.get('/api/v1/orders/:idOrder', catchErrors(getOrder))
+.post('/api/v1/orders', catchErrors(addOrder))
+.patch('/api/v1/orders/:idOrder', catchErrors(updateOrder))
+.delete('/api/v1/orders/:idOrder', catchErrors(deleteOrder))
+
+router.param("idOrder", catchErrors(getOrderById))
 
 //authentification
 .post('/signup', 
