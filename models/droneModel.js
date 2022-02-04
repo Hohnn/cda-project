@@ -8,17 +8,9 @@ const DroneShema = new mongoose.Schema({
         trim: true,
         lowercase: true
     },
-<<<<<<< HEAD
-    category:{
-        type: String,
-        require: false,
-        trim: true,
-        lowercase: true
-=======
     category_id:{
         type: Schema.Types.ObjectId,
         ref: 'Category'
->>>>>>> 584a0ebcaef9d6dbf4ca005b57376866276e01c4
     },
     description_d:{
         type: String,
