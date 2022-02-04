@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react"
 import { useParams } from "react-router-dom"
 import DroneCard from './DroneCard'
+import DroneForm from "./DroneForm"
 
 const Drone = () => {
     const { id } = useParams()
-    const [drone, setDrone] = useState('')
+    const [drone, setDrone] = useState(null)
 
     useEffect(() => {
         const fetchData = async () => {
@@ -18,7 +19,8 @@ const Drone = () => {
 
     return drone ? (
         <div>
-            <DroneCard drone={drone}></DroneCard>
+            <DroneCard drone={drone} />
+            <DroneForm id={id} drone={drone} />
         </div>
     ) : null
 }

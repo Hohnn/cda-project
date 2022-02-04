@@ -3,6 +3,7 @@ import { Card, Badge, Menu } from 'antd'
 const { Meta } = Card
 
 const DroneCard = ({ drone }) => {
+    console.log(drone);
     return (
         <div style={{ widht: 300, margin: '1rem' }}>
 <Card
