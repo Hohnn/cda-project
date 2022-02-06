@@ -5,36 +5,42 @@ const Schema = mongoose.Schema
 const UserSchema = new mongoose.Schema({
     email: {
         type: String,
-        required: true,
-        unique: true
+        required: [true, 'Email is required'],
+        unique: true,
+        lowercase: true
     },
     password: {
         type: String,
-        required: true
+        required: [true, 'Password is required'],
+        minlength: [8, 'Password must be at least 8 characters long']
+    },
+    passwordConfirm: {
+        type: String,
+        required: [true, 'Password confirmation is required']
     },
     firstName_u: {
         type: String,
-        required: true
+        required: [true, 'First name is required']
     },
     lastName_u: {
         type: String,
-        required: true
+        required: [true, 'Last name is required']
     },
     company_u: {
         type: String,
-        required: true
+        required: [true, 'Company is required']
     },
     siret_u: {
         type: String,
-        required: false
+        required: [false, 'Siret is required']
     },
     address_u: {
         type: String,
-        required: false
+        required: [false, 'Address is required']
     },
     phone_u: {
         type: String,
-        required: true
+        required: [true, 'Phone is required']
     },
     role_id: { // type en id et ref en nom de la collection
         type: Schema.Types.ObjectId,
@@ -57,12 +63,11 @@ const UserSchema = new mongoose.Schema({
         type: Date,
         required: true,
         default: Date.now
-    }  
-
+    }
 })
 
-// Pré Hook - Avant l'enregistrement dans la base de données
-
+// Pré Hook - actions avant l'enregistrement dans la base de données MongoDB
+//hashage de mot de passe:
 UserSchema.pre('save', async function (next) {
     const user = this
     if (user.isModified('password')) {
@@ -72,9 +77,9 @@ UserSchema.pre('save', async function (next) {
 } )
 
 // Ajouter une méthode pour vérifier le mot de passe
-
 UserSchema.methods.isValidPassword = async function (password) {
-    return await bcrypt.compare(password, this.password)
+    const user = this
+    return await bcrypt.compare(password, this.password) //return true or false
 }
 
 const UserModel = mongoose.model('User', UserSchema)

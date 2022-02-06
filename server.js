@@ -9,8 +9,10 @@ import swaggerUI from 'swagger-ui-express'
 import swaggerJsDoc from 'swagger-jsdoc'
 import cors from 'cors'
 import privateRoutes from './routes/privateRoutes.js'
+import { AppError } from './utils/appError.js'
+import { globalErrorHandler } from './controllers/errorController.js'
 
-const PORT = process.env.PORT || 5000 // variable d'enviroment pour le port
+const PORT = process.env.PORT || 3000 // variable d'enviroment pour le port
 
 //swagger options 
 const options = {
@@ -24,7 +26,7 @@ const options = {
     },
     servers: [
       {
-        url: "http://localhost:5000"
+        url: "https://skydrone-api.herokuapp.com/api-docs"
       }
     ]
   },
@@ -54,9 +56,18 @@ app.use( // middleware pour les routes privées
   privateRoutes 
 )
 
+//implements CORS
 app.use(cors())
+//ACCESS-CONTROL-ALLOW-ORIGIN : *
+app.options('*', cors());
 
 app.use(routes) // middleware pour les routes publiques
+
+app.all('*', (req, res, next) => { 
+  next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
+});
+
+app.use(globalErrorHandler)
 
 app.listen(PORT, () => {
   console.log(`Server is running on port: ${PORT}`)

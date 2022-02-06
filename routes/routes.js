@@ -197,14 +197,39 @@ router.param("idDrone", catchErrors(getDroneById))
  *       400:
  *         description: Invalid username/password supplied
  */
-.get('/api/v1/login', passport.authenticate(
-  'login'),
+.get('/api/v1/login', passport.authenticate('login'),
     async (req, res, next) => {
     res.json({
         message: 'login success',
         user: req.user
     })
   })
+
+.post('/api/v1/login', (req, res, next) => {
+  passport.authenticate('login', (err, user) => {
+    try{
+      if (err || !user) {
+        return res.status(400).json( 
+          {
+            message: 'Something is not right',
+            user: user
+          }
+        )
+      }
+
+      req.login(user, {session: false}, async error => {
+        if (error) return next(error)
+        
+        const body = { _id: user._id, email: user.email }
+        const token = jwt.sign({ user: body }, process.env.JWT_SECRET)
+        res.json({ token, user: body })
+    })
+    } catch(error) {
+      return next(error)
+    }
+  })(req, res, next)
+})
+      
 
 /**
  * @swagger
@@ -929,9 +954,7 @@ router.get('/api/v1/roles', catchErrors(getRoles))
 router.param("idOrder", catchErrors(getOrderById))
 
 //authentification
-.post('/signup', 
-passport.authenticate(
-  'signup', { session: false }),
+.post('/signup', passport.authenticate('signup', { session: false }),
     async (req, res, next) => {
     res.json({
         message: 'Signup success',
