@@ -82,6 +82,28 @@ UserSchema.methods.isValidPassword = async function (password) {
     return await bcrypt.compare(password, this.password) //return true or false
 }
 
+UserSchema.methods.toJSON = function () {
+    const user = this
+    const userObject = user.toObject()
+    delete userObject.password
+    delete userObject.passwordConfirm
+    return userObject
+}
+
+UserSchema.statics.findByCredentials = async (email, password) => {
+    const user = await User.findOne({ email })
+    if (!user) {
+        throw new Error('Unable to login')
+    }
+    const isMatch = await user.isValidPassword(password)
+    if (!isMatch) {
+        throw new Error('Unable to login')
+    }
+    return user
+}
+
+
+
 const UserModel = mongoose.model('User', UserSchema)
 
 export default UserModel 

@@ -5,6 +5,7 @@ import JWT from 'passport-jwt';
 
 const { Strategy: JWTStrategy, ExtractJwt } = JWT;
 
+//signup strategy
 passport.use(
     'signup',
     new Strategy({
@@ -25,6 +26,7 @@ passport.use(
     })
 )
 
+// login strategy
 passport.use(
     'login',
     new Strategy({
@@ -51,11 +53,11 @@ passport.use(
     })
 )
 
+// JWT strategy
 passport.use(
     new JWTStrategy({
         secretOrKey: process.env.JWT_SECRET,
         jwtFromRequest: ExtractJwt.fromUrlQueryParameter('token')
-        // ,        expiresIn: '1h',
     },
         async (token, done) => {
             try {
@@ -66,5 +68,18 @@ passport.use(
         }
     )
 )
+
+// serialize user
+//passeport.serializeUser((user, done) => {
+//    done(null, user.id);
+// })
+
+// deserialize user
+// passeport.deserializeUser((id, done) => {   
+//     UserModel.findById(id, (err, user) => {
+//         done(err, user);
+//     })
+// })
+
 
 export default passport;

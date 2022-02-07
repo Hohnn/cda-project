@@ -166,7 +166,7 @@ router.param("idDrone", catchErrors(getDroneById))
 /**
  * @swagger
  * /api/v1/users/login:
- *   get:
+ *   post:
  *     summary: Logs user into the system
  *     tags: [User]
  *     parameters:
@@ -197,14 +197,6 @@ router.param("idDrone", catchErrors(getDroneById))
  *       400:
  *         description: Invalid username/password supplied
  */
-.get('/api/v1/login', passport.authenticate('login'),
-    async (req, res, next) => {
-    res.json({
-        message: 'login success',
-        user: req.user
-    })
-  })
-
 .post('/api/v1/login', (req, res, next) => {
   passport.authenticate('login', (err, user) => {
     try{
