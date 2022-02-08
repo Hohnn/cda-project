@@ -535,6 +535,7 @@ router.param("idDrone", catchErrors(getDroneById))
 //#endregion
 
 //#region Role
+
 /**
  * @swagger
  * components:

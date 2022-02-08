@@ -35,11 +35,23 @@ const options = {
 
 const specs = swaggerJsDoc(options)
 
-const app = express() // création de l'application express
+// création de l'application express
+const app = express()
+app.use(express.json()) // middleware pour les requêtes json
+
+//implements CORS
+app.use(cors())
+//ACCESS-CONTROL-ALLOW-ORIGIN : *
+app.options('*', cors());
+
+app.get("/", (req, res) => {
+    res.json({
+        message: "Welcome to SkyDrone API."
+    });
+});
 
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(specs))
 
-app.use(express.json()) // middleware pour les requêtes json
 
 app.use(express.static('client/build')) // middleware pour les fichiers statiques ( les fichiers de build seront accessibles depuis la racine du serveur)
 
@@ -56,16 +68,12 @@ app.use( // middleware pour les routes privées
   privateRoutes 
 )
 
-//implements CORS
-app.use(cors())
-//ACCESS-CONTROL-ALLOW-ORIGIN : *
-app.options('*', cors());
 
 app.use(routes) // middleware pour les routes publiques
 
-app.all('*', (req, res, next) => { 
+/*app.all('*', (req, res, next) => { 
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
-});
+});*/
 
 app.use(globalErrorHandler)
 
