@@ -1,13 +1,14 @@
 {
   "name": "node-crud",
   "version": "1.0.0",
-  "description": "Tuto Node pour Hardcoders",
+  "description": "API SkyDrone V1",
   "main": "server.js",
   "scripts": {
     "start": "nodemon server.js",
-    "debug": "ndb server.js"
+    "debug": "ndb server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "anthowelc",
+  "author": "CDA_Team",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.0.1",
