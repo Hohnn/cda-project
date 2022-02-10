@@ -5,31 +5,31 @@ const OrderShema = new mongoose.Schema({
     user_id:{
         type: Schema.Types.ObjectId,
         ref: 'User',
-        required: true
+        required: [true, 'User _id is required'],
     },
     drone_id:{
         type: Schema.Types.ObjectId,
         ref: 'Drone',
-        required: true
+        required: [true, 'Drone _id is required']
     },
     startAt_o:{
         type: Date,
-        require: true,
+        required: [true, 'Order start date is required']
     },
     endAt_o:{
         type: Date,
-        require: true,
+        required: true,
     },
     report_o:{
         type: String,
-        require: true,
+        required: [true,'Report is required'],
         trim: true,
         lowercase: true
     },
     createdBy_o:{
         type: Schema.Types.ObjectId,
         ref: 'User',
-        required: true
+        required: [true, 'User _id is required'],
     },
     createdAt_o:{
         type: Date,
@@ -42,6 +42,7 @@ const OrderShema = new mongoose.Schema({
     },
     updateAt_o:{
         type: Date,
+        default: Date.now
     },
 })
 

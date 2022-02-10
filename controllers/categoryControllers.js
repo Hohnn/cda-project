@@ -2,25 +2,33 @@ import CategoryModel from '../models/categoryModel.js'
 
 export const addCategory = async (req, res) => {
 	const category = new CategoryModel(req.body)
-  
 	await category.save()
-	res.send(category)
+	res.status(200).send(category)
 }
 
 export const getAllCategories = async (_, res) => {
 	const categories = await CategoryModel.find({})
-	res.send(categories)
+    if (!category) {
+        res.status(404).send('Aucune catégorie trouvée.')
+    }
+    res.status(200).send(categories)
 }
 
 export const getCategory = async (req, res) => {
-  	const category = await CategoryModel.find({ _id: req.params.idCategory })
-  	res.send(category)
+    const category = await CategoryModel.find({ _id: req.params.idCategory })
+    if (!category) {
+        res.status(404).send('Aucune catégorie trouvée.')
+    }
+  	res.status(200).send(category)
 }
 
 export const updateCategory = async (req, res) => {
-  	const category = await CategoryModel.findByIdAndUpdate(req.params.idCategory, req.body)
+    const category = await CategoryModel.findByIdAndUpdate(req.params.idCategory, req.body)
+    if (!category) {
+        res.status(404).send('Aucune catégorie trouvée.')
+    }
   	await category.save()
-  	res.send(category)
+  	res.status(200).send(category)
 }
 
 export const deleteCategory = async (req, res) => {
@@ -28,7 +36,7 @@ export const deleteCategory = async (req, res) => {
 	if (!category) {
 		res.status(404).send('Aucune catégorie trouvée.')
 	}
-	res.status(200).send('Drone supprimé avec succès')
+	res.status(200).send('Catégorie supprimée avec succès.')
 }
 
 export const getCategoryById = async (req, res, next, id) => {
@@ -38,7 +46,7 @@ export const getCategoryById = async (req, res, next, id) => {
           console.log(category)
           if(err || !category){
               return res.status(400).json({
-                  error: "User not found"
+                  error: "Category not found"
               });
           }
 		  console.log(category);

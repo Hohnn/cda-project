@@ -43,7 +43,7 @@ const options = {
     },
     servers: [
       {
-        url: "https://skydrone-api.herokuapp.com/api-docs"
+        url: "https://skydrone-api.herokuapp.com/"
       }
     ]
   },

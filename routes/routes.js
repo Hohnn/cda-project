@@ -72,12 +72,12 @@ const router = express.Router()
  *    description: Operations about user
  *    externalDocs:
  *      description: Find out more about our store
- *      url: "https://skydrone-api.herokuapp.com/api-docs"
+ *      url: "https://skydrone-api.herokuapp.com/"
  *  - name: Drone
  *    description: The drones
  *    externalDocs:
  *      description: Everythings about our drones
- *      url: "https://skydrone-api.herokuapp.com/api-docs"
+ *      url: "https://skydrone-api.herokuapp.com/"
  *  - name: Role
  *    description: The user's role
  *  - name: Categories
@@ -112,6 +112,7 @@ const router = express.Router()
      *           description: The email of the user
      *         password:
      *           type: string
+     *           format: password
      *           description: The password of the user
      *         firstName_u:
      *           type: string
@@ -187,6 +188,7 @@ const router = express.Router()
      *         description: The password for login un clear text
      *         required: true
      *         type: string
+     *         format: password
      *     responses:
      *       200:
      *         description: successful operation
@@ -730,7 +732,7 @@ router
  *           application/json:
  *             schema:
  *                 items:
- *                   $ref: '#/components/schemas/categoriesModel'
+ *                   $ref: '#/components/schemas/categoryModel'
  */
 
 
@@ -840,11 +842,11 @@ router
 
 //#endregion
 
-    .delete('/api/v1/categories/:idCategory', catchErrors(deleteCategory))
-    .patch('/api/v1/categories/:idCategory', catchErrors(updateCategory))
+    .get('/api/v1/categories', catchErrors(getAllCategories))
     .post('/api/v1/categories', catchErrors(addCategory))
     .get('/api/v1/categories/:idCategory', catchErrors(getCategory))
-    .get('/api/v1/categories', catchErrors(getAllCategories))
+    .patch('/api/v1/categories/:idCategory', catchErrors(updateCategory))
+    .delete('/api/v1/categories/:idCategory', catchErrors(deleteCategory))
     .param("idCategory", catchErrors(getCategoryById))
 
 
@@ -854,7 +856,7 @@ router
      * @swagger
      * components:
      *   schemas:
-     *     ProcessStateModel:
+     *     processStateModel:
      *       type: object
      *       required:
      *         - name_ps
@@ -939,11 +941,11 @@ router
 
 //#endregion
 
-    .get('/api/v1/ps/:idPs', catchErrors(getProcessState))
     .get('/api/v1/ps', catchErrors(getAllProcessStates))
+    .post('/api/v1/ps', catchErrors(addProcessState))
+    .get('/api/v1/ps/:idPs', catchErrors(getProcessState))
     .patch('/api/v1/ps/:idPs', catchErrors(updateProcessState))
     .delete('/api/v1/ps/:idPs', catchErrors(deleteProcessState))
-    .post('/api/v1/ps', catchErrors(addProcessState))
 
 //#region Swagger Orders
 
@@ -1021,7 +1023,7 @@ router
      *         description: The order id
      *         required: true
      *         schema:
-     *           type: ObjectId
+     *           type: string
      *     responses:
      *       200:
      *         description: The order required 
@@ -1120,7 +1122,7 @@ router
 //#endregion
 
     .get('/api/v1/orders', catchErrors(getAllOrders))
-    .get('/api/v1/orders/:idOrder', catchErrors(getOrder))
+    .get('/api/v1/orders/:idOrder', catchErrors(getOrderById))
     .post('/api/v1/orders', catchErrors(addOrder))
     .patch('/api/v1/orders/:idOrder', catchErrors(updateOrder))
     .delete('/api/v1/orders/:idOrder', catchErrors(deleteOrder))
