@@ -109,10 +109,11 @@ const router = express.Router()
      *       properties:
      *         email:
      *           type: string
+     *           format: email
      *           description: The email of the user
      *         password:
      *           type: string
-     *           format: password
+     *           writeOnly: true
      *           description: The password of the user
      *         firstName_u:
      *           type: string

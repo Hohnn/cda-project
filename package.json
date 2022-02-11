@@ -29,6 +29,7 @@
     "node": "14.x"
   },
   "devDependencies": {
+    "jest": "^27.5.1",
     "ndb": "^1.1.5"
   }
 }

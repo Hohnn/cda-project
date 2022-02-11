@@ -7,7 +7,7 @@ export const getUsers = async (_, res) => {
   }
 
 export const getUser = async (req, res) => {
-	const users = await userModel.find({ _id: req.params.idUser })
+	const users = await userModel.findOne({ _id: req.params.idUser })
 	res.send(users[0])
 }
 
@@ -19,7 +19,7 @@ export const addUser = async (req, res) => {
 }
 
 export const updateUser = async (req, res) => {
-  	const user = await userModel.findByIdAndUpdate(req.params.idUser, req.body)
+  	const user = await userModel.findByIdAndUpdate(req.params.idUser, ...req.body)
   	await user.save()
   	res.send(user)
 }
