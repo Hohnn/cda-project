@@ -9,7 +9,10 @@ const __dirname = dirname(__filename)
 export const addOrder = async (req, res) => {
     const order = new OrderModel(req.body)
     await order.save()
-    res.send(order)
+   res.status(201).send({
+        message: 'Commande créée avec succès',
+        order: order
+    })
 }
 
 export const getAllOrders = async (req, res) => {

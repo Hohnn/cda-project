@@ -43,7 +43,8 @@ const options = {
     },
     servers: [
       {
-        url: "https://skydrone-api.herokuapp.com/"
+        // url: "https://skydrone-api.herokuapp.com/"
+        url: "http://localhost:3000/"
       }
     ]
   },
@@ -64,12 +65,14 @@ app.get("/", (req, res) => {
 //route swagger
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(specs))
 
-// middleware pour les fichiers statiques ( les fichiers de build seront accessibles depuis la racine du serveur)
+// middleware pour les fichiers statiques 
+//( les fichiers de build seront accessibles depuis la racine du serveur)
 app.use(express.static('client/build'))
 
 //#endregion
 
 //#region MongoDB Connection 
+
 // connection à la base de données
 mongoose.connect(process.env.MONGODB, {
   useNewUrlParser: true,
@@ -90,6 +93,7 @@ app.use(
 //#endregion
 
 //#region public routes
+
 // middleware pour les routes publiques
 app.use(routes) 
 

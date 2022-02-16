@@ -37,7 +37,6 @@ import {
 import {
   addDrone,
   getAllDrones,
-  getDrone,
   updateDrone,
   deleteDrone,
   getDroneById,
@@ -237,7 +236,7 @@ const router = express.Router()
      *         description: The user id
      *         required: true
      *         schema:
-     *           type: ObjectId
+     *           type: string
      *     responses:
      *       200:
      *         description: The list of all users
@@ -261,7 +260,7 @@ const router = express.Router()
      *       - in: path
      *         name: idUser
      *         schema:
-     *           type: ObjectId
+     *           type: string
      *         required: true
      *         description: The user id
      *     requestBody:
@@ -319,9 +318,9 @@ const router = express.Router()
      *       - in: path
      *         name: idUser
      *         schema: 
-     *           type: ObjectId
+     *           type: string
      *         required: true
-     *         description: The user ObjectId 
+     *         description: The user string 
      *     responses:
      *       200:
      *         description: The user is successfully deleted
@@ -455,7 +454,7 @@ router
      *         description: The drone id
      *         required: true
      *         schema:
-     *           type: ObjectId
+     *           type: string
      *     responses:
      *       200:
      *         description: The list of all drones
@@ -478,7 +477,7 @@ router
      *       - in: path
      *         name: idDrone
      *         schema:
-     *           type: ObjectId
+     *           type: string
      *         required: true
      *         description: The drone id
      *     requestBody:
@@ -510,9 +509,9 @@ router
      *       - in: path
      *         name: idDrone
      *         schema: 
-     *           type: ObjectId
+     *           type: string
      *         required: true
-     *         description: The user ObjectId 
+     *         description: The user string 
      *     responses:
      *       200:
      *         description: The drone is successfully deleted
@@ -527,7 +526,7 @@ router
 //#endregion
 
     .patch('/api/v1/drones/:idDrone', catchErrors(updateDrone))
-    .get('/api/v1/drones/:idDrone', catchErrors(getDrone))
+    .get('/api/v1/drones/:idDrone', catchErrors(getDroneById))
     .post('/api/v1/drones', catchErrors(addDrone))
     .get('/api/v1/drones/categories/:idCategory', catchErrors(getDroneByCategory))
     .get('/api/v1/drones', catchErrors(getAllDrones))
@@ -565,7 +564,7 @@ router
 
 /**
  * @swagger
- * /api/v1/role:
+ * /api/v1/roles:
  *   get:
  *     summary: Return the list of all roles
  *     tags: [Role]
@@ -592,7 +591,7 @@ router
  *         description: The role id
  *         required: true
  *         schema:
- *           type: ObjectId
+ *           type: string
  *     responses:
  *       200:
  *         description: The list of all roles
@@ -638,7 +637,7 @@ router
  *       - in: path
  *         name: idRole
  *         schema:
- *           type: ObjectId
+ *           type: string
  *         required: true
  *         description: The role id
  *     requestBody:
@@ -670,9 +669,9 @@ router
  *       - in: path
  *         name: idRole
  *         schema: 
- *           type: ObjectId
+ *           type: string
  *         required: true
- *         description: The user ObjectId 
+ *         description: The user string 
  *     responses:
  *       200:
  *         description: The role is successfully deleted
@@ -749,7 +748,7 @@ router
  *         description: The category id
  *         required: true
  *         schema:
- *           type: ObjectId
+ *           type: string
  *     responses:
  *       200:
  *         description: The list of all categories
@@ -795,7 +794,7 @@ router
  *       - in: path
  *         name: idCategory
  *         schema:
- *           type: ObjectId
+ *           type: string
  *         required: true
  *         description: The category id
  *     requestBody:
@@ -822,14 +821,14 @@ router
  * /api/v1/categories/{idCategory}:
  *   delete:
  *     summary: Delete a category by id
- *     tags: [Role]
+ *     tags: [Categories]
  *     parameters:
  *       - in: path
  *         name: idCategory
  *         schema: 
- *           type: ObjectId
+ *           type: string
  *         required: true
- *         description: The user ObjectId 
+ *         description: The user string 
  *     responses:
  *       200:
  *         description: The category is successfully deleted
@@ -904,7 +903,7 @@ router
      *         description: The process state id
      *         required: true
      *         schema:
-     *           type: ObjectId
+     *           type: string
      *     responses:
      *       200:
      *         description: The list of a process state
@@ -940,7 +939,65 @@ router
      *         description: Some server error
      */
 
-//#endregion
+    /**
+     * @swagger
+     * /api/v1/ps/{idPs}:
+     *   patch:
+     *     summary: Update a process state by id
+     *     tags: [Process State]
+     *     parameters:
+     *       - name: idPs
+     *         in: path
+     *         description: The process state id
+     *         required: true
+     *         schema:
+     *           type: string
+     *     requestBody:
+     *       required: true
+     *       content:
+     *         application/json:
+     *           schema:
+     *             $ref: '#/components/schemas/processStateModel'
+     *     responses:
+     *       200:
+     *         description: The process state data are successfully updated
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/schemas/processStateModel'
+     *       404:
+     *         description: The process state was not found
+     *       500:
+     *         description: Some server error
+     */
+
+    /**
+     * @swagger
+     * /api/v1/ps/{idPs}:
+     *   delete:
+     *     summary: Delete a process state by id
+     *     tags: [Process State]
+     *     parameters:
+     *       - name: idPs
+     *         in: path
+     *         description: The process state id
+     *         required: true
+     *         schema:
+     *           type: string
+     *     responses:
+     *       200:
+     *         description: The process state is successfully deleted
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/schemas/processStateModel'
+     *       404:
+     *         description: The process state was not found
+     *       500:
+     *         description: Some server error
+     */
+
+    //#endregion
 
     .get('/api/v1/ps', catchErrors(getAllProcessStates))
     .post('/api/v1/ps', catchErrors(addProcessState))
@@ -965,10 +1022,10 @@ router
      *       properties:
      *         user_id:
      *           type: string
-     *           description: The requesting user's ObjectId 
+     *           description: The requesting user's string 
      *         drone_id:
      *           type: string
-     *           description: The requested drone's ObjectId 
+     *           description: The requested drone's string 
      *         startAt_o:
      *           type: string
      *           description: The open date of the order
@@ -980,13 +1037,13 @@ router
      *           description: The pilot's report after mission
      *         createdBy_o:
      *           type: string
-     *           description: The creating user's ObjectId  
+     *           description: The creating user's string  
      *         createdAt_o:
      *           type: string
      *           description: The order's creating date
      *         updateBy_o:
      *           type: string
-     *           description: The update user's ObjectId
+     *           description: The update user's string
      *         updateAt_o:
      *           type: string
      *           description: The update order date 
@@ -1074,7 +1131,7 @@ router
      *       - in: path
      *         name: idOrder
      *         schema:
-     *           type: ObjectId
+     *           type: string
      *         required: true
      *         description: The order id
      *     requestBody:
@@ -1106,9 +1163,9 @@ router
      *       - in: path
      *         name: idOrder
      *         schema:
-     *           type: ObjectId
+     *           type: string
      *         required: true
-     *         description: The order ObjectId
+     *         description: The order string
      *     responses:
      *       200:
      *         description: The order is successfully deleted
