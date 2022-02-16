@@ -1,2 +1,0 @@
-MONGODB=mongodb+srv://cdaProject:cdaProject76@cluster0.syxel.mongodb.net/cdaproject?retryWrites=true&w=majority
-JWT_SECRET='cdaProject76'
