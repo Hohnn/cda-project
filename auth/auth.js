@@ -69,17 +69,6 @@ passport.use(
     )
 )
 
-// serialize user
-//passeport.serializeUser((user, done) => {
-//    done(null, user.id);
-// })
-
-// deserialize user
-// passeport.deserializeUser((id, done) => {   
-//     UserModel.findById(id, (err, user) => {
-//         done(err, user);
-//     })
-// })
 
 
 export default passport;
