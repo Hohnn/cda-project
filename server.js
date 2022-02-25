@@ -79,7 +79,12 @@ mongoose.connect(process.env.MONGODB, {
   useUnifiedTopology: true,
   useFindAndModify: false,
   useCreateIndex: true
+}).then(() => {
+  console.log('Connected to MongoDB')
+}).catch(err => {
+  console.log('Error: ', err.message)
 })
+
 //#endregion
 
 //#region private routes

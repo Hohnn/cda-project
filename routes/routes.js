@@ -1188,14 +1188,14 @@ router
 
 
 //#region authentication & login routes
-
+router
     .post('/signup', passport.authenticate('signup', { session: false }),
         async (req, res, next) => {
         res.json({
             message: 'Signup success',
             user: req.user
         })
-        })
+    })
 
 
     .post('/api/v1/login', (req, res, next) => {
@@ -1223,7 +1223,13 @@ router
         })(req, res, next)
     })
 
-    .get('/api/v1/logout', catchErrors())
+    .get('/api/v1/logout', (req, res) => {
+        req.logout()
+        res.send({
+            message: 'Logout success'
+        })
+    })
+
 
 //#endregion
 

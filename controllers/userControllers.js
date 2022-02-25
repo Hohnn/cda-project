@@ -1,9 +1,12 @@
 import userModel from '../models/userModel.js'
 
 
-export const getUsers = async (_, res) => {
+export const getUsers = async (req, res) => {
 	const users = await userModel.find({})
-	res.send(users)
+	if(!users) {
+        res.status(402).send({ message: 'Aucun utilisateur trouvé.'})
+    }
+    res.send(users)
   }
 
 export const getUser = async (req, res) => {
@@ -73,3 +76,4 @@ export const getUserById = async (req, res, next, id) => {
         next();
     });
 };
+
