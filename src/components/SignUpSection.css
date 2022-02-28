@@ -1,0 +1,16 @@
+.signup-container{
+    background: url('../../public/images/img-home2.jpg') center center/cover no-repeat;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: inset 0 0 0 1000px rgb(0,0,0,0.2);
+    object-fit: contain;
+}
+
+.signup-container > h1 {
+    color: whitesmoke;
+    font-size: 75px;
+}

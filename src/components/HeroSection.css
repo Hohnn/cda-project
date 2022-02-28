@@ -1,0 +1,50 @@
+.hero-container{
+    background: url('../../public/images/img-home.png') center center/cover no-repeat;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: inset 0 0 0 1000px rgb(0,0,0,0.2);
+    object-fit: contain;
+}
+
+.hero-container > h1{
+    color: #fff;
+    font-size: 90px;
+    margin-top: -100px;
+    letter-spacing: 5px;
+}
+
+.hero-container > p{
+    margin-top: 10px;
+    margin-bottom: 25px;
+    color: #fff;
+    font-size: 28px;
+    letter-spacing: 1px;
+    font-family: 'Roboto', sans-serif;
+}
+
+.hero-btns{
+    margin-top: 52px;
+}
+
+@media screen and (max-width: 960px){
+    .hero-container > h1{
+        font-size: 60px;
+        margin-top: -150px;
+    }
+}
+
+@media screen and (max-width: 768px){
+    .hero-container > h1{
+        font-size: 50px;
+        margin-top: -100px;
+    }
+
+    .hero-container > p{
+        font-size: 18px;
+        text-align: center;
+    }
+}

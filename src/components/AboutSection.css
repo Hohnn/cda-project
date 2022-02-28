@@ -1,0 +1,86 @@
+h1{
+    text-align: center;
+}
+
+.about{
+    height: auto;
+    background-color: whitesmoke;
+    padding-top: 3rem;
+}
+
+.sectionPresentation{
+	display: flex;
+	flex-direction: row;
+    justify-content: center;
+}
+
+.sectionReferences{
+    display: flex;
+	flex-direction: column;
+    justify-content: center;
+}
+
+.contentAbout{
+    margin-top: 5%;
+	width: 100%;
+	padding-right: 2%;
+	text-align: justify;
+}
+
+.textAbout{
+	padding-top: 5%;
+	letter-spacing: 0.5px;
+}
+
+.imgAbout{
+    display: flex;
+    justify-content: center;
+	width: 100%;
+    margin: 2%;
+}
+
+.imgAbout2{
+    display: flex;
+    justify-content: space-around;
+    margin: 2%;
+}
+
+.imgBio{
+    width: 100%;
+    padding: 0.5%;
+    box-shadow: 0 6px 20px rgba(56, 125, 255, 0.17);
+    -webkit-filter: drop-shadow(0 6px 20px rgba(56, 125, 255, 0.017));
+    filter: drop-shadow(0 6px 20px rgba(56, 125, 255, 0.017));
+}
+
+.imgBio2{
+    width: 15%;
+    padding: 0.5%;
+    box-shadow: 0 6px 20px rgba(56, 125, 255, 0.17);
+    -webkit-filter: drop-shadow(0 6px 20px rgba(56, 125, 255, 0.017));
+    filter: drop-shadow(0 6px 20px rgba(56, 125, 255, 0.017));
+}
+
+@media screen and (max-width:576px){
+    .sectionPresentation{
+        flex-direction: column;
+    }
+	.contentAbout{
+		text-align: justify;
+		padding-left: 10%;
+		padding-right: 10%;
+	}
+	.imgAbout{
+		width: 100%;
+        margin: 0;
+	}
+    .imgAbout2{
+		width: 100%;
+        margin: 0;
+        flex-direction: column;
+	}
+	.imgBio{
+        margin: 5%;
+        width: 75%;
+    }
+}
