@@ -236,7 +236,7 @@ router.param("idDrone", catchErrors(getDroneById))
  *         description: The user id
  *         required: true
  *         schema:
- *           type: ObjectId
+ *           type: string
  *     responses:
  *       200:
  *         description: The list of all users
@@ -260,7 +260,7 @@ router.param("idDrone", catchErrors(getDroneById))
  *       - in: path
  *         name: idUser
  *         schema:
- *           type: ObjectId
+ *           type: string
  *         required: true
  *         description: The user id
  *     requestBody:
@@ -318,9 +318,9 @@ router.param("idDrone", catchErrors(getDroneById))
  *       - in: path
  *         name: idUser
  *         schema: 
- *           type: ObjectId
+ *           type: string
  *         required: true
- *         description: The user ObjectId 
+ *         description: The user string 
  *     responses:
  *       200:
  *         description: The user is successfully deleted
@@ -447,7 +447,7 @@ router.param("idDrone", catchErrors(getDroneById))
  *         description: The drone id
  *         required: true
  *         schema:
- *           type: ObjectId
+ *           type: string
  *     responses:
  *       200:
  *         description: The list of all drones
@@ -471,7 +471,7 @@ router.param("idDrone", catchErrors(getDroneById))
  *       - in: path
  *         name: idDrone
  *         schema:
- *           type: ObjectId
+ *           type: string
  *         required: true
  *         description: The drone id
  *     requestBody:
@@ -504,9 +504,9 @@ router.param("idDrone", catchErrors(getDroneById))
  *       - in: path
  *         name: idDrone
  *         schema: 
- *           type: ObjectId
+ *           type: string
  *         required: true
- *         description: The user ObjectId 
+ *         description: The user string 
  *     responses:
  *       200:
  *         description: The drone is successfully deleted
@@ -576,7 +576,7 @@ router.get('/api/v1/roles', catchErrors(getRoles))
  *         description: The role id
  *         required: true
  *         schema:
- *           type: ObjectId
+ *           type: string
  *     responses:
  *       200:
  *         description: The list of all roles
@@ -624,7 +624,7 @@ router.get('/api/v1/roles', catchErrors(getRoles))
  *       - in: path
  *         name: idRole
  *         schema:
- *           type: ObjectId
+ *           type: string
  *         required: true
  *         description: The role id
  *     requestBody:
@@ -657,9 +657,9 @@ router.get('/api/v1/roles', catchErrors(getRoles))
  *       - in: path
  *         name: idRole
  *         schema: 
- *           type: ObjectId
+ *           type: string
  *         required: true
- *         description: The user ObjectId 
+ *         description: The user string 
  *     responses:
  *       200:
  *         description: The role is successfully deleted
@@ -729,7 +729,7 @@ router.get('/api/v1/roles', catchErrors(getRoles))
  *         description: The category id
  *         required: true
  *         schema:
- *           type: ObjectId
+ *           type: string
  *     responses:
  *       200:
  *         description: The list of all categories
@@ -777,7 +777,7 @@ router.get('/api/v1/roles', catchErrors(getRoles))
  *       - in: path
  *         name: idCategory
  *         schema:
- *           type: ObjectId
+ *           type: string
  *         required: true
  *         description: The category id
  *     requestBody:
@@ -810,9 +810,9 @@ router.get('/api/v1/roles', catchErrors(getRoles))
  *       - in: path
  *         name: idCategory
  *         schema: 
- *           type: ObjectId
+ *           type: string
  *         required: true
- *         description: The user ObjectId 
+ *         description: The user string 
  *     responses:
  *       200:
  *         description: The category is successfully deleted
@@ -879,7 +879,7 @@ router.get('/api/v1/roles', catchErrors(getRoles))
  *         description: The process state id
  *         required: true
  *         schema:
- *           type: ObjectId
+ *           type: string
  *     responses:
  *       200:
  *         description: The list of a process state
