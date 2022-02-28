@@ -16,16 +16,15 @@ import {
   getUser,
   addUser,
   deleteUser,
-  updateUser,
-  getUserById
+  updateUser
+
 } from '../controllers/userControllers.js'
 import {
   getAllCategories,
   getCategory,
   addCategory,
   deleteCategory,
-  updateCategory,
-  getCategoryById
+  updateCategory
 } from '../controllers/categoryControllers.js'
 import {
   getAllProcessStates,
@@ -39,13 +38,12 @@ import {
   getAllDrones,
   updateDrone,
   deleteDrone,
-  getDroneById,
+  getDrone,
   getDroneByCategory
 } from '../controllers/droneControllers.js'
 import {
   addOrder,
   getAllOrders,
-  getOrder,
   updateOrder,
   deleteOrder,
   getOrderById
@@ -171,57 +169,7 @@ const router = express.Router()
      */
 
 
-    /**
-     * @swagger
-     * /api/v1/users/login:
-     *   post:
-     *     summary: Logs user into the system
-     *     tags: [User]
-     *     parameters:
-     *       - name: email
-     *         in: query
-     *         description: The email of user for login 
-     *         required: true
-     *         type: string
-     *       - name: password
-     *         in: query
-     *         description: The password for login un clear text
-     *         required: true
-     *         type: string
-     *         format: password
-     *     responses:
-     *       200:
-     *         description: successful operation
-     *         schema:
-     *           type: string
-     *         headers:
-     *           X-Rate-Limit:
-     *             type: integer
-     *             format: int32
-     *             description: calls per hour allowed by the user
-     *           X-Expired-After:
-     *             type: string
-     *             format: date-time
-     *             description: date in UTC when token expires
-     *       400:
-     *         description: Invalid username/password supplied
-     */
-
-      
-
-    /**
-     * @swagger
-     * /api/v1/users/logout:
-     *   get:
-     *     summary: Logs out current logged in user session
-     *     tags: [User]
-     *     operationId: logoutUser
-     *     parameters: []
-     *     responses:
-     *       default:
-     *         description: successful operation
-     *         
-     */
+ 
 
 
     /**
@@ -239,13 +187,13 @@ const router = express.Router()
      *           type: string
      *     responses:
      *       200:
-     *         description: The list of all users
+     *         description: The user by id
      *         content:
      *           application/json:
      *             schema:
      *                 items:
      *                   $ref: '#/components/schemas/userModel'
-     *       404:
+     *       402:
      *         description: The user was not found
      */
 
@@ -341,7 +289,6 @@ router
     .delete('/api/v1/users/:idUser', catchErrors(deleteUser))
     .patch('/api/v1/users/:idUser', catchErrors(updateUser))
     .post('/api/v1/users', catchErrors(addUser))
-    .param("idUser", getUserById)
     
 
 //#region Swagger Drone
@@ -526,12 +473,11 @@ router
 //#endregion
 
     .patch('/api/v1/drones/:idDrone', catchErrors(updateDrone))
-    .get('/api/v1/drones/:idDrone', catchErrors(getDroneById))
+    .get('/api/v1/drones/:idDrone', catchErrors(getDrone))
     .post('/api/v1/drones', catchErrors(addDrone))
     .get('/api/v1/drones/categories/:idCategory', catchErrors(getDroneByCategory))
     .get('/api/v1/drones', catchErrors(getAllDrones))
     .delete('/api/v1/drones/:idDrone', catchErrors(deleteDrone))
-    .param("idDrone", catchErrors(getDroneById))
 
 
 //#region Swagger Role
@@ -847,7 +793,6 @@ router
     .get('/api/v1/categories/:idCategory', catchErrors(getCategory))
     .patch('/api/v1/categories/:idCategory', catchErrors(updateCategory))
     .delete('/api/v1/categories/:idCategory', catchErrors(deleteCategory))
-    .param("idCategory", catchErrors(getCategoryById))
 
 
 //#region Swagger ProcessState
@@ -1184,11 +1129,11 @@ router
     .post('/api/v1/orders', catchErrors(addOrder))
     .patch('/api/v1/orders/:idOrder', catchErrors(updateOrder))
     .delete('/api/v1/orders/:idOrder', catchErrors(deleteOrder))
-    .param("idOrder", catchErrors(getOrderById))
 
 
-//#region authentication & login routes
+//#region authentication & login routes  
 router
+
     .post('/signup', passport.authenticate('signup', { session: false }),
         async (req, res, next) => {
         res.json({
@@ -1197,7 +1142,42 @@ router
         })
     })
 
-
+    /**
+     * @swagger
+     * /api/v1/login:
+     *   post:
+     *     summary: Logs user into the system
+     *     tags: [User]
+     *     parameters:
+     *       - name: email
+     *         in: query
+     *         description: The email of user for login 
+     *         required: true
+     *         type: string
+     *       - name: password
+     *         in: query
+     *         description: The password for login un clear text
+     *         required: true
+     *         type: string
+     *         format: password
+     *     responses:
+     *       200:
+     *         description: successful operation
+     *         schema:
+     *           type: string
+     *         headers:
+     *           X-Rate-Limit:
+     *             type: integer
+     *             format: int32
+     *             description: calls per hour allowed by the user
+     *           X-Expired-After:
+     *             type: string
+     *             format: date-time
+     *             description: date in UTC when token expires
+     *       400:
+     *         description: Invalid username/password supplied
+     */
+    
     .post('/api/v1/login', (req, res, next) => {
         passport.authenticate('login', (err, user) => {
             try {
@@ -1223,9 +1203,23 @@ router
         })(req, res, next)
     })
 
+    /**
+     * @swagger
+     * /api/v1/logout:
+     *   get:
+     *     summary: Logs out current logged in user session
+     *     tags: [User]
+     *     operationId: logoutUser
+     *     parameters: []
+     *     responses:
+     *       default:
+     *         description: successful operation
+     *         
+     */
+
     .get('/api/v1/logout', (req, res) => {
         req.logout()
-        res.send({
+        res.json({
             message: 'Logout success'
         })
     })

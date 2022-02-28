@@ -20,22 +20,39 @@ export const getAllOrders = async (req, res) => {
     res.send(orders)
 }
 
-export const getOrder = async (req, res) => {
-   /*  const order = await OrderModel.find({ _id: req.params.idOrder })
-    res.send(req.orderProfile) */
+export const getOrderById = async (req, res) => {
+  const order = await OrderModel.findById(req.params.idOrder )
+  .populate('user_id')
+  .populate('drone_id')
+    .exec((err, order) => {
+        if(err) {
+            res.status(400).send({
+                message: 'Erreur lors de la récupération de la commande',
+                error: err
+                })
+        }
+        if(!order) {
+            res.status(404).send({
+                message: 'Aucune commande trouvée.'
+            })
+        }
+        res.send(order)
+    })
 }
 
-export const getOrderByCategory = async (req, res) => {
-    const order = await OrderModel
-    .find({ category_id: req.categoryProfile._id })
-    .populate('category_id')
-    res.send(order)
-}
 
 export const updateOrder = async (req, res) => {
-    const order = await OrderModel.findByIdAndUpdate(req.params.idorder, req.body)
+    const order = await OrderModel.findByIdAndUpdate(req.params.idOrder, req.body)
     await order.save()
-    res.send(order)
+    if(!order) {
+        res.status(404).send({
+            message: 'Aucune commande trouvée.'
+        })
+    }
+    res.send({
+        message: 'Commande modifiée avec succès',
+        order: order
+    })
 }
 
 export const deleteOrder = async (req, res) => {
@@ -45,25 +62,3 @@ export const deleteOrder = async (req, res) => {
     }
     res.status(200).send()
 }
-
-export const getOrderById = (req, res, next, id) => {
-    OrderModel
-      .findById(id)
-      .populate('user_id', '-password -__v')
-      .populate('drone_id', '-__v')
-      .populate('createdBy_o', '-password -__v')
-      .populate('updateBy_o', '-password -__v')
-      .exec()
-      .then(order => {
-        if(!order){
-            return res.status(400).json({
-                error: "Order not found"
-            });
-        }
-        // on ajoute l'objet profile contenant les infos de l'utilisateur dans la requête
-        req.orderProfile = order
-        next()
-        res.send(order)
-        })
-
-  };

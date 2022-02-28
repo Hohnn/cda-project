@@ -21,23 +21,36 @@ export const getAllDrones = async (req, res) => {
 }
 
 export const getDrone = async (req, res) => {
-    /* const drone = await DroneModel.find({ _id: req.params.idDrone })
-    res.send(drone) */
+    const drone = await DroneModel.findById(req.params.idDrone)
+    .populate('name_cat')
+    .populate('processState_id')
+    .exec()
+    if(!drone) {
+        res.status(402).send({ 
+            message: 'Aucun drone trouvé.'
+        })
+    }
+    if(err) {
+        res.status(400).send({
+            message: 'Erreur lors de la récupération du drone',
+            error: err
+        })
+    }
+    res.send(drone)
 }
 
+
 export const getDroneByCategory = async (req, res) => {
-    const drone = await DroneModel
-        .find({ category_id: req.categoryProfile._id })
-        .populate('category_id')
-        .exec((err, drones) => {
-            if (err || !drones) {
-                return res.status(400).send({
-                    message: 'Aucun drone trouvé'
-                })
-            } else {
-                res.send(drones)
-            }
+    const drone = await DroneModel.find({ category_id: req.params.idCategory })
+        .populate('category_id')   
+        .populate('processState_id')   
+        .exec()
+    if(drone.length === 0) {
+        res.status(400).send({
+            message: 'Aucun drone trouvé.'
         })
+    }
+        res.send(drone)
 }
 
 export const updateDrone = async (req, res) => {
@@ -60,21 +73,3 @@ export const deleteDrone = async (req, res) => {
         message: 'Drone supprimé.'
     })
 }
-
-export const getDroneById = async (req, res, next, id) => {
-    await DroneModel
-        .findById(req.params.idDrone)
-        .populate('category_id')
-        .populate('processState_id')
-        .exec((err, drone) => {
-            if (err || !drone) {
-                return res.status(400).send({
-                    error: "Aucun drone trouvé"
-                });
-            }
-            // on ajoute l'objet profile contenant les infos de l'utilisateur dans la requête
-            req.droneProfile = drone;
-            next();
-            res.send(drone)
-        });
-};

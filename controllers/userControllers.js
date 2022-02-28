@@ -10,8 +10,22 @@ export const getUsers = async (req, res) => {
   }
 
 export const getUser = async (req, res) => {
-	const users = await userModel.findOne({ _id: req.params.idUser })
-	res.send(users[0])
+	const user = await userModel.findById(req.params.idUser)
+    .populate('role_id')
+    .exec((err, user) => {
+    if(!user) {
+        res.status(404).send({ 
+            message: 'Aucun utilisateur trouvé.'
+        })
+    }
+    if(err) {
+        res.status(400).send({
+            message: 'Erreur lors de la récupération du user',
+            error: err
+        })
+    }
+    res.send(user)
+    })
 }
 
 
@@ -57,23 +71,9 @@ export const deleteUser = async (req, res) => {
 	res.status(200).send({ message: 'Utilisateur supprimé.' })
 }
 
-export const getUserById = async (req, res, next, id) => {
-  await userModel
-    .findById(req.params.idUser)
-    .populate('role_id')
-    .populate('createBy_id')
-    .populate('updateBy_id')
-    .exec((err, user) => {
-        console.log(user)
-        if(err || !user){
-            return res.status(400).json({
-                error: "Aucun utilisateur trouvé"
-            });
-        }
-        console.log('The author is %s', user.role_id.key_r);
-        // on ajoute l'objet profile contenant les infos de l'utilisateur dans la requête
-        req.profile = user;
-        next();
-    });
-};
+export const logout = (req, res) => {
+    req.logout();
+    res.redirect('/');
+    }
+    
 
