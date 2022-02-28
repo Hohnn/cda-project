@@ -204,7 +204,24 @@ Content-Type: application/json
 GET http://localhost:5000/api/v1/login HTTP/1.1
 content-type: application/json
 
+<<<<<<< HEAD
+
+
+###
+
+POST http://localhost:5000/api/drone HTTP/1.1
+content-type: application/json
+
+{    
+  "name": "test drone"
+=======
 {
+<<<<<<< HEAD
+  "email": "test2@test.com",
+  "password": "test"
+>>>>>>> 6fb2966f9ac4f3c41a7a91101a6a362dbd6fac0a
+}
+=======
   "email": "mailth@hotmail.fr",
   "password": "passwordtest55"
 }
@@ -265,3 +282,4 @@ Content-Type: application/json
 
 GET http://localhost:5000/api/v1/orders HTTP/1.1
 Content-Type: application/json
+>>>>>>> 584a0ebcaef9d6dbf4ca005b57376866276e01c4
