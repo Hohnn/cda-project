@@ -18,5 +18,5 @@ export const AddUser = () => {
             <Button type='submit'>Submit</Button>
             <Link to='/' className='btn btn-outline-secondary ms-2'>Cancel</Link>
         </Form>
-  </div>;
+    </div>;
 };
