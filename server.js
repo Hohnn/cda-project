@@ -29,6 +29,7 @@ app.use(cors())
 //ACCESS-CONTROL-ALLOW-ORIGIN : *
 app.options('*', cors());
 
+
 //#endregion
 
 //#region Swagger
@@ -43,8 +44,8 @@ const options = {
     },
     servers: [
       {
-        // url: "https://skydrone-api.herokuapp.com/"
-        url: "http://localhost:3000/"
+        url: "https://skydrone-api.herokuapp.com/"
+        // url: "http://localhost:3000/"
       }
     ]
   },
@@ -106,12 +107,6 @@ app.use(routes)
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
 });*/
 
-
-//#endregion
-
-//#region Error handling route
-
-app.use(globalErrorHandler)
 
 //#endregion
 
