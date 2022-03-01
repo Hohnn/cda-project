@@ -3,15 +3,15 @@ import mongoose from 'mongoose'
 const ProcessSateSchema = new mongoose.Schema({
     name_ps: {
         type: String,
-        required: true
+        required: [true, 'Name is required'],
     },
     description_ps: {
         type: String,
-        required: true
+        required: [true, 'Description is required'],
     },
     key_ps: {
         type: Number,
-        required: true,
+        required: [true, 'Key code is required'],
         unique: true
     }
 })

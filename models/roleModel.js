@@ -3,17 +3,17 @@ import mongoose from 'mongoose'
 const RoleSchema = new mongoose.Schema({
     name_r: {
         type: String,
-        required: true,
+        required: [true, 'Name is required'],
         lowercase: true
     },
     description_r: {
         type: String,
-        required: true,
+        required: [true, 'Description is required'],
         lowercase: true
     },
     key_r: {
         type: Number,
-        required: true,
+        required: [true, 'Key is required'],
         unique: true
     }
 })

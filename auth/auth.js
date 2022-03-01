@@ -1,12 +1,11 @@
 import passport from 'passport';
 import { Strategy } from 'passport-local';
-
 import UserModel from '../models/userModel.js';
-
 import JWT from 'passport-jwt';
 
 const { Strategy: JWTStrategy, ExtractJwt } = JWT;
 
+//signup strategy
 passport.use(
     'signup',
     new Strategy({
@@ -27,6 +26,7 @@ passport.use(
     })
 )
 
+// login strategy
 passport.use(
     'login',
     new Strategy({
@@ -37,20 +37,23 @@ passport.use(
         try {
             const user = await UserModel.findOne({ email });
             if (!user) {
-                return done(null, false, { message: 'unknow email' });
+                return done(null, false, { message: 'unknown email' });
             }
+
             const validate = await user.isValidPassword(password);
             if (!validate) {
                 return done(null, false, { message: 'wrong password' });
             }
 
             return done(null, user, { message: 'login success' });
+
         } catch (error) {
             return done(error);
         }
     })
 )
 
+// JWT strategy
 passport.use(
     new JWTStrategy({
         secretOrKey: process.env.JWT_SECRET,
@@ -65,5 +68,7 @@ passport.use(
         }
     )
 )
+
+
 
 export default passport;

@@ -4,7 +4,7 @@ const Schema = mongoose.Schema
 const DroneShema = new mongoose.Schema({
     name_d:{
         type: String,
-        require: true,
+        require: [true, 'Name is required'],
         trim: true,
         lowercase: true
     },
@@ -14,13 +14,13 @@ const DroneShema = new mongoose.Schema({
     },
     description_d:{
         type: String,
-        require: false,
+        require: [true, 'Description is required'],
         trim: true,
         lowercase: true
     },
     pricePerDay_d:{
         type: Number,
-        require: false,
+        require: [true, 'Price per day is required'],
         trim: true,
         lowercase: true
     },

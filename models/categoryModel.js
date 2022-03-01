@@ -3,17 +3,17 @@ import mongoose from 'mongoose'
 const CategorySchema = new mongoose.Schema({
     name_cat: {
         type: String,
-        required: true,
-        lowercase: true
+        required: [true, 'Category name is required'],
+        uppercase: true
     },
     description_cat: {
         type: String,
-        required: true,
+        required: [true, 'Description is required'],
         lowercase: true
     },
     key_cat: {
         type: Number,
-        required: true,
+        required: [true, 'Key category is required'],
         unique: true
     }
 })
