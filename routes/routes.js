@@ -1100,7 +1100,7 @@ router
 
     /**
      * @swagger
-     * /api/v1/orders/{idOrders}:
+     * /api/v1/orders/{idOrder}:
      *   delete:
      *     summary: Delete an order by id
      *     tags: [Orders]

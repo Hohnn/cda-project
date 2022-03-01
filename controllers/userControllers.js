@@ -13,18 +13,23 @@ export const getUser = async (req, res) => {
 	const user = await userModel.findById(req.params.idUser)
     .populate('role_id')
     .exec((err, user) => {
-    if(!user) {
+    if(!user || user === null || user === undefined || user === '') {
         res.status(404).send({ 
-            message: 'Aucun utilisateur trouvé.'
+            message: `Aucun utilisateur ${req.params.idUser} trouvé.`
         })
+        return
     }
     if(err) {
         res.status(400).send({
             message: 'Erreur lors de la récupération du user',
             error: err
         })
+        return
     }
-    res.send(user)
+    res.send({
+            message: `Utilisateur ${req.params.idUser} trouvé`,
+            user: user
+        })
     })
 }
 

@@ -27,38 +27,44 @@ export const getOrderById = async (req, res) => {
     .exec((err, order) => {
         if(err) {
             res.status(400).send({
-                message: 'Erreur lors de la récupération de la commande',
+                message: `Erreur lors de la récupération de la commande ${req.params.idOrder}`,
                 error: err
                 })
+            return
         }
-        if(!order) {
+        if(!order || order === null || order === undefined || order === '') {
             res.status(404).send({
-                message: 'Aucune commande trouvée.'
+                message: `commande ${req.params.idOrder} non trouvée.`
             })
+            return
         }
-        res.send(order)
+        res.send({ 
+            message: `Commande ${req.params.idOrder} trouvée`, 
+            order })
     })
 }
 
 
-export const updateOrder = async (req, res) => {
+export const updateOrder = async (req, res, next) => {
     const order = await OrderModel.findByIdAndUpdate(req.params.idOrder, req.body)
-    await order.save()
     if(!order) {
         res.status(404).send({
-            message: 'Aucune commande trouvée.'
+            message: `Commande ${req.params.idOrder} non trouvée.`
         })
     }
+    await order.save()
     res.send({
-        message: 'Commande modifiée avec succès',
+        message: `Commande ${req.params.idOrder} modifiée avec succès`,
         order: order
     })
+    next()
 }
 
 export const deleteOrder = async (req, res) => {
-    const order = await OrderModel.findByIdAndDelete(req.params.idorder)
+    const order = await OrderModel.findByIdAndDelete(req.params.idOrder)
     if (!order) {
-        res.status(404).send('Aucun order trouvé.')
+        res.status(404).send({ message: `Commande ${req.params.idOrder} non trouvée.`})
     }
-    res.status(200).send()
+    res.status(200).send({ message: `Commande ${req.params.idOrder} supprimee.`,
+    order: order})
 }
