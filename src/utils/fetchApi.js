@@ -1,0 +1,1 @@
+export const baseUrl = 'https://skydrone-api.herokuapp.com/api/v1';

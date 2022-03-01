@@ -54,7 +54,7 @@ h1{
 }
 
 .imgBio2{
-    width: 15%;
+    width: 12%;
     padding: 0.5%;
     box-shadow: 0 6px 20px rgba(56, 125, 255, 0.17);
     -webkit-filter: drop-shadow(0 6px 20px rgba(56, 125, 255, 0.017));
@@ -76,8 +76,7 @@ h1{
 	}
     .imgAbout2{
 		width: 100%;
-        margin: 0;
-        flex-direction: column;
+        padding: 2%;
 	}
 	.imgBio{
         margin: 5%;
