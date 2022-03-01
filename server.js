@@ -9,8 +9,6 @@ import swaggerUI from 'swagger-ui-express'
 import swaggerJsDoc from 'swagger-jsdoc'
 import cors from 'cors'
 import privateRoutes from './routes/privateRoutes.js'
-import { AppError } from './utils/appError.js'
-import { globalErrorHandler } from './controllers/errorController.js'
 
 //#region Express
 
