@@ -37,15 +37,19 @@ passport.use(
         try {
             const user = await UserModel.findOne({ email });
             if (!user) {
-                return done(null, false, { message: 'unknown email' });
+                return done(null, false, { message: 'Email inconnu.' });
             }
-
+            const details = {
+                id: user._id,
+                email: user.email,
+                firstName: user.firstName_u,
+                lastName: user.lastName_u
+            };
             const validate = await user.isValidPassword(password);
             if (!validate) {
-                return done(null, false, { message: 'wrong password' });
+                return done(null, false, { message: 'Mot de passe incorrect.' });
             }
-
-            return done(null, user, { message: 'login success' });
+            return done(null, user, { message: 'Connexion réussie.', details });
 
         } catch (error) {
             return done(error);
@@ -61,7 +65,7 @@ passport.use(
     },
         async (token, done) => {
             try {
-                return done(null, token.user);
+            return done(null, token.user);
             } catch (error) {
                 return done(error);
             }

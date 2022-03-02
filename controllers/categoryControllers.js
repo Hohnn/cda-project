@@ -51,20 +51,3 @@ export const deleteCategory = async (req, res) => {
     })
 }
 
-export const getCategoryById = null
-// async (req, res, next, id) => {
-//     await CategoryModel
-//         .findById(req.params.idCategory)
-//         .exec((err, category) => {
-//             console.log(category)
-//             if (err || !category) {
-//                 return res.status(400).send({
-//                     message: 'Aucune catégorie trouvée.'
-//                 });
-//             }
-//             console.log(category);
-//             // on ajoute l'objet profile contenant les infos de l'utilisateur dans la requête
-//             req.categoryProfile = category;
-//             next();
-//         });
-// };

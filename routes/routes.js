@@ -49,16 +49,8 @@ import {
   getOrderById
 } from '../controllers/orderControllers.js'
 
-// Path avec ES module
-import path, { dirname } from 'path'
-import { fileURLToPath } from 'url'
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = dirname(__filename)
 
 const router = express.Router()
-
-//#region
-//#endregion
 
 //#region Swagger config
 
@@ -1131,17 +1123,8 @@ router
     .delete('/api/v1/orders/:idOrder', catchErrors(deleteOrder))
 
 
-//#region authentication & login routes  
-router
-
-    .post('/signup', passport.authenticate('signup', { session: false }),
-        async (req, res, next) => {
-        res.json({
-            message: 'Signup success',
-            user: req.user
-        })
-    })
-
+    //#region authentication & login routes  
+    
     /**
      * @swagger
      * /api/v1/login:
@@ -1178,31 +1161,7 @@ router
      *         description: Invalid username/password supplied
      */
     
-    .post('/api/v1/login', (req, res, next) => {
-        passport.authenticate('login', (err, user) => {
-            try {
-                if (err || !user) {
-                    return res.status(400).json(
-                        {
-                            message: 'Something is not right',
-                            user: user
-                        }
-                    )
-                }
-
-                req.login(user, { session: false }, async error => {
-                    if (error) return next(error)
-
-                    const body = { _id: user._id, email: user.email }
-                    const token = jwt.sign({ user: body }, process.env.JWT_SECRET)
-                    res.json({ token, user: body })
-                })
-            } catch (error) {
-                return next(error)
-            }
-        })(req, res, next)
-    })
-
+    
     /**
      * @swagger
      * /api/v1/logout:
@@ -1216,7 +1175,17 @@ router
      *         description: successful operation
      *         
      */
-
+    
+    
+    //#endregion
+    
+    router.post('/signup', passport.authenticate('signup', { session: false }),
+    async (req, res, next) => {
+        res.json({
+            message: 'Signup success',
+            user: req.user
+        })
+    })
     .get('/api/v1/logout', (req, res) => {
         req.logout()
         res.json({
@@ -1224,7 +1193,30 @@ router
         })
     })
 
-
-//#endregion
-
-export default router
+    .post('/api/v1/login', (req, res, next) => {
+        passport.authenticate('login', (err, user) => {
+            console.log(user)
+            try {
+                if (err || !user) {
+                    return res.status(400).json(
+                        {
+                            message: 'Something is not right',
+                            user: user
+                        }
+                        )
+                    }
+                    
+                    req.login(user, { session: false }, async error => {
+                        if (error) return next(error)
+                        
+                        const body = { _id: user._id, email: user.email, firstname: user.firstName_u, lastname: user.lastName_u }
+                        const token = jwt.sign({ user: body }, process.env.JWT_SECRET)
+                        res.json({ token, user: body })
+                    })
+                } catch (error) {
+                    return next(error)
+                }
+            })(req, res, next)
+        })
+    
+        export default router
