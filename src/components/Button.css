@@ -2,14 +2,53 @@
     --primary: #fff;
 }
 
+.btn-mobile{
+    margin: 2%;
+}
+
+.btnSignUp{
+    padding: 8px 20px;
+    border-radius: 25px;
+    outline: none;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    background-color: #229ee4;
+    border: 1px solid #229ee4;
+    color: #fff;
+    transition: all 0.3s ease-out;
+    letter-spacing: 2px;
+}
+
 .btn{
     padding: 8px 20px;
     border-radius: 25px;
     outline: none;
-    border: none;
     cursor: pointer;
     text-transform: uppercase;
     letter-spacing: 1px;
+    color: #242424;
+    border: 1px solid var(--primary);
+    background-color: transparent;
+    color: #fff;
+    transition: all 0.3s ease-out;
+    letter-spacing: 2px;
+}
+
+.btn:hover{
+    background: #229ee4;
+    border-color: #229ee4;
+    color: #fff;
+    transition: all 0.3s ease-out;
+    text-decoration: none;
+}
+
+.btnSignUp:hover{
+    background: gray;
+    border-color: gray;
+    color: #fff;
+    transition: all 0.3s ease-out;
+    text-decoration: none;
 }
 
 .btn--primary{
@@ -28,7 +67,7 @@
 
 .btn--medium{
     padding: 8px 20px;
-    font-size: 20px;
+    font-size: 15px;
 }
 
 .btn--large{
@@ -42,3 +81,9 @@
     color: #fff;
     transition: all 0.3s ease-out;
 }
+
+@media screen and (max-width: 576px) {
+    .hiddenbtn{
+        display: none;
+    }
+  }
