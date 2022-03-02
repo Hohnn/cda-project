@@ -26,10 +26,9 @@ const SignInSection = () => {
             }
         })
         result = await result.json()
-        console.warn(result)
         if(result){
             localStorage.setItem("user",JSON.stringify(result))
-            navigate('/sign-in')
+            navigate('/dashboard')
         } else {
             alert('EMAIL OU MOT DE PASSE INCORRECT')
         }
@@ -38,13 +37,15 @@ const SignInSection = () => {
     return (
         <>
         <div className="signup-container">
+            <div className="test">
             <h1 className="titleSignUp">Connectez-vous à votre compte</h1>
-                <div className="inputLogin">
-                    <input className="inputBox" name="email" onChange={(e)=>setEmail(e.target.value)} value={email} type='text' placeholder="EMAIL" />
-                    <input className="inputBox" name="password" onChange={(e)=>setPassword(e.target.value)} value={password} type='text' placeholder="MOT DE PASSE" />
+                <div className="inputLoginTest">
+                    <input className="inputBoxLogin" name="email" onChange={(e)=>setEmail(e.target.value)} value={email} type='text' placeholder="EMAIL" />
+                    <input className="inputBoxLogin" name="password" onChange={(e)=>setPassword(e.target.value)} value={password} type='password' placeholder="MOT DE PASSE" />
                 </div>
-                <div>
+                <div className="submitSection">
                     <button type="button" onClick={handleLogin} className="submitBox">CONNEXION</button>
+                </div>
                 </div>
         </div>
         <Footer />

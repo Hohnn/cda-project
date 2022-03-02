@@ -1,5 +1,5 @@
 .signup-container{
-    /* background: url('../../public/images/img-home2.jpg') center center/cover no-repeat; */
+    background: url('../../public/images/img-sign3.jpg') center center/cover no-repeat;
     height: 100vh;
     width: 100%;
     display: flex;
@@ -8,17 +8,29 @@
     align-items: center;
     box-shadow: inset 0 0 0 1000px rgb(0,0,0,0.2);
     object-fit: contain;
-    background-color: whitesmoke;
+    /* background-color: whitesmoke; */
 }
 
-.signup-container > h1 {
+.titleSignUp{
     color: whitesmoke;
-    font-size: 50px;
-    padding-bottom: 3%;
+    padding-bottom: 5%;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-size: 1.5rem;
+}
+
+.test{
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(245, 245, 245, 0.2);
+    padding: 2%;
+    border-radius: 25px;
+    margin-top: 3%;
 }
 
 .inputBox{
-    display: block;
+    display: flex;
+    justify-content: center;
     margin: 15px;
     padding: 10px;
     width: 300px;
@@ -28,6 +40,22 @@
     text-align: center;
     font-weight: bold;
     letter-spacing: 1px;
+}
+
+.inputBoxLogin{
+    margin: 15px;
+    padding: 10px;
+    border: 1px solid skyblue;
+    border-radius: 25px;
+    border-color: whitesmoke;
+    text-align: center;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.submitSection{
+    display: flex;
+    justify-content: center;
 }
 
 .submitBox{
@@ -55,6 +83,13 @@
 .inputLogin{
     display: flex;
     flex-direction: row;
+    justify-content: center;
+}
+
+.inputLoginTest{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
 }
 
 @media screen and (max-width: 768px){

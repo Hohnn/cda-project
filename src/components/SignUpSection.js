@@ -34,28 +34,30 @@ const SignUpSection = () => {
     return (
         <>
         <div className="signup-container">
-            <h1 className="titleSignUp">Inscription</h1>
+            <div className="test">
+            <h1 className="titleSignUp">formulaire d'inscription</h1>
                 <div className="inputLogin">
-                    <input className="inputBox" name="lastName_u" type='text' value={lastName_u} onChange={(e)=>setLastName(e.target.value)} placeholder="LASTNAME" />
-                    <input className="inputBox" name="firstName_u" type='text' value={firstName_u} onChange={(e)=>setFirstName(e.target.value)} placeholder="FIRSTNAME" />
+                    <input className="inputBox" name="lastName_u" type='text' value={lastName_u} onChange={(e)=>setLastName(e.target.value)} placeholder="NOM" />
+                    <input className="inputBox" name="firstName_u" type='text' value={firstName_u} onChange={(e)=>setFirstName(e.target.value)} placeholder="PRÉNOM" />
                 </div>
                 <div className="inputLogin">
-                    <input className="inputBox" name="company_u" type='text' value={company_u} onChange={(e)=>setCompany(e.target.value)} placeholder="ENTREPRISE" />
+                    <input className="inputBox" name="company_u" type='text' value={company_u} onChange={(e)=>setCompany(e.target.value)} placeholder="NOM ENTREPRISE" />
                     <input className="inputBox" type='hidden' placeholder="SIRET" />
                 </div>
                 <div className="inputLogin">
                     <input className="inputBox" type='hidden' name="" placeholder="ADRESSE ENTREPRISE" />
                 </div>
                 <div className="inputLogin">
-                    <input className="inputBox" name="phone_u" type='text' value={phone_u} onChange={(e)=>setPhone(e.target.value)} placeholder="TELEPHONE" />
+                    <input className="inputBox" name="phone_u" type='text' value={phone_u} onChange={(e)=>setPhone(e.target.value)} placeholder="TÉLÉPHONE" />
                     <input className="inputBox" name="email" type='text' value={email} onChange={(e)=>setEmail(e.target.value)} placeholder="EMAIL" />
                 </div>
                 <div className="inputLogin">
                     <input className="inputBox" name="password" type='password' value={password} onChange={(e)=>setPassword(e.target.value)} placeholder="MOT DE PASSE" />
-                    <input className="inputBox" type='hidden' placeholder="CONFIRMER MOT DE PASSE" />
+                    <input className="inputBox" name="confirmPassword" type='password' placeholder="CONFIRMEZ MOT DE PASSE" />
                 </div>
-                <div>
+                <div className="submitSection">
                     <button type="button" onClick={collectData} className="submitBox">Inscription</button>
+                </div>
                 </div>
         </div>
         <Footer />

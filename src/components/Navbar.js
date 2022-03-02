@@ -25,10 +25,12 @@ function Navbar() {
   window.addEventListener('resize', showButton)
 
   const auth = localStorage.getItem('user')
+  const authParsed = JSON.parse(auth);
   const navigate = useNavigate()
   const logOut = () => {
 	  localStorage.clear()
 	  navigate('/')
+    alert('Vous avez bien été déconnecté !')
   }
 
 
@@ -55,7 +57,7 @@ function Navbar() {
                   </li>
                   <li className='nav-item'>
                     <Link to='/services' className='nav-links' onClick={closeMobileMenu}>
-                      Réalisations
+                      Aperçu
                     </Link>
                   </li>
                   <li className='nav-item'>
@@ -70,11 +72,18 @@ function Navbar() {
                   </li>
 
 					{
-						auth ? <li><Link onClick={logOut} to='/'>LOGOUT {JSON.parse(auth)._id}</Link></li>
+						auth ? <li><Link className='nav-links' onClick={logOut} to='/'>LOGOUT</Link></li>
 						:
 						<>
 						<li><Link className='hiddenbtn' to='/sign-up'><button className='btnSignUp'>INSCRIPTION</button></Link></li>
 						<li><Link className='hiddenbtn' to='/sign-in'><button className='btn'>CONNEXION</button></Link></li>
+						</>
+					}
+
+          			{
+						auth ? <li><Link className='nav-links' to='/dashboard'>MON COMPTE</Link></li>
+						:
+						<>
 						</>
 					}
 				  
