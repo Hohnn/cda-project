@@ -1,10 +1,4 @@
 import OrderModel from '../models/orderModel.js'
-import path, { dirname } from 'path'
-import { fileURLToPath } from 'url'
-
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = dirname(__filename)
-
 
 export const addOrder = async (req, res) => {
     const order = new OrderModel(req.body)

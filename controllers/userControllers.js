@@ -1,6 +1,5 @@
 import userModel from '../models/userModel.js'
 
-
 export const getUsers = async (req, res) => {
 	const users = await userModel.find({})
 	if(!users) {
@@ -36,12 +35,18 @@ export const getUser = async (req, res) => {
 
 export const addUser = async (req, res) => {
 	const user = new userModel(req.body)
+    // if(user.email) {
+    //     const userExist = await userModel.findOne({email: user.email})
+    //     if(userExist) {
+    //         res.status(400).send({
+    //             message: 'Email déjà existant.'
+    //         })
+    //         return
+    //     }
+    // }
 	await user.save()
     .then(() => {
-        res.status(201).send({
-            message: 'Utilisateur créé avec succès',
-            user: user
-        })
+        res.status(201).send(user)
     })
     .catch(err => {
         res.status(400).send({
@@ -52,20 +57,15 @@ export const addUser = async (req, res) => {
 }
 
 export const updateUser = async (req, res) => {
-  	const user = await userModel.findByIdAndUpdate(req.params.idUser, ...req.body)
-  	await user.save()
-      .then(() => {
-            res.status(200).send({
-                message: 'Utilisateur modifié avec succès',
-                user: user
+  	const user = await userModel.findByIdAndUpdate(req.params.idUser, req.body)
+      if(!user) {
+          res.status(404).send({ 
+              message: `Aucun utilisateur ${req.params.idUser} trouvé.`
             })
-        })
-        .catch(err => {
-            res.status(400).send({
-                message: 'Erreur lors de la modification de l\'utilisateur',
-                error: err
-            })
-        })
+            return
+        }
+    await user.save()
+    res.status(200).send(user)    
 }
 
 export const deleteUser = async (req, res) => {
