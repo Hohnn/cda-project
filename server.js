@@ -100,7 +100,7 @@ app.use(
 //#region public routes
 
 // middleware pour les routes publiques
-app.use('api/v1',routes) 
+app.use('/api/v1',routes) 
 
 /*app.all('*', (req, res, next) => { 
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
