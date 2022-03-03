@@ -26,5 +26,14 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: npm ci
-    - run: npm test
+    - name: Start MongoDB
+      uses: supercharge/mongodb-github-action@1.7.0
+      with:
+        mongodb-version: ${{ matrix.mongodb-version }}
+        mongodb-username: cdaProject
+        mongodb-password: cdaProject76
+        mongodb-db: cdaProject
+    - name: Install dependencies
+      run: npm install
+    - name: Run tests  
+      run: npm test
