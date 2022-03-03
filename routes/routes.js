@@ -466,12 +466,12 @@ router
 
 //#endregion
 
-    .patch('/api/v1/drones/:idDrone', catchErrors(updateDrone))
-    .get('/api/v1/drones/:idDrone', catchErrors(getDrone))
-    .post('/api/v1/drones', catchErrors(addDrone))
-    .get('/api/v1/drones/categories/:idCategory', catchErrors(getDroneByCategory))
-    .get('/api/v1/drones', catchErrors(getAllDrones))
-    .delete('/api/v1/drones/:idDrone', catchErrors(deleteDrone))
+    .patch('/drones/:idDrone', catchErrors(updateDrone))
+    .get('/drones/:idDrone', catchErrors(getDrone))
+    .post('/drones', catchErrors(addDrone))
+    .get('/drones/categories/:idCategory', catchErrors(getDroneByCategory))
+    .get('/drones', catchErrors(getAllDrones))
+    .delete('/drones/:idDrone', catchErrors(deleteDrone))
 
 
 //#region Swagger Role
@@ -1195,7 +1195,7 @@ router
         })
     })
 
-    .post('/api/v1/login', (req, res, next) => {
+    .post('/login', (req, res, next) => {
         passport.authenticate('login', (err, user) => {
             console.log(user)
             try {

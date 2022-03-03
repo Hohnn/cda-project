@@ -26,7 +26,7 @@ beforeAll(async () => {
 })
 
 app.get("/", (_, res) => {res.send({message: "Welcome to SkyDrone API."})});
-app.use('api/v1', routes) 
+app.use("/api/v1", routes) 
 
 it('Se connecte a l\'API SkyDrone sur MongoDB Atlas', async () => {
     const db = mongoose.connection
@@ -41,63 +41,63 @@ it('Test de la route "/"', async () => {
 
 describe('Test des routes User', () => {
 	const TU_User = {
-		email: 'Jestemail',
+		email: 'jestemail',
 		password: 'jestPassword',
 		firstName_u: 'JestFirstName',
 		lastName_u: 'JestLastName',
         company_u: 'JestCompany',
         siret_u: 'JestSiret',
+		key_u: 99,
         address_u: 'JestAddress',
         phone_u: '123456789',
-        role_id:'621e27c558ff070023646f63',
-        createBy_id:'',
+        role_id:'61d859366d4d8a47389c6cab',
+        createBy_id:'621e27c558ff070023646f63',
         createAt_u:'2022-03-03T12:15:44.327Z',
-        updateBy_id:'',
+        updateBy_id:'621e27c558ff070023646f63',
         updateAt_u:'2022-03-03T12:15:44.327Z'
     }
 
 
 	// creation d'un utilisateur avec la collection TU_User
-	const getUserId = async () => {
+	const TU_UserId = async () => {
 		const response = await request(app).post('/api/v1/users')
 		.send(TU_User)
 		return response.body._id
 	}
 
-	it('should return all users', async () => {
+	it('Tous les users', async () => {
 		const response = await request(app).get('/api/v1/users')
 		expect(response.statusCode).toBe(200)
-		expect(response.type).toEqual('application/json')
 	})
 
-	it('should create an user', async () => {
+	it('Creer un user', async () => {
 		const response = await request(app).post('/api/v1/users')
 		.send(TU_User)
+		console.log(response)
+		expect(response.statusCode).toBe(200)
+	})
+
+	it('retourne un user avec son id', async () => {
+		const response = await request(app).get(`/api/v1/users/${await TU_UserId()}`)
 		expect(response.statusCode).toBe(200)
 		expect(response.type).toEqual('application/json')
 	})
 
-	it('should return an user', async () => {
-		const response = await request(app).get(`/api/v1/users/${await getUserId()}`)
-		expect(response.statusCode).toBe(200)
-		expect(response.type).toEqual('application/json')
-	})
-
-	it('should update an user', async () => {
-		const response = await request(app).patch(`/api/v1/users/${await getUserId()}`)
+	it('Mise a jour un user', async () => {
+		const response = await request(app).patch(`/api/v1/users/${await TU_UserId()}`)
 		.send({
-			first_name: 'SuperTest',
-			last_name: 'Jest'
+			firstName_u: 'NewJestFirstName',
+		lastName_u: 'NewJestLastName'
 		})
 		expect(response.statusCode).toBe(200)
 		expect(response.type).toEqual('application/json')
 	})
 
-	it('should delete an user', async () => {
-		const response = await request(app).delete(`/api/v1/users/${await getUserId()}`)
+	it('Supprime un user', async () => {
+		const response = await request(app).delete(`/api/v1/users/${await TU_UserId()}`)
 		expect(response.statusCode).toBe(200)
 		expect(response.text).toEqual('User deleted')
 	})
 
-	afterAll(() => userModel.deleteMany({ role: 'test' }))
+	afterAll(() => userModel.deleteMany({ email: 'jestemail' }))
 })
