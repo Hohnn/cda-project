@@ -11,9 +11,7 @@ const ProcessSateSchema = new mongoose.Schema({
     },
     key_ps: {
         type: Number,
-        required: [true, 'Key code is required'],
-        unique: true
-    }
+        required: [true, 'Key code is required']    }
 })
 
 const ProcessStateModel = mongoose.model('ProcessState', ProcessSateSchema)

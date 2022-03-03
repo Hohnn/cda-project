@@ -35,15 +35,6 @@ export const getUser = async (req, res) => {
 
 export const addUser = async (req, res) => {
 	const user = new userModel(req.body)
-    // if(user.email) {
-    //     const userExist = await userModel.findOne({email: user.email})
-    //     if(userExist) {
-    //         res.status(400).send({
-    //             message: 'Email déjà existant.'
-    //         })
-    //         return
-    //     }
-    // }
 	await user.save()
     .then(() => {
         res.status(201).send(user)

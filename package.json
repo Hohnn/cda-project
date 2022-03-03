@@ -27,7 +27,7 @@
   },
   "type": "module",
   "engines": {
-    "node": "14.x"
+    "node": "16.x"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.16.11",

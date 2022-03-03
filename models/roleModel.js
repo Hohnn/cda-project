@@ -13,9 +13,7 @@ const RoleSchema = new mongoose.Schema({
     },
     key_r: {
         type: Number,
-        required: [true, 'Key is required'],
-        unique: true
-    }
+        required: [true, 'Key is required']    }
 })
 
 const RoleModel = mongoose.model('Role', RoleSchema)
