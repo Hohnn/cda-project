@@ -84,6 +84,7 @@ mongoose.connect(process.env.MONGODB, {
   console.log('Error: ', err.message)
 })
 
+
 //#endregion
 
 //#region private routes
@@ -99,7 +100,7 @@ app.use(
 //#region public routes
 
 // middleware pour les routes publiques
-app.use(routes) 
+app.use('api/v1',routes) 
 
 /*app.all('*', (req, res, next) => { 
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
@@ -116,4 +117,4 @@ app.listen(PORT, () => {
   console.log(`Server is running on port: ${PORT}`)
 })
 //#endregion
-export default app
+

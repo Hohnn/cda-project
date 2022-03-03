@@ -216,7 +216,7 @@ const router = express.Router()
      *           application/json:
      *             schema:
      *               $ref: '#/components/schemas/userModel'
-     *       404:
+     *       400:
      *         description: The user was not found
      *       500:
      *         description: Some server error
@@ -237,12 +237,14 @@ const router = express.Router()
      *           schema:
      *             $ref: '#/components/schemas/userModel'
      *     responses:
-     *       200:
+     *       201:
      *         description: The new user is successfully created
      *         content:
      *           application/json:
      *             schema:
      *               $ref: '#/components/schemas/userModel'
+     *       400:
+     *         description: The user was not found
      *       500:
      *         description: Some server error
      */
@@ -276,11 +278,11 @@ const router = express.Router()
 //#endregion
 
 router
-    .get('/api/v1/users', catchErrors(getUsers))
-    .get('/api/v1/users/:idUser', catchErrors(getUser))
-    .delete('/api/v1/users/:idUser', catchErrors(deleteUser))
-    .patch('/api/v1/users/:idUser', catchErrors(updateUser))
-    .post('/api/v1/users', catchErrors(addUser))
+    .get('/users', catchErrors(getUsers))
+    .get('/users/:idUser', catchErrors(getUser))
+    .delete('/users/:idUser', catchErrors(deleteUser))
+    .patch('/users/:idUser', catchErrors(updateUser))
+    .post('/users', catchErrors(addUser))
     
 
 //#region Swagger Drone
@@ -623,11 +625,11 @@ router
 
 //#endregion
 
-    .patch('/api/v1/roles/:idRole', catchErrors(updateRole))
-    .post('/api/v1/roles', catchErrors(addRole))
-    .get('/api/v1/roles/:idRole', catchErrors(getRole))
-    .get('/api/v1/roles', catchErrors(getRoles))
-    .delete('/api/v1/roles/:idRole', catchErrors(deleteRole))
+    .patch('/roles/:idRole', catchErrors(updateRole))
+    .post('/roles', catchErrors(addRole))
+    .get('/roles/:idRole', catchErrors(getRole))
+    .get('/roles', catchErrors(getRoles))
+    .delete('/roles/:idRole', catchErrors(deleteRole))
 
 
 //#region Swagger Categories
@@ -780,11 +782,11 @@ router
 
 //#endregion
 
-    .get('/api/v1/categories', catchErrors(getAllCategories))
-    .post('/api/v1/categories', catchErrors(addCategory))
-    .get('/api/v1/categories/:idCategory', catchErrors(getCategory))
-    .patch('/api/v1/categories/:idCategory', catchErrors(updateCategory))
-    .delete('/api/v1/categories/:idCategory', catchErrors(deleteCategory))
+    .get('/categories', catchErrors(getAllCategories))
+    .post('/categories', catchErrors(addCategory))
+    .get('/categories/:idCategory', catchErrors(getCategory))
+    .patch('/categories/:idCategory', catchErrors(updateCategory))
+    .delete('/categories/:idCategory', catchErrors(deleteCategory))
 
 
 //#region Swagger ProcessState
@@ -936,11 +938,11 @@ router
 
     //#endregion
 
-    .get('/api/v1/ps', catchErrors(getAllProcessStates))
-    .post('/api/v1/ps', catchErrors(addProcessState))
-    .get('/api/v1/ps/:idPs', catchErrors(getProcessState))
-    .patch('/api/v1/ps/:idPs', catchErrors(updateProcessState))
-    .delete('/api/v1/ps/:idPs', catchErrors(deleteProcessState))
+    .get('/ps', catchErrors(getAllProcessStates))
+    .post('/ps', catchErrors(addProcessState))
+    .get('/ps/:idPs', catchErrors(getProcessState))
+    .patch('/ps/:idPs', catchErrors(updateProcessState))
+    .delete('/ps/:idPs', catchErrors(deleteProcessState))
 
 //#region Swagger Orders
 
@@ -1116,11 +1118,11 @@ router
 
 //#endregion
 
-    .get('/api/v1/orders', catchErrors(getAllOrders))
-    .get('/api/v1/orders/:idOrder', catchErrors(getOrderById))
-    .post('/api/v1/orders', catchErrors(addOrder))
-    .patch('/api/v1/orders/:idOrder', catchErrors(updateOrder))
-    .delete('/api/v1/orders/:idOrder', catchErrors(deleteOrder))
+    .get('/orders', catchErrors(getAllOrders))
+    .get('/orders/:idOrder', catchErrors(getOrderById))
+    .post('/orders', catchErrors(addOrder))
+    .patch('/orders/:idOrder', catchErrors(updateOrder))
+    .delete('/orders/:idOrder', catchErrors(deleteOrder))
 
 
     //#region authentication & login routes  
