@@ -28,16 +28,20 @@ beforeAll(async () => {
 app.get("/", (_, res) => {res.send({message: "Welcome to SkyDrone API."})});
 app.use("/api/v1", routes) 
 
-it('Se connecte a l\'API SkyDrone sur MongoDB Atlas', async () => {
-    const db = mongoose.connection
-    expect(db.name).toBe('cdaproject')
+describe('Connexion à la base de donnée', () => {
+
+	it('Se connecte a l\'API SkyDrone sur MongoDB Atlas', async () => {
+		const db = mongoose.connection
+		expect(db.name).toBe('cdaproject')
+	})
+
+	it('Test de la route "/"', async () => {
+		const response = await request(app).get('/')
+		expect(response.status).toBe(200)
+		expect(response.body).toEqual({message: "Welcome to SkyDrone API."})
+	})
 })
 
-it('Test de la route "/"', async () => {
-    const response = await request(app).get('/')
-    expect(response.status).toBe(200)
-    expect(response.body).toEqual({message: "Welcome to SkyDrone API."})
-})
 
 describe('Test des routes User', () => {
 	const TU_User = {
@@ -65,38 +69,40 @@ describe('Test des routes User', () => {
 		return response.body._id
 	}
 
-	it('Tous les users', async () => {
+	it('Affiche tous les utilisateurs', async () => {
 		const response = await request(app).get('/api/v1/users')
 		expect(response.statusCode).toBe(200)
+		expect(response.type).toEqual('application/json')
 	})
 
-	it('Creer un user', async () => {
+	it('Créer un utilisateur', async () => {
 		const response = await request(app).post('/api/v1/users')
 		.send(TU_User)
-		console.log(response)
-		expect(response.statusCode).toBe(200)
+		expect(response.statusCode).toBe(201)
+		expect(response.type).toEqual('application/json')
 	})
 
-	it('retourne un user avec son id', async () => {
+	it('Retourne un utilisateurs avec son id', async () => {
 		const response = await request(app).get(`/api/v1/users/${await TU_UserId()}`)
 		expect(response.statusCode).toBe(200)
 		expect(response.type).toEqual('application/json')
 	})
 
-	it('Mise a jour un user', async () => {
+	it('Mise a jour d\'un utilisateur', async () => {
 		const response = await request(app).patch(`/api/v1/users/${await TU_UserId()}`)
 		.send({
 			firstName_u: 'NewJestFirstName',
-		lastName_u: 'NewJestLastName'
+			lastName_u: 'NewJestLastName'
 		})
 		expect(response.statusCode).toBe(200)
 		expect(response.type).toEqual('application/json')
 	})
 
-	it('Supprime un user', async () => {
+	it('Supprime un utilisateur', async () => {
 		const response = await request(app).delete(`/api/v1/users/${await TU_UserId()}`)
 		expect(response.statusCode).toBe(200)
-		expect(response.text).toEqual('User deleted')
+		expect(response.type).toEqual('application/json')
+		expect(response.text).toEqual("{\"message\":\"Utilisateur supprimé.\"}")
 	})
 
 	afterAll(() => userModel.deleteMany({ email: 'jestemail' }))
