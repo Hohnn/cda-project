@@ -4,7 +4,7 @@ export const addCategory = async (req, res) => {
     const category = new CategoryModel(req.body)
     await category.save()
     res.status(201).send({
-        message: 'Category créé avec succès',
+        message: 'Catégorie créé avec succès',
         category: category
     })
 }

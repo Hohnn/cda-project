@@ -6,8 +6,7 @@
   "scripts": {
     "start": "nodemon server.js",
     "debug": "ndb server.js",
-    "test": "jest",
-    "test:watch": "jest --watch"
+    "test": "jest --watchAll --forceExit --detectOpenHandles --verbose"
   },
   "author": "CDA_Team",
   "license": "ISC",

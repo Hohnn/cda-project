@@ -4,6 +4,7 @@ export const getUsers = async (req, res) => {
 	const users = await userModel.find({})
 	if(!users) {
         res.status(402).send({ message: 'Aucun utilisateur trouvé.'})
+        return
     }
     res.send(users)
   }
@@ -63,13 +64,7 @@ export const deleteUser = async (req, res) => {
 	const user = await userModel.findByIdAndDelete(req.params.idUser)
 	if (!user) {
     res.status(400).send({ message: 'Aucun utilisateur trouvé.' })
+    return
 	}
 	res.status(200).send({ message: 'Utilisateur supprimé.' })
 }
-
-export const logout = (req, res) => {
-    req.logout();
-    res.redirect('/');
-    }
-    
-

@@ -19,6 +19,10 @@ app.use(express.json())
 
 //#endregion
 
+//#region PORT
+// variable d'enviroment pour le port
+const PORT = process.env.PORT || 3001
+
 //#region Cross Origin Ressource Sharing
 
 //implements CORS
@@ -42,8 +46,8 @@ const options = {
     },
     servers: [
       {
-        url: "https://skydrone-api.herokuapp.com/"
-        // url: "http://localhost:3000/"
+        // url: "https://skydrone-api.herokuapp.com/"
+        url: `http://localhost:${PORT}/`
       }
     ]
   },
@@ -109,9 +113,7 @@ app.use('/api/v1',routes)
 
 //#endregion
 
-//#region PORT
-// variable d'enviroment pour le port
-const PORT = process.env.PORT || 3000
+
 
 app.listen(PORT, () => {
   console.log(`Server is running on port: ${PORT}`)

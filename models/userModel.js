@@ -15,7 +15,7 @@ const UserSchema = new mongoose.Schema({
     },
     firstName_u: {
         type: String,
-        required: [true, 'First name is required']
+        required: [true, 'First Name is required']
     },
     lastName_u: {
         type: String,
@@ -25,29 +25,28 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Company is required']
     },
+    key_r: {
+        type: Number,
+        required: [true, 'Key role is required']
+    },
     siret_u: {
         type: String,
-        required: [false, 'Siret is required']
+        required: [true, 'Siret is required']
     },
     address_u: {
         type: String,
-        required: [false, 'Address is required']
+        required: [true, 'Address is required']
     },
     phone_u: {
         type: String,
         required: [true, 'Phone is required']
     },
-    role_id: { // type en id et ref en nom de la collection
-        type: Schema.Types.ObjectId,
-        ref: 'Role'
-    }, 
     createBy_id: {
         type: Schema.Types.ObjectId,
         ref: 'User'
     },
     createAt_u: {
         type: Date,
-        required: true,
         default: Date.now
     },
     updateBy_id: {
@@ -56,7 +55,6 @@ const UserSchema = new mongoose.Schema({
     },
     updateAt_u: {
         type: Date,
-        required: true,
         default: Date.now
     }
 })

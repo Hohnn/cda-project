@@ -10,15 +10,16 @@ passport.use(
     'signup',
     new Strategy({
         usernameField: 'email',
-        passwordField: 'password'
+        passwordField: 'password',
+        passReqToCallback: true
     },
-    async (email, password, done) => {
+    async (req, email, password, done) => {
         try {
             const user = await UserModel.findOne({ email });
             if (user) {
                 return done(null, false, { message: 'Email already exists' });
             }
-            const newUser = await UserModel.create({ email, password });
+            const newUser = await UserModel.create({ email, password, ...req.body });
             return done(null, newUser);
         } catch (error) {
             return done(error);
@@ -37,7 +38,9 @@ passport.use(
         try {
             const user = await UserModel.findOne({ email });
             if (!user) {
-                return done(null, false, { message: 'Email inconnu.' });
+                return done(null, false, {
+                     message: 'Email inconnu.' 
+                });
             }
             const details = {
                 id: user._id,

@@ -92,9 +92,9 @@ const router = express.Router()
      *         - lastName_u 
      *         - company_u 
      *         - phone_u
+     *         - address_u
      *         - key_r
-     *         - createAt_u
-     *         - updateAt_u
+     *         - siret_u
      *       properties:
      *         email:
      *           type: string
@@ -102,7 +102,7 @@ const router = express.Router()
      *           description: The email of the user
      *         password:
      *           type: string
-     *           writeOnly: true
+     *           format: password
      *           description: The password of the user
      *         firstName_u:
      *           type: string
@@ -113,33 +113,19 @@ const router = express.Router()
      *         company_u:
      *           type: string
      *           description: The company name of the user
-     *         phone_u:
-     *           type: string
-     *           description: The phone number of the user
-     *         address_u:
-     *           type: string
-     *           description: The address of the user
      *         key_r:
      *           type: number
      *           description: The key role of the user
-     *         createdBy_id:
+     *         siret_u:
      *           type: string
-     *           description: The creating id parent of the user
-     *         createAt_u:
+     *           description: The siret of the user
+     *         address_u:
      *           type: string
-     *           format: date-time
-     *           description: The date of user creation
-     *         updateBy_id:
+     *           description: The address of the user
+     *         phone_u:
      *           type: string
-     *           description: The id of updated user's collection
-     *         updateAt_u:
-     *           type: string
-     *           format: date-time
-     *           description: The updating date of the user collection
-     *         role_id:
-     *           type: string
-     *           description: The role id of the user
-     *       
+     *           description: The phone number of the user
+     *         
      */
 
 
@@ -1183,19 +1169,14 @@ router
     
     router.post('/signup', passport.authenticate('signup', { session: false }),
     async (req, res, next) => {
-        res.json({
-            message: 'Signup success',
+        res.send({
+            message: 'Inscription réussie',
             user: req.user
         })
     })
-    .get('/api/v1/logout', (req, res) => {
-        req.logout()
-        res.json({
-            message: 'Logout success'
-        })
-    })
+    
 
-    .post('/login', (req, res, next) => {
+    router.post('/login', (req, res, next) => {
         passport.authenticate('login', (err, user) => {
             console.log(user)
             try {
@@ -1213,7 +1194,7 @@ router
                         
                         const body = { _id: user._id, email: user.email, firstname: user.firstName_u, lastname: user.lastName_u }
                         const token = jwt.sign({ user: body }, process.env.JWT_SECRET)
-                        res.json({ token, user: body })
+                        res.send({ token, user: body })
                     })
                 } catch (error) {
                     return next(error)
