@@ -1,30 +1,22 @@
 import userModel from '../models/userModel.js'
+import AppError from '../utils/appError.js'
 
-export const getUsers = async (req, res) => {
+export const getUsers = async (req, res, next) => {
 	const users = await userModel.find({})
-	if(!users) {
-        res.status(402).send({ message: 'Aucun utilisateur trouvé.'})
-        return
+	if(!users || users === null || users === undefined || users === '') {
+        return next(new AppError(`Aucun utilisateur trouvé.`, 404))
+        
     }
     res.send(users)
   }
 
-export const getUser = async (req, res) => {
+export const getUser = async (req, res, next) => {
 	const user = await userModel.findById(req.params.idUser)
     .populate('role_id')
     .exec((err, user) => {
     if(!user || user === null || user === undefined || user === '') {
-        res.status(404).send({ 
-            message: `Aucun utilisateur ${req.params.idUser} trouvé.`
-        })
-        return
-    }
-    if(err) {
-        res.status(400).send({
-            message: 'Erreur lors de la récupération du user',
-            error: err
-        })
-        return
+        return next(new AppError(`Aucun utilisateur ${req.params.idUser} trouvé.`, 404))
+        
     }
     res.send({
             message: `Utilisateur ${req.params.idUser} trouvé`,
@@ -48,23 +40,21 @@ export const addUser = async (req, res) => {
     })
 }
 
-export const updateUser = async (req, res) => {
+export const updateUser = async (req, res, next) => {
   	const user = await userModel.findByIdAndUpdate(req.params.idUser, req.body)
-      if(!user) {
-          res.status(404).send({ 
-              message: `Aucun utilisateur ${req.params.idUser} trouvé.`
-            })
-            return
-        }
+      if(!user || user === null || user === undefined || user === '') {
+        return next(new AppError(`Aucun utilisateur ${req.params.idUser} trouvé.`, 404))
+    }
+
     await user.save()
     res.status(200).send(user)    
 }
 
-export const deleteUser = async (req, res) => {
+export const deleteUser = async (req, res, next) => {
 	const user = await userModel.findByIdAndDelete(req.params.idUser)
-	if (!user) {
-    res.status(400).send({ message: 'Aucun utilisateur trouvé.' })
-    return
-	}
-	res.status(200).send({ message: 'Utilisateur supprimé.' })
+	if(!user || user === null || user === undefined || user === '') {
+        return next(new AppError(`Aucun utilisateur ${req.params.idUser} trouvé.`, 404))
+        
+    }
+	res.status(204).send({ message: 'Utilisateur supprimé.' })
 }

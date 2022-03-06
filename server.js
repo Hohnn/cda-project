@@ -3,6 +3,8 @@ import routes from './routes/routes.js'
 import dotenv from 'dotenv'
 import './auth/auth.js'
 dotenv.config()
+import AppError from './utils/appError.js'
+import globalErrorHandler from './controllers/errorController.js'
 import passport from 'passport'
 import mongoose from 'mongoose'
 import swaggerUI from 'swagger-ui-express'
@@ -106,9 +108,11 @@ app.use(
 // middleware pour les routes publiques
 app.use('/api/v1',routes) 
 
-/*app.all('*', (req, res, next) => { 
-  next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
-});*/
+app.all('*', (req, res, next) => { 
+   next(new AppError(`Cette adresse : ${req.originalUrl} n'est pas disponible sur ce serveur.`, 404))
+})
+
+app.use(globalErrorHandler)
 
 
 //#endregion

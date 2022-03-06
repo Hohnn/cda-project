@@ -49,7 +49,6 @@ import {
   getOrderById
 } from '../controllers/orderControllers.js'
 
-
 const router = express.Router()
 
 //#region Swagger config
