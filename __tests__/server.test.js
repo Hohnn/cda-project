@@ -108,9 +108,7 @@ describe('Test des routes', () => {
 
 	it('Supprime un utilisateur', async () => {
 		const response = await request(app).delete(`/api/v1/users/${await TU_UserId()}`)
-		expect(response.statusCode).toBe(200)
-		expect(response.type).toEqual('application/json')
-		expect(response.text).toEqual("{\"message\":\"Utilisateur supprimé.\"}")
+		expect(response.statusCode).toBe(204)
 	})
 
 
