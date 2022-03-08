@@ -48,10 +48,10 @@ describe('Test des routes', () => {
 		"firstName_u": 'JestFirstName',
 		"lastName_u": 'JestLastName',
         'company_u': 'JestCompany',
+        'phone_u': '123456789',
 		'address_u': "address",
-		'key_r': 99,
-        'siret_u': 'JestSiret',
-        'phone_u': '123456789'
+		'key_r': 0,
+        'siret_u': 'JestSiret'
     }
 
 	// creation d'un utilisateur avec la collection TU_User
@@ -67,19 +67,20 @@ describe('Test des routes', () => {
 		expect(response.type).toEqual('application/json')
 	})
 
-	it('Créer un utilisateur', async () => {
-		const response = await request(app).post('/api/v1/users')
-		.send(TU_User)
-		expect(response.statusCode).toBe(201)
-		expect(response.type).toEqual('application/json')
-	})
-
+	
 	// it('Inscription depuis l\'interface utilisateur Signup', async () => {
 	// 	const response = await request(app).post('/api/v1/signup')
 	// 	.send(TU_User)
 	// 	expect(response.statusCode).toBe(201)
 	// 	expect(response.type).toEqual('application/json')	
 	// })
+	
+	it('Créer un utilisateur', async () => {
+		const response = await request(app).post('/api/v1/users')
+		.send(TU_User)
+		expect(response.statusCode).toBe(201)
+		expect(response.type).toEqual('application/json')
+	})
 
 	// it('Teste le login', async () => {
 	// 	const response = await request(app).post('/api/v1/login')

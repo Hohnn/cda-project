@@ -1167,7 +1167,7 @@ router
     
     .post('/signup', passport.authenticate('signup', { session: false }),
     async (req, res, next) => {
-        res.send({
+        res.status(201).send({
             message: 'Inscription réussie',
             user: req.user
         })

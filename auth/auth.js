@@ -14,11 +14,11 @@ passport.use(
         passwordField: 'password',
         passReqToCallback: true
     },
-    async (req, email, password, next) => {
+    async (req, email, password, done) => {
         try {
             const user = await UserModel.findOne({ email });            
             if (user) {
-                return next(new AppError(`Email ${user.email} deja utilisé.`, 400))
+                return done({ message: `Adresse ${user.email} deja utilisée.`})
             }
             const newUser = await UserModel.create({ email, password, ...req.body });
             return done(null, newUser);
