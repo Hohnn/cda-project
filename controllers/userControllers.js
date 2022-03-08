@@ -1,5 +1,5 @@
 import userModel from '../models/userModel.js'
-import AppError from '../utils/appError.js'
+import AppError from '../utils/AppError.js'
 
 export const getUsers = async (req, res, next) => {
 	const users = await userModel.find({})
