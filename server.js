@@ -3,7 +3,7 @@ import routes from './routes/routes.js'
 import dotenv from 'dotenv'
 import './auth/auth.js'
 dotenv.config()
-import AppError from './utils/appError.js'
+import AppError from './utils/AppError.js'
 import globalErrorHandler from './controllers/errorController.js'
 import passport from 'passport'
 import mongoose from 'mongoose'
