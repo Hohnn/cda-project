@@ -17,7 +17,6 @@ import {
   addUser,
   deleteUser,
   updateUser
-
 } from '../controllers/userControllers.js'
 import {
   getAllCategories,
@@ -1166,7 +1165,7 @@ router
     
     //#endregion
     
-    router.post('/signup', passport.authenticate('signup', { session: false }),
+    .post('/signup', passport.authenticate('signup', { session: false }),
     async (req, res, next) => {
         res.send({
             message: 'Inscription réussie',
@@ -1175,30 +1174,29 @@ router
     })
     
 
-    router.post('/login', (req, res, next) => {
-        passport.authenticate('login', (err, user) => {
-            console.log(user)
+    .post('/login', (req, res, next) => {
+        passport.authenticate('login', async (err, user) => {
             try {
                 if (err || !user) {
-                    return res.status(400).json(
-                        {
-                            message: 'Something is not right',
+                    return res.status(400).send({
+                            message: 'Une erreur est survenue lors de la connexion',
                             user: user
-                        }
+                            }
                         )
                     }
-                    
-                    req.login(user, { session: false }, async error => {
-                        if (error) return next(error)
-                        
+                    req.login(user, { session: false }, async err => {
+                        if (err) {res.send(err)}
+
                         const body = { _id: user._id, email: user.email, firstname: user.firstName_u, lastname: user.lastName_u }
                         const token = jwt.sign({ user: body }, process.env.JWT_SECRET)
-                        res.send({ token, user: body })
+                        
+                        res.json({ token, user: body })
                     })
-                } catch (error) {
-                    return next(error)
-                }
-            })(req, res, next)
-        })
+            } catch (error) {
+                return next(error)
+            }
+        })(req, res, next)
+    })
     
-        export default router
+        
+export default router

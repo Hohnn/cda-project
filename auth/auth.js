@@ -1,7 +1,8 @@
-import passport from 'passport';
-import { Strategy } from 'passport-local';
-import UserModel from '../models/userModel.js';
-import JWT from 'passport-jwt';
+import passport from 'passport'
+import { Strategy } from 'passport-local'
+import UserModel from '../models/userModel.js'
+import JWT from 'passport-jwt'
+import AppError from '../utils/AppError.js'
 
 const { Strategy: JWTStrategy, ExtractJwt } = JWT;
 
@@ -13,11 +14,11 @@ passport.use(
         passwordField: 'password',
         passReqToCallback: true
     },
-    async (req, email, password, done) => {
+    async (req, email, password, next) => {
         try {
-            const user = await UserModel.findOne({ email });
+            const user = await UserModel.findOne({ email });            
             if (user) {
-                return done(null, false, { message: 'Email already exists' });
+                return next(new AppError(`Email ${user.email} deja utilisé.`, 400))
             }
             const newUser = await UserModel.create({ email, password, ...req.body });
             return done(null, newUser);
@@ -38,9 +39,7 @@ passport.use(
         try {
             const user = await UserModel.findOne({ email });
             if (!user) {
-                return done(null, false, {
-                     message: 'Email inconnu.' 
-                });
+                return next(new AppError(`Email ${email} inconnu.`, 400))
             }
             const details = {
                 id: user._id,
@@ -50,7 +49,7 @@ passport.use(
             };
             const validate = await user.isValidPassword(password);
             if (!validate) {
-                return done(null, false, { message: 'Mot de passe incorrect.' });
+                return next(new AppError(`Erreur de connexion.`, 400))
             }
             return done(null, user, { message: 'Connexion réussie.', details });
 

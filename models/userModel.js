@@ -5,41 +5,41 @@ const Schema = mongoose.Schema
 const UserSchema = new mongoose.Schema({
     email: {
         type: String,
-        required: [true, 'Email is required'],
+        required: [true, 'Email requis'],
         lowercase: true
     },
     password: {
         type: String,
-        required: [true, 'Password is required'],
+        required: [true, 'Mot de passe requis'],
         minlength: [8, 'Password must be at least 8 characters long']
     },
     firstName_u: {
         type: String,
-        required: [true, 'First Name is required']
+        required: [true, 'Nom requis']
     },
     lastName_u: {
         type: String,
-        required: [true, 'Last name is required']
+        required: [true, 'Prénom  requis']
     },
     company_u: {
         type: String,
-        required: [true, 'Company is required']
+        required: [true, 'Entreprise requis']
     },
     key_r: {
         type: Number,
-        required: [true, 'Key role is required']
+        required: [true, 'Key role requis']
     },
     siret_u: {
         type: String,
-        required: [true, 'Siret is required']
+        required: [true, 'Siret requis']
     },
     address_u: {
         type: String,
-        required: [true, 'Address is required']
+        required: [true, 'Adresse requise']
     },
     phone_u: {
         type: String,
-        required: [true, 'Phone is required']
+        required: [true, 'Téléphone requis']
     },
     createBy_id: {
         type: Schema.Types.ObjectId,
@@ -86,11 +86,11 @@ UserSchema.methods.toJSON = function () {
 UserSchema.statics.findByCredentials = async (email, password) => {
     const user = await User.findOne({ email })
     if (!user) {
-        throw new Error('Unable to login')
+        throw new Error('Impossible de se connecter')
     }
     const isMatch = await user.isValidPassword(password)
     if (!isMatch) {
-        throw new Error('Unable to login')
+        throw new Error('Impossible de se connecter')
     }
     return user
 }

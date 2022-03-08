@@ -1,4 +1,5 @@
 import userModel from '../models/userModel.js'
+import UserModel from '../models/userModel.js'
 import AppError from '../utils/AppError.js'
 
 export const getUsers = async (req, res, next) => {
@@ -26,26 +27,20 @@ export const getUser = async (req, res, next) => {
 }
 
 
-export const addUser = async (req, res) => {
+export const addUser = async (req, res, next) => {
 	const user = new userModel(req.body)
 	await user.save()
-    .then(() => {
+    if(!user || user === null || user === undefined || user === '') {
+        return next(new AppError(`Erreur lors de la création de l'utilisateur.`, 400))
+    }
         res.status(201).send(user)
-    })
-    .catch(err => {
-        res.status(400).send({
-            message: 'Erreur lors de la création de l\'utilisateur',
-            error: err
-        })
-    })
-}
+    }
 
 export const updateUser = async (req, res, next) => {
   	const user = await userModel.findByIdAndUpdate(req.params.idUser, req.body)
       if(!user || user === null || user === undefined || user === '') {
         return next(new AppError(`Aucun utilisateur ${req.params.idUser} trouvé.`, 404))
     }
-
     await user.save()
     res.status(200).send(user)    
 }
