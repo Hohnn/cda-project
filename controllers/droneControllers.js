@@ -26,7 +26,6 @@ export const getDrone = async (req, res) => {
             return
         }
         if(err) {
-            console.log(err)
             res.status(400).send({
                 message: `Erreur lors de la récupération du drone ${req.params.idDrone}`,
                 error: err

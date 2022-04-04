@@ -1187,7 +1187,7 @@ router
                     req.login(user, { session: false }, async err => {
                         if (err) {res.send(err)}
 
-                        const body = { _id: user._id, email: user.email, firstname: user.firstName_u, lastname: user.lastName_u }
+                        const body = { _id: user._id, email: user.email, firstName_u: user.firstName_u, lastName_u: user.lastName_u }
                         const token = jwt.sign({ user: body }, process.env.JWT_SECRET)
                         
                         res.json({ token, user: body })
