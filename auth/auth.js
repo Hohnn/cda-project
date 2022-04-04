@@ -1,25 +1,26 @@
-import passport from 'passport';
-import { Strategy } from 'passport-local';
-
-import UserModel from '../models/userModel.js';
-
-import JWT from 'passport-jwt';
+import passport from 'passport'
+import { Strategy } from 'passport-local'
+import UserModel from '../models/userModel.js'
+import JWT from 'passport-jwt'
+import AppError from '../utils/AppError.js'
 
 const { Strategy: JWTStrategy, ExtractJwt } = JWT;
 
+//signup strategy
 passport.use(
     'signup',
     new Strategy({
         usernameField: 'email',
-        passwordField: 'password'
+        passwordField: 'password',
+        passReqToCallback: true
     },
-    async (email, password, done) => {
+    async (req, email, password, done) => {
         try {
-            const user = await UserModel.findOne({ email });
+            const user = await UserModel.findOne({ email });            
             if (user) {
-                return done(null, false, { message: 'Email already exists' });
+                return done({ message: `Adresse ${user.email} deja utilisée.`})
             }
-            const newUser = await UserModel.create({ email, password });
+            const newUser = await UserModel.create({ email, password, ...req.body });
             return done(null, newUser);
         } catch (error) {
             return done(error);
@@ -27,6 +28,7 @@ passport.use(
     })
 )
 
+// login strategy
 passport.use(
     'login',
     new Strategy({
@@ -37,20 +39,27 @@ passport.use(
         try {
             const user = await UserModel.findOne({ email });
             if (!user) {
-                return done(null, false, { message: 'unknow email' });
+                return next(new AppError(`Email ${email} inconnu.`, 400))
             }
+            const details = {
+                id: user._id,
+                email: user.email,
+                firstName: user.firstName_u,
+                lastName: user.lastName_u
+            };
             const validate = await user.isValidPassword(password);
             if (!validate) {
-                return done(null, false, { message: 'wrong password' });
+                return next(new AppError(`Erreur de connexion.`, 400))
             }
+            return done(null, user, { message: 'Connexion réussie.', details });
 
-            return done(null, user, { message: 'login success' });
         } catch (error) {
             return done(error);
         }
     })
 )
 
+// JWT strategy
 passport.use(
     new JWTStrategy({
         secretOrKey: process.env.JWT_SECRET,
@@ -58,12 +67,14 @@ passport.use(
     },
         async (token, done) => {
             try {
-                return done(null, token.user);
+            return done(null, token.user);
             } catch (error) {
                 return done(error);
             }
         }
     )
 )
+
+
 
 export default passport;

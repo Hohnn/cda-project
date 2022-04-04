@@ -1,13 +1,35 @@
 ### GET ALL USERS
 
-GET http://localhost:5000/api/v1/users/ HTTP/1.1
+GET http://localhost:3000/api/v1/users/ HTTP/1.1
 content-type: application/json
 
 ###
 
+### log into a session
+
+GET http://localhost:3000/api/v1/login HTTP/1.1
+content-type: application/json
+{
+	
+	"email": "email@email.fr",
+	"password": "password"
+		
+}
+
+###
+
+### Visit a private route
+GET http://localhost:3000/private/secret?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjYxZmQ0MDM4YzQ5MjliNjMwZjRiNjhmNSIsImVtYWlsIjoiZW1haWxAZW1haWwuZnIifSwiaWF0IjoxNjQ0MDQ5MTI2fQ.u6Ivk1m8Md5repGQpSBPlbScjW6CH5FlprdkErCIfFE HTTP/1.1
+
+{
+	
+	"email": "email@email.fr",
+	"password": "password"
+		
+}
 ### GET ONE USER
 
-GET http://localhost:5000/api/v1/users/61f7dacb6301b33554b5da01 HTTP/1.1
+GET http://localhost:3000/api/v1/users/61f7dacb6301b33554b5da01 HTTP/1.1
 content-type: application/json
 
 ###
@@ -71,13 +93,18 @@ content-type: application/json
 
 ### CREATE CATEGORY
 
-POST http://localhost:5000/api/v1/categories/ HTTP/1.1
+POST http://localhost:3000/api/v1/users/ HTTP/1.1
 content-type: application/json
 
 {
-    "name_cat": "First Category TEST",
-    "description_cat": "Category TEST",
-    "key_cat": "1"
+    "email": "email@email.fr",
+    "password": "password",
+    "passwordConfirm": "password",
+    "firstName_u": "firstname",
+    "lastName_u": "lastname",
+    "company_u": "company",
+    "phone_u": "phone",
+    "role_id": "1"
 }
 
 ###

@@ -3,6 +3,8 @@ import routes from './routes/routes.js'
 import dotenv from 'dotenv'
 import './auth/auth.js'
 dotenv.config()
+import AppError from './utils/AppError.js'
+import globalErrorHandler from './controllers/errorController.js'
 import passport from 'passport'
 import mongoose from 'mongoose'
 import swaggerUI from 'swagger-ui-express'
@@ -10,9 +12,31 @@ import swaggerJsDoc from 'swagger-jsdoc'
 import cors from 'cors'
 import privateRoutes from './routes/privateRoutes.js'
 
-const PORT = process.env.PORT || 5000 // variable d'enviroment pour le port
+//#region Express
 
-//swagger options 
+// création de l'application express
+const app = express()
+// Permet le traitement des json en POST
+app.use(express.json()) 
+
+//#endregion
+
+//#region PORT
+// variable d'enviroment pour le port
+const PORT = process.env.PORT || 3001
+
+//#region Cross Origin Ressource Sharing
+
+//implements CORS
+app.use(cors())
+
+//ACCESS-CONTROL-ALLOW-ORIGIN : *
+app.options('*', cors());
+
+
+//#endregion
+
+//#region Swagger
 const options = {
   definition: {
     openapi: "3.0.0",
@@ -25,39 +49,78 @@ const options = {
     servers: [
       {
         url: "https://skydrone-api.herokuapp.com/"
+        // url: `http://localhost:${PORT}/`
       }
     ]
   },
   apis: ["./routes/*.js"],
 }
-
 const specs = swaggerJsDoc(options)
+//#endregion
 
-const app = express() // création de l'application express
+//#region routes by default
 
+//route "/"
+app.get("/", (req, res) => {
+    res.send({
+        message: "Welcome to SkyDrone API."
+    });
+});
+
+//route swagger
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(specs))
 
-app.use(express.json()) // middleware pour les requêtes json
+// middleware pour les fichiers statiques 
+//( les fichiers de build seront accessibles depuis la racine du serveur)
+app.use(express.static('client/build'))
 
-app.use(express.static('client/build')) // middleware pour les fichiers statiques ( les fichiers de build seront accessibles depuis la racine du serveur)
+//#endregion
 
-mongoose.connect(process.env.MONGODB, { // connection à la base de données
+//#region MongoDB Connection 
+
+// connection à la base de données
+mongoose.connect(process.env.MONGODB, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useFindAndModify: false,
   useCreateIndex: true
+}).then(() => {
+  console.log('Connected to MongoDB Atlas')
+}).catch(err => {
+  console.log('Error: ', err.message)
 })
 
-app.use( // middleware pour les routes privées
+
+//#endregion
+
+//#region private routes
+
+app.use( 
   '/private', 
   passport.authenticate('jwt', { session: false }),
   privateRoutes 
 )
 
-app.use(cors())
+//#endregion
 
-app.use(routes) // middleware pour les routes publiques
+//#region public routes
+
+// middleware pour les routes publiques
+app.use('/api/v1',routes) 
+
+app.all('*', (req, res, next) => { 
+   next(new AppError(`Cette adresse : ${req.originalUrl} n'est pas disponible sur ce serveur.`, 404))
+})
+
+app.use(globalErrorHandler)
+
+
+//#endregion
+
+
 
 app.listen(PORT, () => {
   console.log(`Server is running on port: ${PORT}`)
 })
+//#endregion
+

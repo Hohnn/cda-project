@@ -1,49 +1,50 @@
 import CategoryModel from '../models/categoryModel.js'
+import AppError from '../utils/AppError.js'
 
-export const addCategory = async (req, res) => {
-	const category = new CategoryModel(req.body)
-  
-	await category.save()
-	res.send(category)
+export const addCategory = async (req, res, next) => {
+    const category = new CategoryModel(req.body)
+    await category.save()
+        res.status(201).send({
+        message: 'Catégorie créée avec succès',
+        category: category
+    })
 }
 
-export const getAllCategories = async (_, res) => {
-	const categories = await CategoryModel.find({})
-	res.send(categories)
+export const getAllCategories = async (req, res, next) => {
+    const categories = await CategoryModel.find({})
+    if(!categories || categories === null || categories === undefined || categories === '') {
+        return next(new AppError(`Aucune catégorie ${req.params.idCategory} trouvée.`, 404))
+    }    
+    res.send(categories)
 }
 
-export const getCategory = async (req, res) => {
-  	const category = await CategoryModel.find({ _id: req.params.idCategory })
-  	res.send(category)
+export const getCategory = async (req, res, next) => {
+    const category = await CategoryModel.findById(req.params.idCategory)
+    if(!category || category === null || category === undefined || category === '') {
+        return next(new AppError(`Aucune catégorie ${req.params.idCategory} trouvée.`, 404))
+        }
+        res.send(category)
 }
 
 export const updateCategory = async (req, res) => {
-  	const category = await CategoryModel.findByIdAndUpdate(req.params.idCategory, req.body)
-  	await category.save()
-  	res.send(category)
+    const category = await CategoryModel.findByIdAndUpdate(req.params.idCategory, req.body)
+    if(!category || category === null || category === undefined || category === '') {
+        return next(new AppError(`Aucune catégorie ${req.params.idCategory} trouvée.`, 404))
+    }    
+    await category.save()
+    res.send({
+        message: `Catégorie ${req.params.idCategory} modifiée avec succès.`,
+        category: category
+    })
 }
 
 export const deleteCategory = async (req, res) => {
-	const category = await CategoryModel.findByIdAndDelete(req.params.idCategory)
-	if (!category) {
-		res.status(404).send('Aucune catégorie trouvée.')
-	}
-	res.status(200).send('Drone supprimé avec succès')
+    const category = await CategoryModel.findByIdAndDelete(req.params.idCategory)
+    if(!category || category === null || category === undefined || category === '') {
+        return next(new AppError(`Aucune catégorie ${req.params.idCategory} trouvée.`, 404))
+    }    
+    res.status(204).send({
+        message: `Catégorie ${req.params.idCategory} supprimée avec succès.`
+    })
 }
 
-export const getCategoryById = async (req, res, next, id) => {
-    await CategoryModel
-      .findById(req.params.idCategory)
-      .exec((err, category) => {
-          console.log(category)
-          if(err || !category){
-              return res.status(400).json({
-                  error: "User not found"
-              });
-          }
-		  console.log(category);
-          // on ajoute l'objet profile contenant les infos de l'utilisateur dans la requête
-          req.categoryProfile = category;
-          next();
-      });
-  };

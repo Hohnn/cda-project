@@ -16,16 +16,14 @@ import {
   getUser,
   addUser,
   deleteUser,
-  updateUser,
-  getUserById
+  updateUser
 } from '../controllers/userControllers.js'
 import {
   getAllCategories,
   getCategory,
   addCategory,
   deleteCategory,
-  updateCategory,
-  getCategoryById
+  updateCategory
 } from '../controllers/categoryControllers.js'
 import {
   getAllProcessStates,
@@ -37,96 +35,22 @@ import {
 import {
   addDrone,
   getAllDrones,
-  getDrone,
   updateDrone,
   deleteDrone,
-  getDroneById,
+  getDrone,
   getDroneByCategory
 } from '../controllers/droneControllers.js'
 import {
   addOrder,
   getAllOrders,
-  getOrder,
   updateOrder,
   deleteOrder,
   getOrderById
 } from '../controllers/orderControllers.js'
 
-// Path avec ES module
-import path, { dirname } from 'path'
-import { fileURLToPath } from 'url'
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = dirname(__filename)
+const router = express.Router()
 
-const router = express.Router() // création du router
-
-router.param("idDrone", catchErrors(getDroneById))
-.param("idCategory", catchErrors(getCategoryById))
-.get('/', (_, res) => {
-  res.redirect('/api-docs')
-  })
-  
-//#region User
-/**
- * @swagger
- * components:
- *   schemas:
- *     userModel:
- *       type: object
- *       required:
- *         - email
- *         - password 
- *         - firstName_u
- *         - lastName_u 
- *         - company_u 
- *         - phone_u
- *         - key_r
- *         - createAt_u
- *         - updateAt_u
- *       properties:
- *         email:
- *           type: string
- *           description: The email of the user
- *         password:
- *           type: string
- *           description: The password of the user
- *         firstName_u:
- *           type: string
- *           description: The firstname of the user
- *         lastName_u:
- *           type: string
- *           description: The lastname of the user
- *         company_u:
- *           type: string
- *           description: The company name of the user
- *         phone_u:
- *           type: string
- *           description: The phone number of the user
- *         address_u:
- *           type: string
- *           description: The address of the user
- *         key_r:
- *           type: number
- *           description: The key role of the user
- *         createdBy_id:
- *           type: string
- *           description: The creating id parent of the user
- *         createAt_u:
- *           type: string
- *           format: date-time
- *           description: The date of user creation
- *         updateBy_id:
- *           type: string
- *           description: The id of updated user's collection
- *         updateAt_u:
- *           type: string
- *           format: date-time
- *           description: The updating date of the user collection
- *         role_id:
- *           type: string
- *           description: The role id of the user
- *       
- */
+//#region Swagger config
 
 /**
  * @swagger
@@ -135,392 +59,407 @@ router.param("idDrone", catchErrors(getDroneById))
  *    description: Operations about user
  *    externalDocs:
  *      description: Find out more about our store
- *      url: "https://skydrone-api.herokuapp.com/api-docs"
+ *      url: "https://skydrone-api.herokuapp.com/"
  *  - name: Drone
  *    description: The drones
  *    externalDocs:
  *      description: Everythings about our drones
- *      url: "https://skydrone-api.herokuapp.com/api-docs"
+ *      url: "https://skydrone-api.herokuapp.com/"
  *  - name: Role
  *    description: The user's role
  *  - name: Categories
  *    description: The drone categories
  *  - name: Process State
- *    description: The drone process state 
+ *    description: The drone process state
+ *  - name: Orders
+ *    description: The orders
  */
+//#endregion
 
-/**
- * @swagger
- * /api/v1/users:
- *   get:
- *     summary: Return the list of all users
- *     tags: [User]
- *     responses:
- *       200:
- *         description: The list of all users
- *         content:
- *           application/json:
- *             schema:
- *                 items:
- *                   $ref: '#/components/schemas/userModel'
- */
-.get('/api/v1/users', catchErrors(getUsers))
-
-/**
- * @swagger
- * /api/v1/users/login:
- *   get:
- *     summary: Logs user into the system
- *     tags: [User]
- *     parameters:
- *       - name: email
- *         in: query
- *         description: The email of user for login 
- *         required: true
- *         type: string
- *       - name: password
- *         in: query
- *         description: The password for login un clear text
- *         required: true
- *         type: string
- *     responses:
- *       200:
- *         description: successful operation
- *         schema:
- *           type: string
- *         headers:
- *           X-Rate-Limit:
- *             type: integer
- *             format: int32
- *             description: calls per hour allowed by the user
- *           X-Expired-After:
- *             type: string
- *             format: date-time
- *             description: date in UTC when token expires
- *       400:
- *         description: Invalid username/password supplied
- */
-.get('/api/v1/login', passport.authenticate(
-  'login'),
-    async (req, res, next) => {
-    res.json({
-        message: 'login success',
-        user: req.user
-    })
-  })
-
-/**
- * @swagger
- * /api/v1/users/logout:
- *   get:
- *     summary: Logs out current logged in user session
- *     tags: [User]
- *     operationId: logoutUser
- *     parameters: []
- *     responses:
- *       default:
- *         description: successful operation
- *         
- */
-.get('/api/v1/logout', catchErrors())
-
-/**
- * @swagger
- * /api/v1/users/{idUser}:
- *   get:
- *     summary: Return the user by id
- *     tags: [User]
- *     parameters:
- *       - name: idUser
- *         in: path
- *         description: The user id
- *         required: true
- *         schema:
- *           type: string
- *     responses:
- *       200:
- *         description: The list of all users
- *         content:
- *           application/json:
- *             schema:
- *                 items:
- *                   $ref: '#/components/schemas/userModel'
- *       404:
- *         description: The user was not found
- */
- .get('/api/v1/users/:idUser', catchErrors(getUser))
- .param("idUser", getUserById)
-/**
- * @swagger
- * /api/v1/users/{idUser}:
- *   patch:
- *     summary: Update a user by id
- *     tags: [User]
- *     parameters:
- *       - in: path
- *         name: idUser
- *         schema:
- *           type: string
- *         required: true
- *         description: The user id
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/userModel'
- *     responses:
- *       200:
- *         description: The user data are successfully updated
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/userModel'
- *       404:
- *         description: The user was not found
- *       500:
- *         description: Some server error
- */
-.patch('/api/v1/users/:idUser', catchErrors(updateUser))
+//#region Swagger User
+    /**
+     * @swagger
+     * components:
+     *   schemas:
+     *     userModel:
+     *       type: object
+     *       required:
+     *         - email
+     *         - password 
+     *         - firstName_u
+     *         - lastName_u 
+     *         - company_u 
+     *         - phone_u
+     *         - address_u
+     *         - key_r
+     *         - siret_u
+     *       properties:
+     *         email:
+     *           type: string
+     *           format: email
+     *           description: The email of the user
+     *         password:
+     *           type: string
+     *           format: password
+     *           description: The password of the user
+     *         firstName_u:
+     *           type: string
+     *           description: The firstname of the user
+     *         lastName_u:
+     *           type: string
+     *           description: The lastname of the user
+     *         company_u:
+     *           type: string
+     *           description: The company name of the user
+     *         key_r:
+     *           type: number
+     *           description: The key role of the user
+     *         siret_u:
+     *           type: string
+     *           description: The siret of the user
+     *         address_u:
+     *           type: string
+     *           description: The address of the user
+     *         phone_u:
+     *           type: string
+     *           description: The phone number of the user
+     *         
+     */
 
 
-/**
- * @swagger
- * /api/v1/users:
- *   post:
- *     summary: Create a new user
- *     tags: [User]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/userModel'
- *     responses:
- *       200:
- *         description: The new user is successfully created
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/userModel'
- *       500:
- *         description: Some server error
- */
- .post('/api/v1/users', catchErrors(addUser))
 
-/**
- * @swagger
- * /api/v1/users/{idUser}:
- *   delete:
- *     summary: Delete a user by id
- *     tags: [User]
- *     parameters:
- *       - in: path
- *         name: idUser
- *         schema: 
- *           type: string
- *         required: true
- *         description: The user string 
- *     responses:
- *       200:
- *         description: The user is successfully deleted
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/userModel'
- *       404:
- *         description: The user is not found
- */
-.delete('/api/v1/users/:idUser', catchErrors(deleteUser))
+    /**
+     * @swagger
+     * /api/v1/users:
+     *   get:
+     *     summary: Return the list of all users
+     *     tags: [User]
+     *     responses:
+     *       200:
+     *         description: The list of all users
+     *         content:
+     *           application/json:
+     *             schema:
+     *                 items:
+     *                   $ref: '#/components/schemas/userModel'
+     */
+
+
+ 
+
+
+    /**
+     * @swagger
+     * /api/v1/users/{idUser}:
+     *   get:
+     *     summary: Return the user by id
+     *     tags: [User]
+     *     parameters:
+     *       - name: idUser
+     *         in: path
+     *         description: The user id
+     *         required: true
+     *         schema:
+     *           type: string
+     *     responses:
+     *       200:
+     *         description: The user by id
+     *         content:
+     *           application/json:
+     *             schema:
+     *                 items:
+     *                   $ref: '#/components/schemas/userModel'
+     *       402:
+     *         description: The user was not found
+     */
+
+
+    /**
+     * @swagger
+     * /api/v1/users/{idUser}:
+     *   patch:
+     *     summary: Update a user by id
+     *     tags: [User]
+     *     parameters:
+     *       - in: path
+     *         name: idUser
+     *         schema:
+     *           type: string
+     *         required: true
+     *         description: The user id
+     *     requestBody:
+     *       required: true
+     *       content:
+     *         application/json:
+     *           schema:
+     *             $ref: '#/components/schemas/userModel'
+     *     responses:
+     *       200:
+     *         description: The user data are successfully updated
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/schemas/userModel'
+     *       400:
+     *         description: The user was not found
+     *       500:
+     *         description: Some server error
+     */
+
+
+
+    /**
+     * @swagger
+     * /api/v1/users:
+     *   post:
+     *     summary: Create a new user
+     *     tags: [User]
+     *     requestBody:
+     *       required: true
+     *       content:
+     *         application/json:
+     *           schema:
+     *             $ref: '#/components/schemas/userModel'
+     *     responses:
+     *       201:
+     *         description: The new user is successfully created
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/schemas/userModel'
+     *       400:
+     *         description: The user was not found
+     *       500:
+     *         description: Some server error
+     */
+ 
+
+    /**
+     * @swagger
+     * /api/v1/users/{idUser}:
+     *   delete:
+     *     summary: Delete a user by id
+     *     tags: [User]
+     *     parameters:
+     *       - in: path
+     *         name: idUser
+     *         schema: 
+     *           type: string
+     *         required: true
+     *         description: The user string 
+     *     responses:
+     *       200:
+     *         description: The user is successfully deleted
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/schemas/userModel'
+     *       404:
+     *         description: The user is not found
+     */
+
 
 //#endregion
 
-//#region Drone
-/**
- * @swagger
- * components:
- *   schemas:
- *     droneModel:
- *       type: object
- *       required:
- *         - name_d
- *         - category_id 
- *         - description_d
- *         - pricePerDay_d 
- *         - processState_id
- *       properties:
- *         name_d:
- *           type: string
- *           description: The name of the drone
- *         category_id:
- *           type: string
- *           description: The category of the drone
- *         description_d:
- *           type: string
- *           description: The description of the drone
- *         pricePerDay_d:
- *           type: number
- *           description: The price per day of the drone
- *         processState_id:
- *           type: string
- *           description: The process state id
- */
+router
+    .get('/users', catchErrors(getUsers))
+    .get('/users/:idUser', catchErrors(getUser))
+    .delete('/users/:idUser', catchErrors(deleteUser))
+    .patch('/users/:idUser', catchErrors(updateUser))
+    .post('/users', catchErrors(addUser))
+    
 
-/**
- * @swagger
- * /api/v1/drones:
- *   get:
- *     summary: Return the list of all drones
- *     tags: [Drone]
- *     responses:
- *       200:
- *         description: The list of all drones
- *         content:
- *           application/json:
- *             schema:
- *                 items:
- *                   $ref: '#/components/schemas/droneModel'
- */
-.get('/api/v1/drones', catchErrors(getAllDrones))
+//#region Swagger Drone
+    /**
+     * @swagger
+     * components:
+     *   schemas:
+     *     droneModel:
+     *       type: object
+     *       required:
+     *         - name_d
+     *         - category_id 
+     *         - description_d
+     *         - pricePerDay_d 
+     *         - processState_id
+     *       properties:
+     *         name_d:
+     *           type: string
+     *           description: The name of the drone
+     *         category_id:
+     *           type: string
+     *           description: The category of the drone
+     *         description_d:
+     *           type: string
+     *           description: The description of the drone
+     *         pricePerDay_d:
+     *           type: number
+     *           description: The price per day of the drone
+     *         processState_id:
+     *           type: string
+     *           description: The process state id
+     */
 
-/**
- * @swagger
- * /api/v1/drones/categories/{idCategory}:
- *   get:
- *     summary: Return the list of drones by category
- *     tags: [Drone]
- *     parameters:
- *       - name: idCategory
- *         in: path
- *         description: Return a list of drones inventory by category
- *         required: true
- *         type: string 
- *     responses:
- *       200:
- *         description: The list of drones by selected category
- *         content:
- *           application/json:
- *             schema:
- *                 items:
- *                   $ref: '#/components/schemas/droneModel'
- *       400:
- *         description: Invalid ID supplied
- *       404:
- *         description: Category not found
- */
-.get('/api/v1/drones/categories/:idCategory', catchErrors(getDroneByCategory))
-
-/**
- * @swagger
- * /api/v1/drones:
- *   post:
- *     summary: Create a new drone
- *     tags: [Drone]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/droneModel'
- *     responses:
- *       200:
- *         description: The new drone is successfully created
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/droneModel'
- *       500:
- *         description: Some server error
- */
-.post('/api/v1/drones', catchErrors(addDrone))
+    /**
+     * @swagger
+     * /api/v1/drones:
+     *   get:
+     *     summary: Return the list of all drones
+     *     tags: [Drone]
+     *     responses:
+     *       200:
+     *         description: The list of all drones
+     *         content:
+     *           application/json:
+     *             schema:
+     *                 items:
+     *                   $ref: '#/components/schemas/droneModel'
+     */
 
 
-/**
- * @swagger
- * /api/v1/drones/{idDrone}:
- *   get:
- *     summary: Return the drone by id
- *     tags: [Drone]
- *     parameters:
- *       - name: idDrone
- *         in: path
- *         description: The drone id
- *         required: true
- *         schema:
- *           type: string
- *     responses:
- *       200:
- *         description: The list of all drones
- *         content:
- *           application/json:
- *             schema:
- *                 items:
- *                   $ref: '#/components/schemas/droneModel'
- *       404:
- *         description: The drone was not found
- */
-.get('/api/v1/drones/:idDrone', catchErrors(getDrone))
+    /**
+     * @swagger
+     * /api/v1/drones/categories/{idCategory}:
+     *   get:
+     *     summary: Return the list of drones by category
+     *     tags: [Drone]
+     *     parameters:
+     *       - name: idCategory
+     *         in: path
+     *         description: Return a list of drones inventory by category
+     *         required: true
+     *         type: string 
+     *     responses:
+     *       200:
+     *         description: The list of drones by selected category
+     *         content:
+     *           application/json:
+     *             schema:
+     *                 items:
+     *                   $ref: '#/components/schemas/droneModel'
+     *       400:
+     *         description: Invalid ID supplied
+     *       404:
+     *         description: Category not found
+     */
 
-/**
- * @swagger
- * /api/v1/drones/{idDrone}:
- *   patch:
- *     summary: Update a drone by id
- *     tags: [Drone]
- *     parameters:
- *       - in: path
- *         name: idDrone
- *         schema:
- *           type: string
- *         required: true
- *         description: The drone id
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/droneModel'
- *     responses:
- *       200:
- *         description: The drone data are successfully updated
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/droneModel'
- *       404:
- *         description: The drone was not found
- *       500:
- *         description: Some server error
- */
-.patch('/api/v1/drones/:idDrone', catchErrors(updateDrone))
+    /**
+     * @swagger
+     * /api/v1/drones:
+     *   post:
+     *     summary: Create a new drone
+     *     tags: [Drone]
+     *     requestBody:
+     *       required: true
+     *       content:
+     *         application/json:
+     *           schema:
+     *             $ref: '#/components/schemas/droneModel'
+     *     responses:
+     *       200:
+     *         description: The new drone is successfully created
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/schemas/droneModel'
+     *       500:
+     *         description: Some server error
+     */
 
-/**
- * @swagger
- * /api/v1/drones/{idDrone}:
- *   delete:
- *     summary: Delete a drone by id
- *     tags: [Drone]
- *     parameters:
- *       - in: path
- *         name: idDrone
- *         schema: 
- *           type: string
- *         required: true
- *         description: The user string 
- *     responses:
- *       200:
- *         description: The drone is successfully deleted
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/droneModel'
- *       404:
- *         description: The drone is not found
- */
-.delete('/api/v1/drones/:idDrone', catchErrors(deleteDrone))
+
+    /**
+     * @swagger
+     * /api/v1/drones/{idDrone}:
+     *   get:
+     *     summary: Return the drone by id
+     *     tags: [Drone]
+     *     parameters:
+     *       - name: idDrone
+     *         in: path
+     *         description: The drone id
+     *         required: true
+     *         schema:
+     *           type: string
+     *     responses:
+     *       200:
+     *         description: The list of all drones
+     *         content:
+     *           application/json:
+     *             schema:
+     *                 items:
+     *                   $ref: '#/components/schemas/droneModel'
+     *       404:
+     *         description: The drone was not found
+     */
+
+    /**
+     * @swagger
+     * /api/v1/drones/{idDrone}:
+     *   patch:
+     *     summary: Update a drone by id
+     *     tags: [Drone]
+     *     parameters:
+     *       - in: path
+     *         name: idDrone
+     *         schema:
+     *           type: string
+     *         required: true
+     *         description: The drone id
+     *     requestBody:
+     *       required: true
+     *       content:
+     *         application/json:
+     *           schema:
+     *             $ref: '#/components/schemas/droneModel'
+     *     responses:
+     *       200:
+     *         description: The drone data are successfully updated
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/schemas/droneModel'
+     *       404:
+     *         description: The drone was not found
+     *       500:
+     *         description: Some server error
+     */
+
+    /**
+     * @swagger
+     * /api/v1/drones/{idDrone}:
+     *   delete:
+     *     summary: Delete a drone by id
+     *     tags: [Drone]
+     *     parameters:
+     *       - in: path
+     *         name: idDrone
+     *         schema: 
+     *           type: string
+     *         required: true
+     *         description: The user string 
+     *     responses:
+     *       200:
+     *         description: The drone is successfully deleted
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/schemas/droneModel'
+     *       404:
+     *         description: The drone is not found
+     */
+
 //#endregion
 
-//#region Role
+    .patch('/drones/:idDrone', catchErrors(updateDrone))
+    .get('/drones/:idDrone', catchErrors(getDrone))
+    .post('/drones', catchErrors(addDrone))
+    .get('/drones/categories/:idCategory', catchErrors(getDroneByCategory))
+    .get('/drones', catchErrors(getAllDrones))
+    .delete('/drones/:idDrone', catchErrors(deleteDrone))
+
+
+//#region Swagger Role
+
 /**
  * @swagger
  * components:
@@ -549,7 +488,7 @@ router.param("idDrone", catchErrors(getDroneById))
 
 /**
  * @swagger
- * /api/v1/role:
+ * /api/v1/roles:
  *   get:
  *     summary: Return the list of all roles
  *     tags: [Role]
@@ -562,7 +501,7 @@ router.param("idDrone", catchErrors(getDroneById))
  *                 items:
  *                   $ref: '#/components/schemas/roleModel'
  */
-router.get('/api/v1/roles', catchErrors(getRoles))
+
 
 /**
  * @swagger
@@ -588,7 +527,6 @@ router.get('/api/v1/roles', catchErrors(getRoles))
  *       404:
  *         description: The role was not found
  */
-.get('/api/v1/roles/:idRole', catchErrors(getRole))
 
 /**
  * @swagger
@@ -612,7 +550,6 @@ router.get('/api/v1/roles', catchErrors(getRoles))
  *       500:
  *         description: Some server error
  */
-.post('/api/v1/roles', catchErrors(addRole))
 
 /**
  * @swagger
@@ -645,7 +582,6 @@ router.get('/api/v1/roles', catchErrors(getRoles))
  *       500:
  *         description: Some server error
  */
-.patch('/api/v1/roles/:idRole', catchErrors(updateRole))
 
 /**
  * @swagger
@@ -670,10 +606,17 @@ router.get('/api/v1/roles', catchErrors(getRoles))
  *       404:
  *         description: The role is not found
  */
-.delete('/api/v1/roles/:idRole', catchErrors(deleteRole))
+
 //#endregion
 
-//#region 
+    .patch('/roles/:idRole', catchErrors(updateRole))
+    .post('/roles', catchErrors(addRole))
+    .get('/roles/:idRole', catchErrors(getRole))
+    .get('/roles', catchErrors(getRoles))
+    .delete('/roles/:idRole', catchErrors(deleteRole))
+
+
+//#region Swagger Categories
 /**
  * @swagger
  * components:
@@ -713,9 +656,9 @@ router.get('/api/v1/roles', catchErrors(getRoles))
  *           application/json:
  *             schema:
  *                 items:
- *                   $ref: '#/components/schemas/categoriesModel'
+ *                   $ref: '#/components/schemas/categoryModel'
  */
-.get('/api/v1/categories', catchErrors(getAllCategories))
+
 
 /**
  * @swagger
@@ -741,7 +684,6 @@ router.get('/api/v1/roles', catchErrors(getRoles))
  *       404:
  *         description: The category was not found
  */
-.get('/api/v1/categories/:idCategory', catchErrors(getCategory))
 
 /**
  * @swagger
@@ -765,7 +707,6 @@ router.get('/api/v1/roles', catchErrors(getRoles))
  *       500:
  *         description: Some server error
  */
-.post('/api/v1/categories', catchErrors(addCategory))
 
 /**
  * @swagger
@@ -798,14 +739,13 @@ router.get('/api/v1/roles', catchErrors(getRoles))
  *       500:
  *         description: Some server error
  */
-.patch('/api/v1/categories/:idCategory', catchErrors(updateCategory))
 
 /**
  * @swagger
  * /api/v1/categories/{idCategory}:
  *   delete:
  *     summary: Delete a category by id
- *     tags: [Role]
+ *     tags: [Categories]
  *     parameters:
  *       - in: path
  *         name: idCategory
@@ -823,123 +763,440 @@ router.get('/api/v1/roles', catchErrors(getRoles))
  *       404:
  *         description: The category is not found
  */
-.delete('/api/v1/categories/:idCategory', catchErrors(deleteCategory))
+
 //#endregion
 
-//#region ProcessState
+    .get('/categories', catchErrors(getAllCategories))
+    .post('/categories', catchErrors(addCategory))
+    .get('/categories/:idCategory', catchErrors(getCategory))
+    .patch('/categories/:idCategory', catchErrors(updateCategory))
+    .delete('/categories/:idCategory', catchErrors(deleteCategory))
 
-/**
- * @swagger
- * components:
- *   schemas:
- *     ProcessStateModel:
- *       type: object
- *       required:
- *         - name_ps
- *         - description
- *         - key_ps
- *       properties:
- *         name_ps:
- *           type: string
- *           description: The name of the process state
- *         description:
- *           type: string
- *           description: The description of the process state
- *         key_ps: 
- *           type: number
- *           description: The key code of the process state
- */
 
-/**
- * @swagger
-* /api/v1/ps:
- *   get:
- *     summary: Return the list of all process states
- *     tags: [Process State]
- *     responses:
- *       200:
- *         description: The list of all process states
- *         content:
- *           application/json:
- *             schema:
- *                 items:
- *                   $ref: '#/components/schemas/processStateModel'
- */
-.get('/api/v1/ps', catchErrors(getAllProcessStates))
+//#region Swagger ProcessState
 
-/**
- * @swagger
- * /api/v1/ps/{idPs}:
- *   get:
- *     summary: Return a process state by id
- *     tags: [Process State]
- *     parameters:
- *       - name: idPs
- *         in: path
- *         description: The process state id
- *         required: true
- *         schema:
- *           type: string
- *     responses:
- *       200:
- *         description: The list of a process state
- *         content:
- *           application/json:
- *             schema:
- *                 items:
- *                   $ref: '#/components/schemas/processStateModel'
- *       404:
- *         description: The category was not found
- */
-.get('/api/v1/ps/:idPs', catchErrors(getProcessState))
+    /**
+     * @swagger
+     * components:
+     *   schemas:
+     *     processStateModel:
+     *       type: object
+     *       required:
+     *         - name_ps
+     *         - description
+     *         - key_ps
+     *       properties:
+     *         name_ps:
+     *           type: string
+     *           description: The name of the process state
+     *         description:
+     *           type: string
+     *           description: The description of the process state
+     *         key_ps: 
+     *           type: number
+     *           description: The key code of the process state
+     */
 
-/**
- * @swagger
- * /api/v1/ps:
- *   post:
- *     summary: Create a new process state
- *     tags: [Process State]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/processStateModel'
- *     responses:
- *       200:
- *         description: The new process state is successfully created
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/processStateModel'
- *       500:
- *         description: Some server error
- */
-.post('/api/v1/ps', catchErrors(addProcessState))
+    /**
+     * @swagger
+     * /api/v1/ps:
+     *   get:
+     *     summary: Return the list of all process states
+     *     tags: [Process State]
+     *     responses:
+     *       200:
+     *         description: The list of all process states
+     *         content:
+     *           application/json:
+     *             schema:
+     *                 items:
+     *                   $ref: '#/components/schemas/processStateModel'
+     */
+
+
+    /**
+     * @swagger
+     * /api/v1/ps/{idPs}:
+     *   get:
+     *     summary: Return a process state by id
+     *     tags: [Process State]
+     *     parameters:
+     *       - name: idPs
+     *         in: path
+     *         description: The process state id
+     *         required: true
+     *         schema:
+     *           type: string
+     *     responses:
+     *       200:
+     *         description: The list of a process state
+     *         content:
+     *           application/json:
+     *             schema:
+     *                 items:
+     *                   $ref: '#/components/schemas/processStateModel'
+     *       404:
+     *         description: The category was not found
+     */
+
+    /**
+     * @swagger
+     * /api/v1/ps:
+     *   post:
+     *     summary: Create a new process state
+     *     tags: [Process State]
+     *     requestBody:
+     *       required: true
+     *       content:
+     *         application/json:
+     *           schema:
+     *             $ref: '#/components/schemas/processStateModel'
+     *     responses:
+     *       200:
+     *         description: The new process state is successfully created
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/schemas/processStateModel'
+     *       500:
+     *         description: Some server error
+     */
+
+    /**
+     * @swagger
+     * /api/v1/ps/{idPs}:
+     *   patch:
+     *     summary: Update a process state by id
+     *     tags: [Process State]
+     *     parameters:
+     *       - name: idPs
+     *         in: path
+     *         description: The process state id
+     *         required: true
+     *         schema:
+     *           type: string
+     *     requestBody:
+     *       required: true
+     *       content:
+     *         application/json:
+     *           schema:
+     *             $ref: '#/components/schemas/processStateModel'
+     *     responses:
+     *       200:
+     *         description: The process state data are successfully updated
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/schemas/processStateModel'
+     *       404:
+     *         description: The process state was not found
+     *       500:
+     *         description: Some server error
+     */
+
+    /**
+     * @swagger
+     * /api/v1/ps/{idPs}:
+     *   delete:
+     *     summary: Delete a process state by id
+     *     tags: [Process State]
+     *     parameters:
+     *       - name: idPs
+     *         in: path
+     *         description: The process state id
+     *         required: true
+     *         schema:
+     *           type: string
+     *     responses:
+     *       200:
+     *         description: The process state is successfully deleted
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/schemas/processStateModel'
+     *       404:
+     *         description: The process state was not found
+     *       500:
+     *         description: Some server error
+     */
+
+    //#endregion
+
+    .get('/ps', catchErrors(getAllProcessStates))
+    .post('/ps', catchErrors(addProcessState))
+    .get('/ps/:idPs', catchErrors(getProcessState))
+    .patch('/ps/:idPs', catchErrors(updateProcessState))
+    .delete('/ps/:idPs', catchErrors(deleteProcessState))
+
+//#region Swagger Orders
+
+    /**
+     * @swagger
+     * components:
+     *   schemas:
+     *     orderModel:
+     *       type: object
+     *       required:
+     *         - user_id
+     *         - drone_id
+     *         - endAt_o
+     *         - report_o
+     *         - createdBy_o
+     *       properties:
+     *         user_id:
+     *           type: string
+     *           description: The requesting user's string 
+     *         drone_id:
+     *           type: string
+     *           description: The requested drone's string 
+     *         startAt_o:
+     *           type: string
+     *           description: The open date of the order
+     *         endAt_o:
+     *           type: string
+     *           description: The closing date of the order
+     *         report_o:
+     *           type: string
+     *           description: The pilot's report after mission
+     *         createdBy_o:
+     *           type: string
+     *           description: The creating user's string  
+     *         createdAt_o:
+     *           type: string
+     *           description: The order's creating date
+     *         updateBy_o:
+     *           type: string
+     *           description: The update user's string
+     *         updateAt_o:
+     *           type: string
+     *           description: The update order date 
+     *           
+     */
+
+    /**
+     * @swagger
+     * /api/v1/orders:
+     *   get:
+     *     summary: Return the list of all orders
+     *     tags: [Orders]
+     *     responses:
+     *       200:
+     *         description: The list of all orders
+     *         content:
+     *           application/json:
+     *             schema:
+     *               items:
+     *                 $ref: '#/components/schemas/orderModel'
+     *       401:
+     *         description: The content is protected
+     */
+
+
+    /**
+     * @swagger
+     * /api/v1/orders/{idOrder}:
+     *   get:
+     *     summary: Return an order by id
+     *     tags: [Orders]
+     *     parameters:
+     *       - name: idOrder
+     *         in: path
+     *         description: The order id
+     *         required: true
+     *         schema:
+     *           type: string
+     *     responses:
+     *       200:
+     *         description: The order required 
+     *         content:
+     *           application/json:
+     *             schema:
+     *                 items:
+     *                   $ref: '#/components/schemas/orderModel'
+     *       401:
+     *         description: The content is protected
+     *       404:
+     *         description: The order was not found
+     */
+
+    /**
+     * @swagger
+     * /api/v1/orders:
+     *   post:
+     *     summary: Create a new order
+     *     tags: [Orders]
+     *     requestBody:
+     *       required: true
+     *       content:
+     *         application/json:
+     *           schema:
+     *             $ref: '#/components/schemas/orderModel'
+     *     responses:
+     *       200:
+     *         description: The new order is successfully created
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/schemas/processStateModel'
+     *       401:
+     *         description: Unauthorized operation, you must be authenticate to proceed.
+     *       500:
+     *         description: Some server error
+     */
+
+    /**
+     * @swagger
+     * /api/v1/orders/{idOrder}:
+     *   patch:
+     *     summary: Update an order by id
+     *     tags: [Orders]
+     *     parameters:
+     *       - in: path
+     *         name: idOrder
+     *         schema:
+     *           type: string
+     *         required: true
+     *         description: The order id
+     *     requestBody:
+     *       required: true
+     *       content:
+     *         application/json:
+     *           schema:
+     *             $ref: '#/components/schemas/orderModel'
+     *     responses:
+     *       200:
+     *         description: The order datas are successfully updated
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/schemas/orderModel'
+     *       404:
+     *         description: The order was not found
+     *       500:
+     *         description: Some server error
+     */
+
+    /**
+     * @swagger
+     * /api/v1/orders/{idOrder}:
+     *   delete:
+     *     summary: Delete an order by id
+     *     tags: [Orders]
+     *     parameters:
+     *       - in: path
+     *         name: idOrder
+     *         schema:
+     *           type: string
+     *         required: true
+     *         description: The order string
+     *     responses:
+     *       200:
+     *         description: The order is successfully deleted
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/schemas/orderModel'
+     *       404:
+     *         description: The order was not found
+     */
+
 //#endregion
 
-.patch('/api/v1/ps/:idPs', catchErrors(updateProcessState))
-.delete('/api/v1/ps/:idPs', catchErrors(deleteProcessState))
+    .get('/orders', catchErrors(getAllOrders))
+    .get('/orders/:idOrder', catchErrors(getOrderById))
+    .post('/orders', catchErrors(addOrder))
+    .patch('/orders/:idOrder', catchErrors(updateOrder))
+    .delete('/orders/:idOrder', catchErrors(deleteOrder))
 
-//ORDERS
-.get('/api/v1/orders', catchErrors(getAllOrders))
-.get('/api/v1/orders/:idOrder', catchErrors(getOrder))
-.post('/api/v1/orders', catchErrors(addOrder))
-.patch('/api/v1/orders/:idOrder', catchErrors(updateOrder))
-.delete('/api/v1/orders/:idOrder', catchErrors(deleteOrder))
 
-router.param("idOrder", catchErrors(getOrderById))
-
-//authentification
-.post('/signup', 
-passport.authenticate(
-  'signup', { session: false }),
+    //#region authentication & login routes  
+    
+    /**
+     * @swagger
+     * /api/v1/login:
+     *   post:
+     *     summary: Logs user into the system
+     *     tags: [User]
+     *     parameters:
+     *       - name: email
+     *         in: query
+     *         description: The email of user for login 
+     *         required: true
+     *         type: string
+     *       - name: password
+     *         in: query
+     *         description: The password for login un clear text
+     *         required: true
+     *         type: string
+     *         format: password
+     *     responses:
+     *       200:
+     *         description: successful operation
+     *         schema:
+     *           type: string
+     *         headers:
+     *           X-Rate-Limit:
+     *             type: integer
+     *             format: int32
+     *             description: calls per hour allowed by the user
+     *           X-Expired-After:
+     *             type: string
+     *             format: date-time
+     *             description: date in UTC when token expires
+     *       400:
+     *         description: Invalid username/password supplied
+     */
+    
+    
+    /**
+     * @swagger
+     * /api/v1/logout:
+     *   get:
+     *     summary: Logs out current logged in user session
+     *     tags: [User]
+     *     operationId: logoutUser
+     *     parameters: []
+     *     responses:
+     *       default:
+     *         description: successful operation
+     *         
+     */
+    
+    
+    //#endregion
+    
+    .post('/signup', passport.authenticate('signup', { session: false }),
     async (req, res, next) => {
-    res.json({
-        message: 'Signup success',
-        user: req.user
+        res.status(201).send({
+            message: 'Inscription réussie',
+            user: req.user
+        })
     })
-  })
+    
 
+    .post('/login', (req, res, next) => {
+        passport.authenticate('login', async (err, user) => {
+            try {
+                if (err || !user) {
+                    return res.status(400).send({
+                            message: 'Une erreur est survenue lors de la connexion',
+                            user: user
+                            }
+                        )
+                    }
+                    req.login(user, { session: false }, async err => {
+                        if (err) {res.send(err)}
 
+                        const body = { _id: user._id, email: user.email, firstName_u: user.firstName_u, lastName_u: user.lastName_u }
+                        const token = jwt.sign({ user: body }, process.env.JWT_SECRET)
+                        
+                        res.json({ token, user: body })
+                    })
+            } catch (error) {
+                return next(error)
+            }
+        })(req, res, next)
+    })
+    
+        
 export default router
