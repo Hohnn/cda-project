@@ -52,7 +52,6 @@ export const deleteUser = async (req, res, next) => {
     }
 	res.status(204).send({ message: `Utilisateur ${req.params.idUser} supprimé.` })
 }
-<<<<<<< HEAD
 
 export const getUserById = async (req, res, next, id) => {
   await userModel
@@ -75,5 +74,3 @@ export const getUserById = async (req, res, next, id) => {
 };
 
 //hhhhhhhhhhhhh
-=======
->>>>>>> b5f25bc694641a0f334294448897957fef8bcfa0
