@@ -11,6 +11,7 @@ export const addDrone = async (req, res) => {
 
 export const getAllDrones = async (req, res) => {
     const drones = await DroneModel.find({})
+    .populate('name_cat')
     res.send(drones)
 }
 
