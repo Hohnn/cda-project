@@ -17,7 +17,7 @@ export const getAllDrones = async (req, res) => {
 
 export const getDrone = async (req, res) => {
     const drone = await DroneModel.findById(req.params.idDrone)
-    .populate('name_cat')
+    .populate('category_id')
     .populate('processState_id')
     .exec((err, drone) => {
         if(!drone || drone === null || drone === undefined || drone === '') {
