@@ -2,51 +2,56 @@ import express from 'express'
 import dotenv from 'dotenv'
 dotenv.config()
 import jwt from 'jsonwebtoken'
-import passport from 'passport';
+import passport from 'passport'
 import { catchErrors } from '../helpers.js'
 import {
-  getRoles,
-  getRole,
-  addRole,
-  updateRole,
-  deleteRole
+    getRoles,
+    getRole,
+    addRole,
+    updateRole,
+    deleteRole
 } from '../controllers/roleControllers.js'
 import {
-  getUsers,
-  getUser,
-  addUser,
-  deleteUser,
-  updateUser
+    getUsers,
+    getUser,
+    addUser,
+    deleteUser,
+    updateUser
 } from '../controllers/userControllers.js'
 import {
-  getAllCategories,
-  getCategory,
-  addCategory,
-  deleteCategory,
-  updateCategory
+    getAllCategories,
+    getCategory,
+    addCategory,
+    deleteCategory,
+    updateCategory
 } from '../controllers/categoryControllers.js'
 import {
-  getAllProcessStates,
-  getProcessState,
-  addProcessState,
-  updateProcessState,
-  deleteProcessState
+    getAllProcessStates,
+    getProcessState,
+    addProcessState,
+    updateProcessState,
+    deleteProcessState
 } from '../controllers/processStateControllers.js'
 import {
-  addDrone,
-  getAllDrones,
-  updateDrone,
-  deleteDrone,
-  getDrone,
-  getDroneByCategory
+    addDrone,
+    getAllDrones,
+    updateDrone,
+    deleteDrone,
+    getDrone,
+    getDroneByCategory
 } from '../controllers/droneControllers.js'
 import {
-  addOrder,
-  getAllOrders,
-  updateOrder,
-  deleteOrder,
-  getOrderById
+    addOrder,
+    getAllOrders,
+    updateOrder,
+    deleteOrder,
+    getOrderById
 } from '../controllers/orderControllers.js'
+import {
+    upload
+    // getListFiles,
+    // download
+} from '../controllers/file.controller.js'
 
 const router = express.Router()
 
@@ -77,186 +82,186 @@ const router = express.Router()
 //#endregion
 
 //#region Swagger User
-    /**
-     * @swagger
-     * components:
-     *   schemas:
-     *     userModel:
-     *       type: object
-     *       required:
-     *         - email
-     *         - password 
-     *         - firstName_u
-     *         - lastName_u 
-     *         - company_u 
-     *         - phone_u
-     *         - address_u
-     *         - key_r
-     *         - siret_u
-     *       properties:
-     *         email:
-     *           type: string
-     *           format: email
-     *           description: The email of the user
-     *         password:
-     *           type: string
-     *           format: password
-     *           description: The password of the user
-     *         firstName_u:
-     *           type: string
-     *           description: The firstname of the user
-     *         lastName_u:
-     *           type: string
-     *           description: The lastname of the user
-     *         company_u:
-     *           type: string
-     *           description: The company name of the user
-     *         key_r:
-     *           type: number
-     *           description: The key role of the user
-     *         siret_u:
-     *           type: string
-     *           description: The siret of the user
-     *         address_u:
-     *           type: string
-     *           description: The address of the user
-     *         phone_u:
-     *           type: string
-     *           description: The phone number of the user
-     *         
-     */
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     userModel:
+ *       type: object
+ *       required:
+ *         - email
+ *         - password 
+ *         - firstName_u
+ *         - lastName_u 
+ *         - company_u 
+ *         - phone_u
+ *         - address_u
+ *         - key_r
+ *         - siret_u
+ *       properties:
+ *         email:
+ *           type: string
+ *           format: email
+ *           description: The email of the user
+ *         password:
+ *           type: string
+ *           format: password
+ *           description: The password of the user
+ *         firstName_u:
+ *           type: string
+ *           description: The firstname of the user
+ *         lastName_u:
+ *           type: string
+ *           description: The lastname of the user
+ *         company_u:
+ *           type: string
+ *           description: The company name of the user
+ *         key_r:
+ *           type: number
+ *           description: The key role of the user
+ *         siret_u:
+ *           type: string
+ *           description: The siret of the user
+ *         address_u:
+ *           type: string
+ *           description: The address of the user
+ *         phone_u:
+ *           type: string
+ *           description: The phone number of the user
+ *         
+ */
 
 
 
-    /**
-     * @swagger
-     * /api/v1/users:
-     *   get:
-     *     summary: Return the list of all users
-     *     tags: [User]
-     *     responses:
-     *       200:
-     *         description: The list of all users
-     *         content:
-     *           application/json:
-     *             schema:
-     *                 items:
-     *                   $ref: '#/components/schemas/userModel'
-     */
-
-
- 
-
-
-    /**
-     * @swagger
-     * /api/v1/users/{idUser}:
-     *   get:
-     *     summary: Return the user by id
-     *     tags: [User]
-     *     parameters:
-     *       - name: idUser
-     *         in: path
-     *         description: The user id
-     *         required: true
-     *         schema:
-     *           type: string
-     *     responses:
-     *       200:
-     *         description: The user by id
-     *         content:
-     *           application/json:
-     *             schema:
-     *                 items:
-     *                   $ref: '#/components/schemas/userModel'
-     *       402:
-     *         description: The user was not found
-     */
-
-
-    /**
-     * @swagger
-     * /api/v1/users/{idUser}:
-     *   patch:
-     *     summary: Update a user by id
-     *     tags: [User]
-     *     parameters:
-     *       - in: path
-     *         name: idUser
-     *         schema:
-     *           type: string
-     *         required: true
-     *         description: The user id
-     *     requestBody:
-     *       required: true
-     *       content:
-     *         application/json:
-     *           schema:
-     *             $ref: '#/components/schemas/userModel'
-     *     responses:
-     *       200:
-     *         description: The user data are successfully updated
-     *         content:
-     *           application/json:
-     *             schema:
-     *               $ref: '#/components/schemas/userModel'
-     *       400:
-     *         description: The user was not found
-     *       500:
-     *         description: Some server error
-     */
+/**
+ * @swagger
+ * /api/v1/users:
+ *   get:
+ *     summary: Return the list of all users
+ *     tags: [User]
+ *     responses:
+ *       200:
+ *         description: The list of all users
+ *         content:
+ *           application/json:
+ *             schema:
+ *                 items:
+ *                   $ref: '#/components/schemas/userModel'
+ */
 
 
 
-    /**
-     * @swagger
-     * /api/v1/users:
-     *   post:
-     *     summary: Create a new user
-     *     tags: [User]
-     *     requestBody:
-     *       required: true
-     *       content:
-     *         application/json:
-     *           schema:
-     *             $ref: '#/components/schemas/userModel'
-     *     responses:
-     *       201:
-     *         description: The new user is successfully created
-     *         content:
-     *           application/json:
-     *             schema:
-     *               $ref: '#/components/schemas/userModel'
-     *       400:
-     *         description: The user was not found
-     *       500:
-     *         description: Some server error
-     */
- 
 
-    /**
-     * @swagger
-     * /api/v1/users/{idUser}:
-     *   delete:
-     *     summary: Delete a user by id
-     *     tags: [User]
-     *     parameters:
-     *       - in: path
-     *         name: idUser
-     *         schema: 
-     *           type: string
-     *         required: true
-     *         description: The user string 
-     *     responses:
-     *       200:
-     *         description: The user is successfully deleted
-     *         content:
-     *           application/json:
-     *             schema:
-     *               $ref: '#/components/schemas/userModel'
-     *       404:
-     *         description: The user is not found
-     */
+
+/**
+ * @swagger
+ * /api/v1/users/{idUser}:
+ *   get:
+ *     summary: Return the user by id
+ *     tags: [User]
+ *     parameters:
+ *       - name: idUser
+ *         in: path
+ *         description: The user id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: The user by id
+ *         content:
+ *           application/json:
+ *             schema:
+ *                 items:
+ *                   $ref: '#/components/schemas/userModel'
+ *       402:
+ *         description: The user was not found
+ */
+
+
+/**
+ * @swagger
+ * /api/v1/users/{idUser}:
+ *   patch:
+ *     summary: Update a user by id
+ *     tags: [User]
+ *     parameters:
+ *       - in: path
+ *         name: idUser
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The user id
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/userModel'
+ *     responses:
+ *       200:
+ *         description: The user data are successfully updated
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/userModel'
+ *       400:
+ *         description: The user was not found
+ *       500:
+ *         description: Some server error
+ */
+
+
+
+/**
+ * @swagger
+ * /api/v1/users:
+ *   post:
+ *     summary: Create a new user
+ *     tags: [User]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/userModel'
+ *     responses:
+ *       201:
+ *         description: The new user is successfully created
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/userModel'
+ *       400:
+ *         description: The user was not found
+ *       500:
+ *         description: Some server error
+ */
+
+
+/**
+ * @swagger
+ * /api/v1/users/{idUser}:
+ *   delete:
+ *     summary: Delete a user by id
+ *     tags: [User]
+ *     parameters:
+ *       - in: path
+ *         name: idUser
+ *         schema: 
+ *           type: string
+ *         required: true
+ *         description: The user string 
+ *     responses:
+ *       200:
+ *         description: The user is successfully deleted
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/userModel'
+ *       404:
+ *         description: The user is not found
+ */
 
 
 //#endregion
@@ -267,9 +272,9 @@ router
     .delete('/users/:idUser', catchErrors(deleteUser))
     .patch('/users/:idUser', catchErrors(updateUser))
     .post('/users', catchErrors(addUser))
-    
 
-//#region Swagger Drone
+
+    //#region Swagger Drone
     /**
      * @swagger
      * components:
@@ -448,7 +453,7 @@ router
      *         description: The drone is not found
      */
 
-//#endregion
+    //#endregion
 
     .patch('/drones/:idDrone', catchErrors(updateDrone))
     .get('/drones/:idDrone', catchErrors(getDrone))
@@ -458,156 +463,156 @@ router
     .delete('/drones/:idDrone', catchErrors(deleteDrone))
 
 
-//#region Swagger Role
+    //#region Swagger Role
 
-/**
- * @swagger
- * components:
- *   schemas:
- *     roleModel:
- *       type: object
- *       required:
- *         - name_r
- *         - description_r
- *         - key_r 
- *       properties:
- *         name_r:
- *           type: string
- *           description: The name of the role
- *         description_r:
- *           type: string
- *           description: The description of the role
- *         key_r:
- *           type: number
- *           description: The key of the role
- *       example:
- *         name_r: "administrator"
- *         description_r: "Create Read Update Delete any data"
- *         key_r: "1"
- */
+    /**
+     * @swagger
+     * components:
+     *   schemas:
+     *     roleModel:
+     *       type: object
+     *       required:
+     *         - name_r
+     *         - description_r
+     *         - key_r 
+     *       properties:
+     *         name_r:
+     *           type: string
+     *           description: The name of the role
+     *         description_r:
+     *           type: string
+     *           description: The description of the role
+     *         key_r:
+     *           type: number
+     *           description: The key of the role
+     *       example:
+     *         name_r: "administrator"
+     *         description_r: "Create Read Update Delete any data"
+     *         key_r: "1"
+     */
 
-/**
- * @swagger
- * /api/v1/roles:
- *   get:
- *     summary: Return the list of all roles
- *     tags: [Role]
- *     responses:
- *       200:
- *         description: The list of all roles
- *         content:
- *           application/json:
- *             schema:
- *                 items:
- *                   $ref: '#/components/schemas/roleModel'
- */
+    /**
+     * @swagger
+     * /api/v1/roles:
+     *   get:
+     *     summary: Return the list of all roles
+     *     tags: [Role]
+     *     responses:
+     *       200:
+     *         description: The list of all roles
+     *         content:
+     *           application/json:
+     *             schema:
+     *                 items:
+     *                   $ref: '#/components/schemas/roleModel'
+     */
 
 
-/**
- * @swagger
- * /api/v1/roles/{idRole}:
- *   get:
- *     summary: Return the role by id
- *     tags: [Role]
- *     parameters:
- *       - name: idRole
- *         in: path
- *         description: The role id
- *         required: true
- *         schema:
- *           type: string
- *     responses:
- *       200:
- *         description: The list of all roles
- *         content:
- *           application/json:
- *             schema:
- *                 items:
- *                   $ref: '#/components/schemas/roleModel'
- *       404:
- *         description: The role was not found
- */
+    /**
+     * @swagger
+     * /api/v1/roles/{idRole}:
+     *   get:
+     *     summary: Return the role by id
+     *     tags: [Role]
+     *     parameters:
+     *       - name: idRole
+     *         in: path
+     *         description: The role id
+     *         required: true
+     *         schema:
+     *           type: string
+     *     responses:
+     *       200:
+     *         description: The list of all roles
+     *         content:
+     *           application/json:
+     *             schema:
+     *                 items:
+     *                   $ref: '#/components/schemas/roleModel'
+     *       404:
+     *         description: The role was not found
+     */
 
-/**
- * @swagger
- * /api/v1/roles:
- *   post:
- *     summary: Create a new role
- *     tags: [Role]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/roleModel'
- *     responses:
- *       200:
- *         description: The new role is successfully created
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/roleModel'
- *       500:
- *         description: Some server error
- */
+    /**
+     * @swagger
+     * /api/v1/roles:
+     *   post:
+     *     summary: Create a new role
+     *     tags: [Role]
+     *     requestBody:
+     *       required: true
+     *       content:
+     *         application/json:
+     *           schema:
+     *             $ref: '#/components/schemas/roleModel'
+     *     responses:
+     *       200:
+     *         description: The new role is successfully created
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/schemas/roleModel'
+     *       500:
+     *         description: Some server error
+     */
 
-/**
- * @swagger
- * /api/v1/roles/{idRole}:
- *   patch:
- *     summary: Update a role by id
- *     tags: [Role]
- *     parameters:
- *       - in: path
- *         name: idRole
- *         schema:
- *           type: string
- *         required: true
- *         description: The role id
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/roleeModel'
- *     responses:
- *       200:
- *         description: The role data are successfully updated
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/roleModel'
- *       404:
- *         description: The role was not found
- *       500:
- *         description: Some server error
- */
+    /**
+     * @swagger
+     * /api/v1/roles/{idRole}:
+     *   patch:
+     *     summary: Update a role by id
+     *     tags: [Role]
+     *     parameters:
+     *       - in: path
+     *         name: idRole
+     *         schema:
+     *           type: string
+     *         required: true
+     *         description: The role id
+     *     requestBody:
+     *       required: true
+     *       content:
+     *         application/json:
+     *           schema:
+     *             $ref: '#/components/schemas/roleeModel'
+     *     responses:
+     *       200:
+     *         description: The role data are successfully updated
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/schemas/roleModel'
+     *       404:
+     *         description: The role was not found
+     *       500:
+     *         description: Some server error
+     */
 
-/**
- * @swagger
- * /api/v1/roles/{idRole}:
- *   delete:
- *     summary: Delete a role by id
- *     tags: [Role]
- *     parameters:
- *       - in: path
- *         name: idRole
- *         schema: 
- *           type: string
- *         required: true
- *         description: The user string 
- *     responses:
- *       200:
- *         description: The role is successfully deleted
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/roleModel'
- *       404:
- *         description: The role is not found
- */
+    /**
+     * @swagger
+     * /api/v1/roles/{idRole}:
+     *   delete:
+     *     summary: Delete a role by id
+     *     tags: [Role]
+     *     parameters:
+     *       - in: path
+     *         name: idRole
+     *         schema: 
+     *           type: string
+     *         required: true
+     *         description: The user string 
+     *     responses:
+     *       200:
+     *         description: The role is successfully deleted
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/schemas/roleModel'
+     *       404:
+     *         description: The role is not found
+     */
 
-//#endregion
+    //#endregion
 
     .patch('/roles/:idRole', catchErrors(updateRole))
     .post('/roles', catchErrors(addRole))
@@ -616,155 +621,155 @@ router
     .delete('/roles/:idRole', catchErrors(deleteRole))
 
 
-//#region Swagger Categories
-/**
- * @swagger
- * components:
- *   schemas:
- *     categoryModel:
- *       type: object
- *       required:
- *         - name_cat
- *         - description_cat
- *         - key_cat 
- *       properties:
- *         name_cat:
- *           type: string
- *           description: The name of the category
- *         description_cat:
- *           type: string
- *           description: The description of the category
- *         key_cat:
- *           type: number
- *           description: The key of the category
- *       example:
- *         name_cat: "D"
- *         description_cat: "les aéronefs utilisés pour un travail aérien d’une masse au décollage inférieure à 2 Kg (structure + charge)"
- *         key_cat: "1"
- */
+    //#region Swagger Categories
+    /**
+     * @swagger
+     * components:
+     *   schemas:
+     *     categoryModel:
+     *       type: object
+     *       required:
+     *         - name_cat
+     *         - description_cat
+     *         - key_cat 
+     *       properties:
+     *         name_cat:
+     *           type: string
+     *           description: The name of the category
+     *         description_cat:
+     *           type: string
+     *           description: The description of the category
+     *         key_cat:
+     *           type: number
+     *           description: The key of the category
+     *       example:
+     *         name_cat: "D"
+     *         description_cat: "les aéronefs utilisés pour un travail aérien d’une masse au décollage inférieure à 2 Kg (structure + charge)"
+     *         key_cat: "1"
+     */
 
-/**
- * @swagger
- * /api/v1/categories:
- *   get:
- *     summary: Return the list of all categories
- *     tags: [Categories]
- *     responses:
- *       200:
- *         description: The list of all categories
- *         content:
- *           application/json:
- *             schema:
- *                 items:
- *                   $ref: '#/components/schemas/categoryModel'
- */
+    /**
+     * @swagger
+     * /api/v1/categories:
+     *   get:
+     *     summary: Return the list of all categories
+     *     tags: [Categories]
+     *     responses:
+     *       200:
+     *         description: The list of all categories
+     *         content:
+     *           application/json:
+     *             schema:
+     *                 items:
+     *                   $ref: '#/components/schemas/categoryModel'
+     */
 
 
-/**
- * @swagger
- * /api/v1/categories/{idCategory}:
- *   get:
- *     summary: Return a category by id
- *     tags: [Categories]
- *     parameters:
- *       - name: idCategory
- *         in: path
- *         description: The category id
- *         required: true
- *         schema:
- *           type: string
- *     responses:
- *       200:
- *         description: The list of all categories
- *         content:
- *           application/json:
- *             schema:
- *                 items:
- *                   $ref: '#/components/schemas/categoryModel'
- *       404:
- *         description: The category was not found
- */
+    /**
+     * @swagger
+     * /api/v1/categories/{idCategory}:
+     *   get:
+     *     summary: Return a category by id
+     *     tags: [Categories]
+     *     parameters:
+     *       - name: idCategory
+     *         in: path
+     *         description: The category id
+     *         required: true
+     *         schema:
+     *           type: string
+     *     responses:
+     *       200:
+     *         description: The list of all categories
+     *         content:
+     *           application/json:
+     *             schema:
+     *                 items:
+     *                   $ref: '#/components/schemas/categoryModel'
+     *       404:
+     *         description: The category was not found
+     */
 
-/**
- * @swagger
- * /api/v1/categories:
- *   post:
- *     summary: Create a new category
- *     tags: [Categories]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/categoryModel'
- *     responses:
- *       200:
- *         description: The new category is successfully created
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/categoryModel'
- *       500:
- *         description: Some server error
- */
+    /**
+     * @swagger
+     * /api/v1/categories:
+     *   post:
+     *     summary: Create a new category
+     *     tags: [Categories]
+     *     requestBody:
+     *       required: true
+     *       content:
+     *         application/json:
+     *           schema:
+     *             $ref: '#/components/schemas/categoryModel'
+     *     responses:
+     *       200:
+     *         description: The new category is successfully created
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/schemas/categoryModel'
+     *       500:
+     *         description: Some server error
+     */
 
-/**
- * @swagger
- * /api/v1/categories/{idCategory}:
- *   patch:
- *     summary: Update a category by id
- *     tags: [Categories]
- *     parameters:
- *       - in: path
- *         name: idCategory
- *         schema:
- *           type: string
- *         required: true
- *         description: The category id
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/categoryModel'
- *     responses:
- *       200:
- *         description: The category data are successfully updated
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/roleModel'
- *       404:
- *         description: The category was not found
- *       500:
- *         description: Some server error
- */
+    /**
+     * @swagger
+     * /api/v1/categories/{idCategory}:
+     *   patch:
+     *     summary: Update a category by id
+     *     tags: [Categories]
+     *     parameters:
+     *       - in: path
+     *         name: idCategory
+     *         schema:
+     *           type: string
+     *         required: true
+     *         description: The category id
+     *     requestBody:
+     *       required: true
+     *       content:
+     *         application/json:
+     *           schema:
+     *             $ref: '#/components/schemas/categoryModel'
+     *     responses:
+     *       200:
+     *         description: The category data are successfully updated
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/schemas/roleModel'
+     *       404:
+     *         description: The category was not found
+     *       500:
+     *         description: Some server error
+     */
 
-/**
- * @swagger
- * /api/v1/categories/{idCategory}:
- *   delete:
- *     summary: Delete a category by id
- *     tags: [Categories]
- *     parameters:
- *       - in: path
- *         name: idCategory
- *         schema: 
- *           type: string
- *         required: true
- *         description: The user string 
- *     responses:
- *       200:
- *         description: The category is successfully deleted
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/categoryModel'
- *       404:
- *         description: The category is not found
- */
+    /**
+     * @swagger
+     * /api/v1/categories/{idCategory}:
+     *   delete:
+     *     summary: Delete a category by id
+     *     tags: [Categories]
+     *     parameters:
+     *       - in: path
+     *         name: idCategory
+     *         schema: 
+     *           type: string
+     *         required: true
+     *         description: The user string 
+     *     responses:
+     *       200:
+     *         description: The category is successfully deleted
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/schemas/categoryModel'
+     *       404:
+     *         description: The category is not found
+     */
 
-//#endregion
+    //#endregion
 
     .get('/categories', catchErrors(getAllCategories))
     .post('/categories', catchErrors(addCategory))
@@ -773,7 +778,7 @@ router
     .delete('/categories/:idCategory', catchErrors(deleteCategory))
 
 
-//#region Swagger ProcessState
+    //#region Swagger ProcessState
 
     /**
      * @swagger
@@ -928,7 +933,7 @@ router
     .patch('/ps/:idPs', catchErrors(updateProcessState))
     .delete('/ps/:idPs', catchErrors(deleteProcessState))
 
-//#region Swagger Orders
+    //#region Swagger Orders
 
     /**
      * @swagger
@@ -1100,7 +1105,7 @@ router
      *         description: The order was not found
      */
 
-//#endregion
+    //#endregion
 
     .get('/orders', catchErrors(getAllOrders))
     .get('/orders/:idOrder', catchErrors(getOrderById))
@@ -1110,7 +1115,7 @@ router
 
 
     //#region authentication & login routes  
-    
+
     /**
      * @swagger
      * /api/v1/login:
@@ -1146,8 +1151,8 @@ router
      *       400:
      *         description: Invalid username/password supplied
      */
-    
-    
+
+
     /**
      * @swagger
      * /api/v1/logout:
@@ -1161,52 +1166,58 @@ router
      *         description: successful operation
      *         
      */
-    
-    
+
+
     //#endregion
-    
+
+    //upload file test
+    .post("/upload", catchErrors(upload))
+    // .get("/files", catchErrors(getListFiles))
+    // .get("/files/:name", catchErrors(download))
+
+
     .post('/signup', passport.authenticate('signup', { session: false }),
-    async (req, res, next) => {
-        res.status(201).send({
-            message: 'Inscription réussie',
-            user: req.user
+        async (req, res, next) => {
+            res.status(201).send({
+                message: 'Inscription réussie',
+                user: req.user
+            })
         })
-    })
-    
+
 
     .post('/login', (req, res, next) => {
         passport.authenticate('login', async (err, user) => {
             try {
                 if (err || !user) {
                     return res.status(400).send({
-                            message: 'Une erreur est survenue lors de la connexion',
-                            user: user
-                            }
-                        )
+                        message: 'Une erreur est survenue lors de la connexion',
+                        user: user
                     }
-                    req.login(user, { session: false }, async err => {
-                        if (err) {res.send(err)}
+                    )
+                }
+                req.login(user, { session: false }, async err => {
+                    if (err) { res.send(err) }
 
-                        const body = { 
-                            _id: user._id,
-                            email: user.email, 
-                            firstName_u: user.firstName_u, 
-                            lastName_u: user.lastName_u, 
-                            key_r: user.key_r, 
-                            company_u: user.company_u, 
-                            phone_u: user.phone_u, 
-                            address_u: user.address_u, 
-                            siret_u: user.siret_u
-                        }
-                        const token = jwt.sign({ user: body }, process.env.JWT_SECRET)
-                        
-                        res.json({ token, user: body })
-                    })
+                    const body = {
+                        _id: user._id,
+                        email: user.email,
+                        firstName_u: user.firstName_u,
+                        lastName_u: user.lastName_u,
+                        key_r: user.key_r,
+                        company_u: user.company_u,
+                        phone_u: user.phone_u,
+                        address_u: user.address_u,
+                        siret_u: user.siret_u
+                    }
+                    const token = jwt.sign({ user: body }, process.env.JWT_SECRET)
+
+                    res.json({ token, user: body })
+                })
             } catch (error) {
                 return next(error)
             }
         })(req, res, next)
     })
-    
-        
+
+
 export default router

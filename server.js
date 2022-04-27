@@ -1,3 +1,5 @@
+
+
 import express from 'express'
 import routes from './routes/routes.js'
 import dotenv from 'dotenv'
@@ -11,7 +13,10 @@ import swaggerUI from 'swagger-ui-express'
 import swaggerJsDoc from 'swagger-jsdoc'
 import cors from 'cors'
 import privateRoutes from './routes/privateRoutes.js'
-
+var corsOptions = {
+    origin: "http://localhost:8081"
+  };
+  
 //#region Express
 
 // création de l'application express
@@ -28,7 +33,7 @@ const PORT = process.env.PORT || 3001
 //#region Cross Origin Ressource Sharing
 
 //implements CORS
-app.use(cors())
+app.use(cors(corsOptions))
 
 //ACCESS-CONTROL-ALLOW-ORIGIN : *
 app.options('*', cors());
