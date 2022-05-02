@@ -26,13 +26,6 @@ import {
     updateCategory
 } from '../controllers/categoryControllers.js'
 import {
-    getAllProcessStates,
-    getProcessState,
-    addProcessState,
-    updateProcessState,
-    deleteProcessState
-} from '../controllers/processStateControllers.js'
-import {
     addDrone,
     getAllDrones,
     updateDrone,
@@ -163,7 +156,7 @@ router
     .post('/orders', catchErrors(addOrder))
     .patch('/orders/:idOrder', catchErrors(updateOrder))
     .delete('/orders/:idOrder', catchErrors(deleteOrder))
-    
+
 
     .post('/signup', passport.authenticate('signup', { session: false }),
         async (req, res, next) => {

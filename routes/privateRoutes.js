@@ -4,7 +4,6 @@ import { catchErrors } from '../helpers.js'
 import { getRoles, getRole, addRole, updateRole, deleteRole } from '../controllers/roleControllers.js'
 import { getUsers, getUser, addUser, deleteUser, updateUser } from '../controllers/userControllers.js'
 import { getAllCategories, getCategory, addCategory, deleteCategory, updateCategory } from '../controllers/categoryControllers.js'
-import { getAllProcessStates, getProcessState, addProcessState, updateProcessState, deleteProcessState } from '../controllers/processStateControllers.js'
 import { addDrone, getAllDrones, updateDrone, deleteDrone, getDrone, getDroneByCategory } from '../controllers/droneControllers.js'
 
 const router = express.Router()
@@ -34,10 +33,5 @@ router.get('/secret', (req, res) => {
     .patch('/orders/:idOrder', catchErrors(updateOrder))
     .delete('/orders/:idOrder', catchErrors(deleteOrder))
 
-    .get('/ps', catchErrors(getAllProcessStates))
-    .post('/ps', catchErrors(addProcessState))
-    .get('/ps/:idPs', catchErrors(getProcessState))
-    .patch('/ps/:idPs', catchErrors(updateProcessState))
-    .delete('/ps/:idPs', catchErrors(deleteProcessState))
 
 export default router

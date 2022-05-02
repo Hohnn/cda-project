@@ -292,10 +292,10 @@
         "parameters": [],
         "responses": {
           "200": {
-            "description": "Return all users"
+            "description": "all users"
           },
           "404": {
-            "description": "Error : No users found"
+            "description": "users not found"
           }
         }
       },
@@ -319,7 +319,7 @@
             "description": "user added"
           },
           "400": {
-            "description": "Error : user already exists"
+            "description": "user already exists"
           }
         },
         "requestBody": {
@@ -356,7 +356,7 @@
             "description": "user found"
           },
           "404": {
-            "description": "Error : users not found"
+            "description": "user not found"
           }
         }
       },
@@ -381,7 +381,7 @@
             "description": "user deleted"
           },
           "404": {
-            "description": "Error : user not found"
+            "description": "user not found"
           }
         }
       },
@@ -414,7 +414,7 @@
             "description": "user updated"
           },
           "404": {
-            "description": "Error : user not found"
+            "description": "user not found"
           }
         }
       }
@@ -593,62 +593,6 @@
         "parameters": [
           {
             "name": "idCategory",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {}
-      }
-    },
-    "/api/v1/ps": {
-      "get": {
-        "description": "",
-        "parameters": [],
-        "responses": {}
-      },
-      "post": {
-        "description": "",
-        "parameters": [],
-        "responses": {}
-      }
-    },
-    "/api/v1/ps/{idPs}": {
-      "get": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "idPs",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {}
-      },
-      "patch": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "idPs",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {}
-      },
-      "delete": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "idPs",
             "in": "path",
             "required": true,
             "schema": {
