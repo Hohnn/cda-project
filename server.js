@@ -2,17 +2,18 @@ import express from 'express'
 import routes from './routes/routes.js'
 import dotenv from 'dotenv'
 import './auth/auth.js'
-dotenv.config()
 import AppError from './utils/AppError.js'
 import globalErrorHandler from './controllers/errorController.js'
 import passport from 'passport'
 import mongoose from 'mongoose'
-import swaggerUI from 'swagger-ui-express'
-import swaggerJsDoc from 'swagger-jsdoc'
+import swaggerUi from 'swagger-ui-express'
+import { readFile } from 'fs/promises'
 import cors from 'cors'
 import privateRoutes from './routes/privateRoutes.js'
 
+
 //#region Express
+dotenv.config()
 
 // création de l'application express
 const app = express()
@@ -22,40 +23,47 @@ app.use(express.json())
 //#endregion
 
 //#region PORT
-// variable d'enviroment pour le port
-const PORT = process.env.PORT || 3001
+
+const PORT = process.env.PORT || 3000
+
+//#endregion
 
 //#region Cross Origin Ressource Sharing
 
-//implements CORS
 app.use(cors())
-
-//ACCESS-CONTROL-ALLOW-ORIGIN : *
 app.options('*', cors());
-
 
 //#endregion
 
 //#region Swagger
-const options = {
-  definition: {
-    openapi: "3.0.0",
-    info: {
-      title: "SkyDrone API",
-      version: "1.0.0",
-      description: "This is the SkyDrone project API.",
-      termsOfService: "https://skydrone-api.herokuapp.com/terms"    
-    },
-    servers: [
-      {
-        url: "https://skydrone-api.herokuapp.com/"
-        // url: `http://localhost:${PORT}/`
-      }
-    ]
-  },
-  apis: ["./routes/*.js"],
-}
-const specs = swaggerJsDoc(options)
+
+const swaggerFile = JSON.parse(
+	await readFile(
+		new URL('./swagger-output.json', import.meta.url)
+	)
+)
+
+app.use('/api-doc', swaggerUi.serve, swaggerUi.setup(swaggerFile))
+// const options = {
+//   definition: {
+//     openapi: "3.0.0",
+//     info: {
+//       title: "SkyDrone API",
+//       version: "1.0.0",
+//       description: "This is the SkyDrone project API.",
+//       termsOfService: "https://skydrone-api.herokuapp.com/terms"    
+//     },
+//     servers: [
+//       {
+//         url: "https://skydrone-api.herokuapp.com/"
+//         // url: `http://localhost:${PORT}/`
+//       }
+//     ]
+//   },
+//   apis: ["./routes/*.js"],
+// }
+// const specs = swaggerJsDoc(options)
+
 //#endregion
 
 //#region routes by default
@@ -68,7 +76,7 @@ app.get("/", (req, res) => {
 });
 
 //route swagger
-app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(specs))
+// app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(specs))
 
 // middleware pour les fichiers statiques 
 //( les fichiers de build seront accessibles depuis la racine du serveur)
@@ -120,7 +128,8 @@ app.use(globalErrorHandler)
 
 
 app.listen(PORT, () => {
-  console.log(`Server is running on port: ${PORT}`)
+  console.log("Server is running on port: %s (HTTP)", PORT)
+  
 })
 //#endregion
 

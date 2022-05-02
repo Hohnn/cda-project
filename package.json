@@ -4,7 +4,8 @@
   "description": "API SkyDrone V1",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon server.js",
+    "start": "node swagger.js && nodemon server.js",
+    "doc": "node swagger.js",
     "debug": "ndb server.js",
     "test": "jest --forceExit --detectOpenHandles --verbose"
   },
@@ -21,7 +22,7 @@
     "passport": "^0.5.2",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
-    "swagger-jsdoc": "^6.1.0",
+    "swagger-autogen": "^2.21.1",
     "swagger-ui-express": "^4.3.0"
   },
   "type": "module",

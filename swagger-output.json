@@ -1,0 +1,885 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "SkyDrone API",
+    "description": "Open documentation for the SkyDrone project API."
+  },
+  "servers": [
+    {
+      "url": "https://skydrone-api.herokuapp.com/"
+    }
+  ],
+  "tags": [
+    {
+      "name": "API root",
+      "description": "Return the API root state"
+    },
+    {
+      "name": "The Users",
+      "description": "Operations about users"
+    },
+    {
+      "name": "The Drones",
+      "description": "Everythings about our drones"
+    },
+    {
+      "name": "The Orders",
+      "description": "Operations about orders"
+    }
+  ],
+  "paths": {
+    "/": {
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/private/secret": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/private/users": {
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {}
+      },
+      "post": {
+        "description": "",
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/private/users/{idUser}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "idUser",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {}
+      },
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "idUser",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {}
+      },
+      "patch": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "idUser",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/private/roles/{idRole}": {
+      "patch": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "idRole",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {}
+      },
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "idRole",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {}
+      },
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "idRole",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/private/roles": {
+      "post": {
+        "description": "",
+        "parameters": [],
+        "responses": {}
+      },
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/private/orders": {
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {}
+      },
+      "post": {
+        "description": "",
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/private/orders/{idOrder}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "idOrder",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {}
+      },
+      "patch": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "idOrder",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {}
+      },
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "idOrder",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/private/ps": {
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {}
+      },
+      "post": {
+        "description": "",
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/private/ps/{idPs}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "idPs",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {}
+      },
+      "patch": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "idPs",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {}
+      },
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "idPs",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/api/v1/users": {
+      "get": {
+        "tags": [
+          "The Users"
+        ],
+        "description": "Endpoint to get a user.",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Return all users"
+          },
+          "404": {
+            "description": "Error : No users found"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "The Users"
+        ],
+        "description": "Endpoint to add a new user.",
+        "parameters": [
+          {
+            "name": "idUser",
+            "in": "body",
+            "description": "add a new user",
+            "schema": {
+              "$ref": "#/components/schemas/user"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "user added"
+          },
+          "400": {
+            "description": "Error : user already exists"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/user"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/users/{idUser}": {
+      "get": {
+        "tags": [
+          "The Users"
+        ],
+        "description": "Endpoint to get a user by id.",
+        "parameters": [
+          {
+            "name": "idUser",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The id of the user"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "user found"
+          },
+          "404": {
+            "description": "Error : users not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "The Users"
+        ],
+        "description": "Endpoint to delete a user.",
+        "parameters": [
+          {
+            "name": "idUser",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The id of the user"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "user deleted"
+          },
+          "404": {
+            "description": "Error : user not found"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "The Users"
+        ],
+        "description": "Endpoint to update a user by id.",
+        "parameters": [
+          {
+            "name": "idUser",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "idUser",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/user"
+            },
+            "description": "update a new user"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "user updated"
+          },
+          "404": {
+            "description": "Error : user not found"
+          }
+        }
+      }
+    },
+    "/api/v1/drones/{idDrone}": {
+      "patch": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "idDrone",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {}
+      },
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "idDrone",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {}
+      },
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "idDrone",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/api/v1/drones": {
+      "post": {
+        "description": "",
+        "parameters": [],
+        "responses": {}
+      },
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/api/v1/drones/categories/{idCategory}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "idCategory",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/api/v1/roles/{idRole}": {
+      "patch": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "idRole",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {}
+      },
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "idRole",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {}
+      },
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "idRole",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/api/v1/roles": {
+      "post": {
+        "description": "",
+        "parameters": [],
+        "responses": {}
+      },
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/api/v1/categories": {
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {}
+      },
+      "post": {
+        "description": "",
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/api/v1/categories/{idCategory}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "idCategory",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {}
+      },
+      "patch": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "idCategory",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {}
+      },
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "idCategory",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/api/v1/ps": {
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {}
+      },
+      "post": {
+        "description": "",
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/api/v1/ps/{idPs}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "idPs",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {}
+      },
+      "patch": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "idPs",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {}
+      },
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "idPs",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/api/v1/orders": {
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {}
+      },
+      "post": {
+        "description": "",
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/api/v1/orders/{idOrder}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "idOrder",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {}
+      },
+      "patch": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "idOrder",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {}
+      },
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "idOrder",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/api/v1/signup": {
+      "post": {
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        }
+      }
+    },
+    "/api/v1/login": {
+      "post": {
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "user": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "api@skydrone.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "encrypted"
+          },
+          "firstName_u": {
+            "type": "string",
+            "example": "Sky"
+          },
+          "lastName_u": {
+            "type": "string",
+            "example": "Drone"
+          },
+          "company_u": {
+            "type": "string",
+            "example": "SkyDrone Inc"
+          },
+          "key_r": {
+            "type": "number",
+            "example": 1
+          },
+          "siret_u": {
+            "type": "string",
+            "example": "FR0123456789"
+          },
+          "address_u": {
+            "type": "string",
+            "example": "21 Rue Des Ailes"
+          },
+          "phone_u": {
+            "type": "string",
+            "example": "+33000000000"
+          }
+        },
+        "required": [
+          "email",
+          "password",
+          "firstName_u",
+          "lastName_u",
+          "company_u",
+          "key_r",
+          "siret_u",
+          "address_u",
+          "phone_u"
+        ]
+      },
+      "drone": {
+        "type": "object",
+        "properties": {
+          "name_d": {
+            "type": "string",
+            "example": "Model A"
+          },
+          "category_id": {
+            "type": "string",
+            "example": "category_id"
+          },
+          "description_d": {
+            "type": "string",
+            "example": "A"
+          },
+          "pricePerDay_d": {
+            "type": "number",
+            "example": 123
+          },
+          "processState_id": {
+            "type": "string",
+            "example": "processState_id"
+          }
+        },
+        "required": [
+          "name_d",
+          "description_d",
+          "pricePerDay_d"
+        ]
+      },
+      "role": {
+        "type": "object",
+        "properties": {
+          "name_r": {
+            "type": "string",
+            "example": "administrator"
+          },
+          "description_r": {
+            "type": "string",
+            "example": "Create Read Update Delete any data"
+          },
+          "key_r": {
+            "type": "number",
+            "example": 1
+          }
+        },
+        "required": [
+          "name_r",
+          "description_r",
+          "key_r"
+        ]
+      },
+      "categories": {
+        "type": "object",
+        "properties": {
+          "name_cat": {
+            "type": "string",
+            "example": "D"
+          },
+          "description_cat": {
+            "type": "string",
+            "example": "les aéronefs utilisés pour un travail aérien d’une masse au décollage inférieure à 2 Kg (structure + charge)"
+          },
+          "key_cat": {
+            "type": "number",
+            "example": 1
+          }
+        },
+        "required": [
+          "name_cat",
+          "description_cat",
+          "key_cat"
+        ]
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "basepath": "/",
+  "security": {
+    "bearerAuth": []
+  }
+}
