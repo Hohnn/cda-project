@@ -10,6 +10,7 @@ const DroneShema = new mongoose.Schema({
     },
     category_id:{
         type: Schema.Types.ObjectId,
+        require: [true, 'Category ID is required'],
         ref: 'Category'
     },
     description_d:{
@@ -24,9 +25,9 @@ const DroneShema = new mongoose.Schema({
         trim: true,
         lowercase: true
     },
-    processState_id:{
-        type: Schema.Types.ObjectId,
-        ref: 'ProcessState'
+    State:{
+        type: String,
+        require: [true, 'State is required']
     }
 })
 

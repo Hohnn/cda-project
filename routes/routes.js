@@ -43,131 +43,112 @@ import {
 
 const router = express.Router()
 
-
 router
     .get('/users', catchErrors(getUsers)
         /*
-             #swagger.tags = ['The Users']
-             #swagger.description = 'Endpoint to get a user.'
+            #swagger.tags = ['The Users']
+            #swagger.description = 'Endpoint to get a user.'
+            #swagger.security = [{
+                "bearerAuth": []
+            }]
     
-             #swagger.responses[200] = { description: 'all users' }
-             #swagger.responses[404] = { description: 'users not found' }
+            #swagger.responses[200] = { description: 'all users' }
+            #swagger.responses[404] = { description: 'users not found' }
         */
     )
-
-    .get('/users/:idUser', catchErrors(getUser)
+    .get('/drones', catchErrors(getAllDrones)
         /*
-        #swagger.tags = ['The Users']
-        #swagger.description = 'Endpoint to get a user by id.'
-        #swagger.parameters[idUser] = { 
-            in: 'path', 
-            name: 'idUser', 
-            description: 'The id of the user', 
-            required: true, 
-            type: 'string' 
-        }
-        #swagger.responses[200] = { description: 'user found'},
-        #swagger.responses[404] = { description: 'user not found'}
-    */
-    )
-    .delete('/users/:idUser', catchErrors(deleteUser)
-        /*
-        #swagger.tags = ['The Users']
-        #swagger.description = 'Endpoint to delete a user.'
-        #swagger.parameters[idUser] = {
-            in: 'path',
-            name: 'idUser',
-            description: 'The id of the user',
-            required: true,
-            type: 'string'
-        }
-        #swagger.responses[204] = { description: 'user deleted' }
-        #swagger.responses[404] = { description: 'user not found' }
+            #swagger.tags = ['The Drones']
+            #swagger.description = 'Endpoint to get a drone.'
+            
+            #swagger.responses[200] = { description: 'all drones' }
+            #swagger.responses[404] = { description: 'drones not found' }
         */
     )
-    .patch('/users/:idUser', catchErrors(updateUser)
-        /* 
-        #swagger.tags = ['The Users']
-        #swagger.description = 'Endpoint to update a user by id.'
-
-        #swagger.parameters['idUser'] = { 
-           in: 'body',
-           description: 'update a new user',
-           schema: { $ref: "#/components/schemas/user" }
-        }
-
-        #swagger.responses[200] = { description: 'user updated' }
-        #swagger.responses[404] = { description: 'user not found' }
-        */
-    )
-    .post('/users', catchErrors(addUser)
+    .get('/drones/:idDrone', catchErrors(getDrone)
         /*
-        #swagger.tags = ['The Users']
-        #swagger.description = 'Endpoint to add a new user.'
-        
-        #swagger.parameters['idUser'] = { 
-            in: 'body', 
-            description: 'add a new user', 
-            schema: { $ref: "#/components/schemas/user" }
-        }
-
-        #swagger.requestBody = {
-            required: true,
-            content: {
-                "application/json": {
-                    schema: {
-                        $ref: "#/components/schemas/user"
-                    }  
-                }
+            #swagger.tags = ['The Drones']
+            #swagger.description = 'Endpoint to get a drone by id.'
+            #swagger.parameters[idDrone] = { 
+                in: 'path', 
+                name: 'idDrone', 
+                description: 'The id of the drone', 
+                required: true, 
+                type: 'string' 
             }
-        }
-
-        #swagger.responses[201] = { description: 'user added' }
-        #swagger.responses[400] = { description: 'user already exists' }
+            #swagger.responses[200] = { description: 'drone found'},
+            #swagger.responses[404] = { description: 'drone not found'}
         */
     )
+    .get('/drones/categories/:idCategory', catchErrors(getDroneByCategory)
+        /*
+            #swagger.tags = ['The Drones']
+            #swagger.description = 'Endpoint to get a drone category by id.'
+            #swagger.parameters[idCategory] = { 
+                in: 'path', 
+                name: 'idCategory', 
+                description: 'The id of The Categories', 
+                required: true, 
+                type: 'string' 
+            }
+            #swagger.responses[200] = { description: 'drone found'},
+            #swagger.responses[404] = { description: 'drone not found'}
+        */
+    )
+    .get('/categories', catchErrors(getAllCategories)
+        /*
+            #swagger.tags = ['The Categories']
+            #swagger.description = 'Endpoint to get a category.'
 
-
-    .patch('/drones/:idDrone', catchErrors(updateDrone))
-    .get('/drones/:idDrone', catchErrors(getDrone))
-    .post('/drones', catchErrors(addDrone))
-    .get('/drones/categories/:idCategory', catchErrors(getDroneByCategory))
-    .get('/drones', catchErrors(getAllDrones))
-    .delete('/drones/:idDrone', catchErrors(deleteDrone))
-
-
-    .patch('/roles/:idRole', catchErrors(updateRole))
-    .post('/roles', catchErrors(addRole))
-    .get('/roles/:idRole', catchErrors(getRole))
-    .get('/roles', catchErrors(getRoles))
-    .delete('/roles/:idRole', catchErrors(deleteRole))
-
-
-
-    .get('/categories', catchErrors(getAllCategories))
-    .post('/categories', catchErrors(addCategory))
-    .get('/categories/:idCategory', catchErrors(getCategory))
-    .patch('/categories/:idCategory', catchErrors(updateCategory))
-    .delete('/categories/:idCategory', catchErrors(deleteCategory))
-
-
-    .get('/orders', catchErrors(getAllOrders))
-    .get('/orders/:idOrder', catchErrors(getOrderById))
-    .post('/orders', catchErrors(addOrder))
-    .patch('/orders/:idOrder', catchErrors(updateOrder))
-    .delete('/orders/:idOrder', catchErrors(deleteOrder))
+            #swagger.responses[200] = { description: 'all categories' }
+            #swagger.responses[404] = { description: 'categories not found' }
+        */
+    )
+    .get('/categories/:idCategory', catchErrors(getCategory)
+        /*
+            #swagger.tags = ['The Categories']
+            #swagger.description = 'Endpoint to get a category by id.'
+            #swagger.parameters[idCategory] = { 
+                in: 'path', 
+                name: 'idCategory', 
+                description: 'The ID of The category', 
+                required: true, 
+                type: 'string' 
+            }
+            #swagger.responses[200] = { description: 'category found'},
+            #swagger.responses[404] = { description: 'category not found'}
+        */
+    )
 
 
     .post('/signup', passport.authenticate('signup', { session: false }),
-        async (req, res, next) => {
-            res.status(201).send({
-                message: 'Inscription réussie',
-                user: req.user
-            })
+    async (req, res, next) => {
+        res.status(201).send({
+            message: 'Inscription réussie',
+            user: req.user
         })
-
-
+    })
+    
+    
     .post('/login', (req, res, next) => {
+        /*
+            #swagger.tags = ['API root']
+            #swagger.description = 'Endpoint to the API.'
+            #swagger.parameters[email] = { 
+            in: 'path', 
+            name: 'email', 
+            description: 'The email of the user', 
+            required: true, 
+            type: 'string' 
+        }
+            #swagger.parameters[password] = { 
+            in: 'path', 
+            name: 'password', 
+            description: 'The password of the user', 
+            required: true, 
+            type: 'string' 
+        }
+      */
         passport.authenticate('login', async (err, user) => {
             try {
                 if (err || !user) {
@@ -192,14 +173,14 @@ router
                         siret_u: user.siret_u
                     }
                     const token = jwt.sign({ user: body }, process.env.JWT_SECRET)
-
+                    
                     res.json({ token, user: body })
                 })
             } catch (error) {
                 return next(error)
             }
-        })(req, res, next)
-    })
+        })(req, res, next)}
+    )
 
 
 export default router

@@ -18,7 +18,7 @@ dotenv.config()
 // création de l'application express
 const app = express()
 // Permet le traitement des json en POST
-app.use(express.json()) 
+app.use(express.json())
 
 //#endregion
 
@@ -31,52 +31,34 @@ const PORT = process.env.PORT || 3000
 //#region Cross Origin Ressource Sharing
 
 app.use(cors())
-app.options('*', cors());
+app.options('*', cors())
 
 //#endregion
 
 //#region Swagger
 
 const swaggerFile = JSON.parse(
-	await readFile(
-		new URL('./swagger-output.json', import.meta.url)
-	)
+  await readFile(
+    new URL('./swagger-output.json', import.meta.url)
+  )
 )
 
 app.use('/api-doc', swaggerUi.serve, swaggerUi.setup(swaggerFile))
-// const options = {
-//   definition: {
-//     openapi: "3.0.0",
-//     info: {
-//       title: "SkyDrone API",
-//       version: "1.0.0",
-//       description: "This is the SkyDrone project API.",
-//       termsOfService: "https://skydrone-api.herokuapp.com/terms"    
-//     },
-//     servers: [
-//       {
-//         url: "https://skydrone-api.herokuapp.com/"
-//         // url: `http://localhost:${PORT}/`
-//       }
-//     ]
-//   },
-//   apis: ["./routes/*.js"],
-// }
-// const specs = swaggerJsDoc(options)
-
-//#endregion
 
 //#region routes by default
 
-//route "/"
-app.get("/", (req, res) => {
-    res.send({
-        message: "Welcome to SkyDrone API."
-    });
-});
-
-//route swagger
-// app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(specs))
+app.get("/", (_, res) => {
+  res.send({
+    message: "Welcome to SkyDrone API."
+  })
+  /*
+          #swagger.tags = ['API root']
+          #swagger.description = 'Endpoint to the API.'
+          
+          #swagger.responses[200] = { description: "Welcome to SkyDrone API." }
+          #swagger.responses[500] = { description: "Internal server error." }
+      */
+})
 
 // middleware pour les fichiers statiques 
 //( les fichiers de build seront accessibles depuis la racine du serveur)
@@ -103,33 +85,24 @@ mongoose.connect(process.env.MONGODB, {
 
 //#region private routes
 
-app.use( 
-  '/private', 
-  passport.authenticate('jwt', { session: false }),
-  privateRoutes 
+app.use('/private', passport.authenticate('jwt', { session: false }),
+  privateRoutes
 )
 
 //#endregion
 
 //#region public routes
+app.use('/api/v1', routes)
 
-// middleware pour les routes publiques
-app.use('/api/v1',routes) 
-
-app.all('*', (req, res, next) => { 
-   next(new AppError(`Cette adresse : ${req.originalUrl} n'est pas disponible sur ce serveur.`, 404))
+app.all('*', (req, res, next) => {
+  next(new AppError(`Cette adresse : ${req.originalUrl} n'est pas disponible sur ce serveur.`, 404))
 })
 
 app.use(globalErrorHandler)
-
-
 //#endregion
-
-
 
 app.listen(PORT, () => {
   console.log("Server is running on port: %s (HTTP)", PORT)
-  
 })
-//#endregion
+
 

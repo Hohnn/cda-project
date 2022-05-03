@@ -7,283 +7,28 @@
   },
   "servers": [
     {
-      "url": "https://skydrone-api.herokuapp.com/"
-    }
-  ],
-  "tags": [
-    {
-      "name": "API root",
-      "description": "Return the API root state"
-    },
-    {
-      "name": "The Users",
-      "description": "Operations about users"
-    },
-    {
-      "name": "The Drones",
-      "description": "Everythings about our drones"
-    },
-    {
-      "name": "The Orders",
-      "description": "Operations about orders"
+      "url": "http://localhost:3000/"
     }
   ],
   "paths": {
     "/": {
       "get": {
-        "description": "",
+        "tags": [
+          "API root"
+        ],
+        "description": "Endpoint to the API.",
         "parameters": [],
         "responses": {
           "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/private/secret": {
-      "get": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "token",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
+            "description": "Welcome to SkyDrone API."
+          },
+          "500": {
+            "description": "Internal server error."
           }
         }
       }
     },
     "/private/users": {
-      "get": {
-        "description": "",
-        "parameters": [],
-        "responses": {}
-      },
-      "post": {
-        "description": "",
-        "parameters": [],
-        "responses": {}
-      }
-    },
-    "/private/users/{idUser}": {
-      "get": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "idUser",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {}
-      },
-      "delete": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "idUser",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {}
-      },
-      "patch": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "idUser",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {}
-      }
-    },
-    "/private/roles/{idRole}": {
-      "patch": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "idRole",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {}
-      },
-      "get": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "idRole",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {}
-      },
-      "delete": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "idRole",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {}
-      }
-    },
-    "/private/roles": {
-      "post": {
-        "description": "",
-        "parameters": [],
-        "responses": {}
-      },
-      "get": {
-        "description": "",
-        "parameters": [],
-        "responses": {}
-      }
-    },
-    "/private/orders": {
-      "get": {
-        "description": "",
-        "parameters": [],
-        "responses": {}
-      },
-      "post": {
-        "description": "",
-        "parameters": [],
-        "responses": {}
-      }
-    },
-    "/private/orders/{idOrder}": {
-      "get": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "idOrder",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {}
-      },
-      "patch": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "idOrder",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {}
-      },
-      "delete": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "idOrder",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {}
-      }
-    },
-    "/private/ps": {
-      "get": {
-        "description": "",
-        "parameters": [],
-        "responses": {}
-      },
-      "post": {
-        "description": "",
-        "parameters": [],
-        "responses": {}
-      }
-    },
-    "/private/ps/{idPs}": {
-      "get": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "idPs",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {}
-      },
-      "patch": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "idPs",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {}
-      },
-      "delete": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "idPs",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {}
-      }
-    },
-    "/api/v1/users": {
       "get": {
         "tags": [
           "The Users"
@@ -297,7 +42,12 @@
           "404": {
             "description": "users not found"
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       },
       "post": {
         "tags": [
@@ -322,6 +72,11 @@
             "description": "user already exists"
           }
         },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -334,7 +89,7 @@
         }
       }
     },
-    "/api/v1/users/{idUser}": {
+    "/private/users/{idUser}": {
       "get": {
         "tags": [
           "The Users"
@@ -358,7 +113,12 @@
           "404": {
             "description": "user not found"
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       },
       "delete": {
         "tags": [
@@ -383,7 +143,12 @@
           "404": {
             "description": "user not found"
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       },
       "patch": {
         "tags": [
@@ -416,26 +181,649 @@
           "404": {
             "description": "user not found"
           }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/private/drones/{idDrone}": {
+      "delete": {
+        "tags": [
+          "The Drones"
+        ],
+        "description": "Endpoint to delete a drone.",
+        "parameters": [
+          {
+            "name": "idDrone",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "iddrone",
+            "in": "path",
+            "description": "The id of the drone",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "drone deleted"
+          },
+          "404": {
+            "description": "drone not found"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "The Drones"
+        ],
+        "description": "Endpoint to update a drone by id.",
+        "parameters": [
+          {
+            "name": "idDrone",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "iddrone",
+            "in": "body",
+            "description": "update a new drone",
+            "schema": {
+              "$ref": "#/components/schemas/drone"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "drone updated"
+          },
+          "404": {
+            "description": "drone not found"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/private/drones": {
+      "post": {
+        "tags": [
+          "The Drones"
+        ],
+        "description": "Endpoint to add a new drone.",
+        "parameters": [
+          {
+            "name": "iddrone",
+            "in": "body",
+            "description": "add a new drone",
+            "schema": {
+              "$ref": "#/components/schemas/drone"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "drone added"
+          },
+          "400": {
+            "description": "drone already exists"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/drone"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/private/roles": {
+      "get": {
+        "tags": [
+          "The Roles"
+        ],
+        "description": "Endpoint to get a role.",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "all users"
+          },
+          "404": {
+            "description": "users not found"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "The Roles"
+        ],
+        "description": "Endpoint to add a new role.",
+        "parameters": [
+          {
+            "name": "idrole",
+            "in": "body",
+            "description": "add a new role",
+            "schema": {
+              "$ref": "#/components/schemas/role"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "role added"
+          },
+          "400": {
+            "description": "role already exists"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/role"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/private/roles/{idRole}": {
+      "get": {
+        "tags": [
+          "The Roles"
+        ],
+        "description": "Endpoint to get a role by id.",
+        "parameters": [
+          {
+            "name": "idRole",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "idrole",
+            "in": "path",
+            "description": "The id of The Roles",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "role found"
+          },
+          "404": {
+            "description": "role not found"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "The Roles"
+        ],
+        "description": "Endpoint to delete a role.",
+        "parameters": [
+          {
+            "name": "idRole",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "idrole",
+            "in": "path",
+            "description": "The id of The Roles",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "role deleted"
+          },
+          "404": {
+            "description": "role not found"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "The Roles"
+        ],
+        "description": "Endpoint to update a role by id.",
+        "parameters": [
+          {
+            "name": "idRole",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "idrole",
+            "in": "body",
+            "description": "update a new role",
+            "schema": {
+              "$ref": "#/components/schemas/role"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "role updated"
+          },
+          "404": {
+            "description": "role not found"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/private/categories/{idCategory}": {
+      "delete": {
+        "tags": [
+          "The Categories"
+        ],
+        "description": "Endpoint to delete a category.",
+        "parameters": [
+          {
+            "name": "idCategory",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "idcategory",
+            "in": "path",
+            "description": "The id of The Categories",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "category deleted"
+          },
+          "404": {
+            "description": "category not found"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "The Categories"
+        ],
+        "description": "Endpoint to update a category by id.",
+        "parameters": [
+          {
+            "name": "idCategory",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "idCategory",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/category"
+            },
+            "description": "update a new category"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "category updated"
+          },
+          "404": {
+            "description": "category not found"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/private/categories": {
+      "post": {
+        "tags": [
+          "The Categories"
+        ],
+        "description": "Endpoint to add a new category.",
+        "parameters": [
+          {
+            "name": "idcategory",
+            "in": "body",
+            "description": "add a new category",
+            "schema": {
+              "$ref": "#/components/schemas/category"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "category added"
+          },
+          "400": {
+            "description": "category already exists"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/category"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/private/orders": {
+      "get": {
+        "tags": [
+          "The Orders"
+        ],
+        "description": "Endpoint to get a order.",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "all orders"
+          },
+          "404": {
+            "description": "orders not found"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "The Orders"
+        ],
+        "description": "Endpoint to add a new order.",
+        "parameters": [
+          {
+            "name": "idorder",
+            "in": "body",
+            "description": "add a new order",
+            "schema": {
+              "$ref": "#/components/schemas/order"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "order added"
+          },
+          "400": {
+            "description": "order already exists"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/order"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/private/orders/{idOrder}": {
+      "get": {
+        "tags": [
+          "The Orders"
+        ],
+        "description": "Endpoint to get a order by id.",
+        "parameters": [
+          {
+            "name": "idOrder",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "idorder",
+            "in": "path",
+            "description": "The id of The Orders",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "order found"
+          },
+          "404": {
+            "description": "order not found"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "The Orders"
+        ],
+        "description": "Endpoint to update a order by id.",
+        "parameters": [
+          {
+            "name": "idOrder",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "idOrder",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/order"
+            },
+            "description": "update a new order"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "order updated"
+          },
+          "404": {
+            "description": "order not found"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "The Orders"
+        ],
+        "description": "Endpoint to delete a order.",
+        "parameters": [
+          {
+            "name": "idOrder",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "idorder",
+            "in": "path",
+            "description": "The id of The Orders",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "order deleted"
+          },
+          "404": {
+            "description": "order not found"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/users": {
+      "get": {
+        "tags": [
+          "The Users"
+        ],
+        "description": "Endpoint to get a user.",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "all users"
+          },
+          "404": {
+            "description": "users not found"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/drones": {
+      "get": {
+        "tags": [
+          "The Drones"
+        ],
+        "description": "Endpoint to get a drone.",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "all drones"
+          },
+          "404": {
+            "description": "drones not found"
+          }
         }
       }
     },
     "/api/v1/drones/{idDrone}": {
-      "patch": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "idDrone",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {}
-      },
       "get": {
-        "description": "",
+        "tags": [
+          "The Drones"
+        ],
+        "description": "Endpoint to get a drone by id.",
         "parameters": [
           {
             "name": "idDrone",
@@ -443,41 +831,26 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "The id of the drone"
           }
         ],
-        "responses": {}
-      },
-      "delete": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "idDrone",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
+        "responses": {
+          "200": {
+            "description": "drone found"
+          },
+          "404": {
+            "description": "drone not found"
           }
-        ],
-        "responses": {}
-      }
-    },
-    "/api/v1/drones": {
-      "post": {
-        "description": "",
-        "parameters": [],
-        "responses": {}
-      },
-      "get": {
-        "description": "",
-        "parameters": [],
-        "responses": {}
+        }
       }
     },
     "/api/v1/drones/categories/{idCategory}": {
       "get": {
-        "description": "",
+        "tags": [
+          "The Drones"
+        ],
+        "description": "Endpoint to get a drone category by id.",
         "parameters": [
           {
             "name": "idCategory",
@@ -485,83 +858,43 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "The id of The Categories"
           }
         ],
-        "responses": {}
-      }
-    },
-    "/api/v1/roles/{idRole}": {
-      "patch": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "idRole",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
+        "responses": {
+          "200": {
+            "description": "drone found"
+          },
+          "404": {
+            "description": "drone not found"
           }
-        ],
-        "responses": {}
-      },
-      "get": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "idRole",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {}
-      },
-      "delete": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "idRole",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {}
-      }
-    },
-    "/api/v1/roles": {
-      "post": {
-        "description": "",
-        "parameters": [],
-        "responses": {}
-      },
-      "get": {
-        "description": "",
-        "parameters": [],
-        "responses": {}
+        }
       }
     },
     "/api/v1/categories": {
       "get": {
-        "description": "",
+        "tags": [
+          "The Categories"
+        ],
+        "description": "Endpoint to get a category.",
         "parameters": [],
-        "responses": {}
-      },
-      "post": {
-        "description": "",
-        "parameters": [],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "all categories"
+          },
+          "404": {
+            "description": "categories not found"
+          }
+        }
       }
     },
     "/api/v1/categories/{idCategory}": {
       "get": {
-        "description": "",
+        "tags": [
+          "The Categories"
+        ],
+        "description": "Endpoint to get a category by id.",
         "parameters": [
           {
             "name": "idCategory",
@@ -569,94 +902,18 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "The ID of The category"
           }
         ],
-        "responses": {}
-      },
-      "patch": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "idCategory",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
+        "responses": {
+          "200": {
+            "description": "category found"
+          },
+          "404": {
+            "description": "category not found"
           }
-        ],
-        "responses": {}
-      },
-      "delete": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "idCategory",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {}
-      }
-    },
-    "/api/v1/orders": {
-      "get": {
-        "description": "",
-        "parameters": [],
-        "responses": {}
-      },
-      "post": {
-        "description": "",
-        "parameters": [],
-        "responses": {}
-      }
-    },
-    "/api/v1/orders/{idOrder}": {
-      "get": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "idOrder",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {}
-      },
-      "patch": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "idOrder",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {}
-      },
-      "delete": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "idOrder",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {}
+        }
       }
     },
     "/api/v1/signup": {
@@ -672,8 +929,30 @@
     },
     "/api/v1/login": {
       "post": {
-        "description": "",
-        "parameters": [],
+        "tags": [
+          "API root"
+        ],
+        "description": "Endpoint to the API.",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "path",
+            "description": "The email of the user",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "password",
+            "in": "path",
+            "description": "The password of the user",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -758,15 +1037,63 @@
             "type": "number",
             "example": 123
           },
-          "processState_id": {
+          "state": {
             "type": "string",
-            "example": "processState_id"
+            "example": "Available"
           }
         },
         "required": [
           "name_d",
+          "category_id",
           "description_d",
-          "pricePerDay_d"
+          "pricePerDay_d",
+          "state"
+        ]
+      },
+      "order": {
+        "type": "object",
+        "properties": {
+          "user_id": {
+            "type": "string",
+            "example": "Model A"
+          },
+          "drone_id": {
+            "type": "string",
+            "example": "category_id"
+          },
+          "startAt_o": {
+            "type": "string",
+            "example": "2022-01-01"
+          },
+          "endAt_o": {
+            "type": "string",
+            "example": "2022-12-01"
+          },
+          "report_o": {
+            "type": "string",
+            "example": "a report"
+          },
+          "createdBy_o": {
+            "type": "string",
+            "example": "idUser"
+          },
+          "createdAt_o": {
+            "type": "string",
+            "example": "2020-01-01"
+          },
+          "processState": {
+            "type": "number",
+            "example": 1
+          }
+        },
+        "required": [
+          "user_id",
+          "drone_id",
+          "startAt_o",
+          "endAt_o",
+          "report_o",
+          "createdBy_o",
+          "createdAt_o"
         ]
       },
       "role": {

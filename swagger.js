@@ -6,14 +6,14 @@ const doc = {
 		title: 'SkyDrone API',
 		description: 'Open documentation for the SkyDrone project API.'
 	},
-	host: 'skydrone-api.herokuapp.com',
 	basepath: '/',
-	schemes: ['http','https'],
+	schemes: ['http', 'https'],
 	consumes: ['application/json'],
-    produces: ['application/json'],
+	produces: ['application/json'],
 	servers: [
 		{
-			url: 'https://skydrone-api.herokuapp.com/'
+			url: 'https://skydrone-api.herokuapp.com/',
+			url: 'http://localhost:3000/'
 		}
 	],
 	security: {
@@ -26,24 +26,6 @@ const doc = {
 			bearerFormat: 'JWT'
 		}
 	},
-	tags: [
-		{
-			"name": "API root",
-			"description": "Return the API root state"
-		},
-		{
-			"name": "The Users",
-			"description": "Operations about users"
-		},
-		{
-			"name": "The Drones",
-			"description": "Everythings about our drones"
-		},
-		{
-			"name": "The Orders",
-			"description": "Operations about orders"
-		}
-	],
 	components: {
 		schemas: {
 			user: {
@@ -59,10 +41,20 @@ const doc = {
 			},
 			drone: {
 				$name_d: 'Model A',
-				category_id: 'category_id',
+				$category_id: 'category_id',
 				$description_d: 'A',
 				$pricePerDay_d: 123,
-				processState_id: 'processState_id'
+				$state: 'Available'
+			},
+			order: {
+				$user_id: 'Model A',
+				$drone_id: 'category_id',
+				$startAt_o: '2022-01-01',
+				$endAt_o: '2022-12-01',
+				$report_o: 'a report',
+				$createdBy_o: 'idUser',
+				$createdAt_o: '2020-01-01',
+				processState: 1
 			},
 			role: {
 				$name_r: 'administrator',
