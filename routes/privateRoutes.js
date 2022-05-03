@@ -110,9 +110,9 @@ router
             #swagger.security = [{
                 "bearerAuth": []
             }]
-            #swagger.parameters[iddrone] = {
+            #swagger.parameters[idDrone] = {
                 in: 'path',
-                name: 'iddrone',
+                name: 'idDrone',
                 description: 'The id of the drone',
                 required: true,
                 type: 'string'
@@ -128,7 +128,7 @@ router
             #swagger.security = [{
                 "bearerAuth": []
             }]
-            #swagger.parameters['iddrone'] = { 
+            #swagger.parameters['idDrone'] = { 
                 in: 'body',
                 description: 'update a new drone',
                 schema: { $ref: "#/components/schemas/drone" }
@@ -145,21 +145,10 @@ router
             #swagger.security = [{
                 "bearerAuth": []
             }]
-            #swagger.parameters['iddrone'] = { 
+            #swagger.parameters['Drone'] = { 
                 in: 'body', 
                 description: 'add a new drone', 
                 schema: { $ref: "#/components/schemas/drone" }
-            }
-    
-            #swagger.requestBody = {
-                required: true,
-                content: {
-                    "application/json": {
-                        schema: {
-                            $ref: "#/components/schemas/drone"
-                        }  
-                    }
-                }
             }
     
             #swagger.responses[201] = { description: 'drone added' }
@@ -174,8 +163,8 @@ router
             #swagger.security = [{
                 "bearerAuth": []
             }]
-            #swagger.responses[200] = { description: 'all users' }
-            #swagger.responses[404] = { description: 'users not found' }
+            #swagger.responses[200] = { description: 'all roles' }
+            #swagger.responses[404] = { description: 'roles not found' }
         */
     )
     .get('/roles/:idRole', catchErrors(getRole)
@@ -185,10 +174,10 @@ router
             #swagger.security = [{
                 "bearerAuth": []
             }]
-            #swagger.parameters[idrole] = { 
+            #swagger.parameters[idRole] = { 
                 in: 'path', 
-                name: 'idrole', 
-                description: 'The id of The Roles', 
+                name: 'idRole', 
+                description: 'The id of the roles', 
                 required: true, 
                 type: 'string' 
             }
@@ -203,10 +192,10 @@ router
             #swagger.security = [{
                 "bearerAuth": []
             }]
-            #swagger.parameters[idrole] = {
+            #swagger.parameters[idRole] = {
                 in: 'path',
-                name: 'idrole',
-                description: 'The id of The Roles',
+                name: 'idRole',
+                description: 'The id of the roles',
                 required: true,
                 type: 'string'
             }
@@ -221,7 +210,7 @@ router
             #swagger.security = [{
                 "bearerAuth": []
             }]
-            #swagger.parameters['idrole'] = { 
+            #swagger.parameters['Role'] = { 
                in: 'body',
                description: 'update a new role',
                schema: { $ref: "#/components/schemas/role" }
@@ -238,21 +227,10 @@ router
             #swagger.security = [{
                 "bearerAuth": []
             }]
-            #swagger.parameters['idrole'] = { 
+            #swagger.parameters['Role'] = { 
                 in: 'body', 
                 description: 'add a new role', 
                 schema: { $ref: "#/components/schemas/role" }
-            }
-    
-            #swagger.requestBody = {
-                required: true,
-                content: {
-                    "application/json": {
-                        schema: {
-                            $ref: "#/components/schemas/role"
-                        }  
-                    }
-                }
             }
     
             #swagger.responses[201] = { description: 'role added' }
@@ -266,10 +244,10 @@ router
             #swagger.security = [{
                 "bearerAuth": []
             }]
-            #swagger.parameters[idcategory] = {
+            #swagger.parameters[idCategory] = {
                 in: 'path',
-                name: 'idcategory',
-                description: 'The id of The Categories',
+                name: 'idCategory',
+                description: 'The id of the category',
                 required: true,
                 type: 'string'
             }
@@ -284,10 +262,10 @@ router
             #swagger.security = [{
                 "bearerAuth": []
             }]
-            #swagger.parameters['idCategory'] = { 
+            #swagger.parameters['Category'] = { 
                in: 'body',
-               description: 'update a new category',
-               schema: { $ref: "#/components/schemas/category" }
+               description: 'update an existing category',
+               schema: { $ref: "#/components/schemas/categories" }
             }
     
             #swagger.responses[200] = { description: 'category updated' }
@@ -301,21 +279,10 @@ router
             #swagger.security = [{
                 "bearerAuth": []
             }]
-            #swagger.parameters['idcategory'] = { 
+            #swagger.parameters['Category'] = { 
                 in: 'body', 
                 description: 'add a new category', 
-                schema: { $ref: "#/components/schemas/category" }
-            }
-    
-            #swagger.requestBody = {
-                required: true,
-                content: {
-                    "application/json": {
-                        schema: {
-                            $ref: "#/components/schemas/category"
-                        }  
-                    }
-                }
+                schema: { $ref: "#/components/schemas/categories" }
             }
     
             #swagger.responses[201] = { description: 'category added' }
@@ -337,10 +304,10 @@ router
         /*
             #swagger.tags = ['The Orders']
             #swagger.description = 'Endpoint to get a order by id.'
-            #swagger.parameters[idorder] = { 
+            #swagger.parameters[idOrder] = { 
                 in: 'path', 
-                name: 'idorder', 
-                description: 'The id of The Orders', 
+                name: 'idOrder', 
+                description: 'The id of the order', 
                 required: true, 
                 type: 'string' 
             }
@@ -358,7 +325,7 @@ router
             #swagger.security = [{
                 "bearerAuth": []
             }]
-            #swagger.parameters['idorder'] = { 
+            #swagger.parameters['Order'] = { 
                 in: 'body', 
                 description: 'add a new order', 
                 schema: { $ref: "#/components/schemas/order" }
@@ -386,9 +353,10 @@ router
             #swagger.security = [{
                 "bearerAuth": []
             }]
-            #swagger.parameters['idOrder'] = { 
+            #swagger.parameters['Order Object'] = { 
                 in: 'body',
-                description: 'update a new order',
+                type: 'object',
+                description: 'Update an existing order',
                 schema: { $ref: "#/components/schemas/order" }
             }
     
@@ -400,10 +368,10 @@ router
         /*
             #swagger.tags = ['The Orders']
             #swagger.description = 'Endpoint to delete a order.'
-            #swagger.parameters[idorder] = {
+            #swagger.parameters[idOrder] = {
                 in: 'path',
-                name: 'idorder',
-                description: 'The id of The Orders',
+                name: 'idOrder',
+                description: 'The id of the order to be deleted',
                 required: true,
                 type: 'string'
             }

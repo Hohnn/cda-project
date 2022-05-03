@@ -202,16 +202,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
-          },
-          {
-            "name": "iddrone",
-            "in": "path",
-            "description": "The id of the drone",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
+            },
+            "description": "The id of the drone"
           }
         ],
         "responses": {
@@ -243,12 +235,13 @@
             }
           },
           {
-            "name": "iddrone",
+            "name": "idDrone",
             "in": "body",
-            "description": "update a new drone",
+            "required": true,
             "schema": {
               "$ref": "#/components/schemas/drone"
-            }
+            },
+            "description": "update a new drone"
           }
         ],
         "responses": {
@@ -274,7 +267,7 @@
         "description": "Endpoint to add a new drone.",
         "parameters": [
           {
-            "name": "iddrone",
+            "name": "Drone",
             "in": "body",
             "description": "add a new drone",
             "schema": {
@@ -294,17 +287,7 @@
           {
             "bearerAuth": []
           }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/drone"
-              }
-            }
-          }
-        }
+        ]
       }
     },
     "/private/roles": {
@@ -355,17 +338,7 @@
           {
             "bearerAuth": []
           }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/role"
-              }
-            }
-          }
-        }
+        ]
       }
     },
     "/private/roles/{idRole}": {
@@ -381,16 +354,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
-          },
-          {
-            "name": "idrole",
-            "in": "path",
-            "description": "The id of The Roles",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
+            },
+            "description": "The id of the roles"
           }
         ],
         "responses": {
@@ -419,16 +384,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
-          },
-          {
-            "name": "idrole",
-            "in": "path",
-            "description": "The id of The Roles",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
+            },
+            "description": "The id of the roles"
           }
         ],
         "responses": {
@@ -460,7 +417,7 @@
             }
           },
           {
-            "name": "idrole",
+            "name": "Role",
             "in": "body",
             "description": "update a new role",
             "schema": {
@@ -496,16 +453,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
-          },
-          {
-            "name": "idcategory",
-            "in": "path",
-            "description": "The id of The Categories",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
+            },
+            "description": "The id of the category"
           }
         ],
         "responses": {
@@ -537,13 +486,12 @@
             }
           },
           {
-            "name": "idCategory",
+            "name": "Category",
             "in": "body",
-            "required": true,
+            "description": "update an existing category",
             "schema": {
-              "$ref": "#/components/schemas/category"
-            },
-            "description": "update a new category"
+              "$ref": "#/components/schemas/categories"
+            }
           }
         ],
         "responses": {
@@ -569,11 +517,11 @@
         "description": "Endpoint to add a new category.",
         "parameters": [
           {
-            "name": "idcategory",
+            "name": "Category",
             "in": "body",
             "description": "add a new category",
             "schema": {
-              "$ref": "#/components/schemas/category"
+              "$ref": "#/components/schemas/categories"
             }
           }
         ],
@@ -589,17 +537,7 @@
           {
             "bearerAuth": []
           }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/category"
-              }
-            }
-          }
-        }
+        ]
       }
     },
     "/private/orders": {
@@ -630,7 +568,7 @@
         "description": "Endpoint to add a new order.",
         "parameters": [
           {
-            "name": "idorder",
+            "name": "Order",
             "in": "body",
             "description": "add a new order",
             "schema": {
@@ -676,16 +614,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
-          },
-          {
-            "name": "idorder",
-            "in": "path",
-            "description": "The id of The Orders",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
+            },
+            "description": "The id of the order"
           }
         ],
         "responses": {
@@ -717,13 +647,12 @@
             }
           },
           {
-            "name": "idOrder",
+            "name": "Order Object",
             "in": "body",
-            "required": true,
+            "description": "Update an existing order",
             "schema": {
               "$ref": "#/components/schemas/order"
-            },
-            "description": "update a new order"
+            }
           }
         ],
         "responses": {
@@ -752,16 +681,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
-          },
-          {
-            "name": "idorder",
-            "in": "path",
-            "description": "The id of The Orders",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
+            },
+            "description": "The id of the order to be deleted"
           }
         ],
         "responses": {
