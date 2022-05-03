@@ -35,16 +35,6 @@ app.options('*', cors())
 
 //#endregion
 
-//#region Swagger
-
-const swaggerFile = JSON.parse(
-  await readFile(
-    new URL('./swagger-output.json', import.meta.url)
-  )
-)
-
-app.use('/api-doc', swaggerUi.serve, swaggerUi.setup(swaggerFile))
-
 //#region routes by default
 
 app.get("/", (_, res) => {
@@ -52,12 +42,12 @@ app.get("/", (_, res) => {
     message: "Welcome to SkyDrone API."
   })
   /*
-          #swagger.tags = ['API root']
-          #swagger.description = 'Endpoint to the API.'
-          
-          #swagger.responses[200] = { description: "Welcome to SkyDrone API." }
-          #swagger.responses[500] = { description: "Internal server error." }
-      */
+  #swagger.tags = ['API root']
+  #swagger.description = 'Endpoint to the API.'
+  
+  #swagger.responses[200] = { description: "Welcome to SkyDrone API." }
+  #swagger.responses[500] = { description: "Internal server error." }
+  */
 })
 
 // middleware pour les fichiers statiques 
@@ -86,9 +76,20 @@ mongoose.connect(process.env.MONGODB, {
 //#region private routes
 
 app.use('/private', passport.authenticate('jwt', { session: false }),
-  privateRoutes
+privateRoutes
 )
 
+//#endregion
+
+//#region Swagger
+  
+const swaggerFile = JSON.parse(
+  await readFile(
+    new URL('./swagger-output.json', import.meta.url)
+  )
+)
+
+app.use('/api-doc', swaggerUi.serve, swaggerUi.setup(swaggerFile))
 //#endregion
 
 //#region public routes
@@ -101,8 +102,10 @@ app.all('*', (req, res, next) => {
 app.use(globalErrorHandler)
 //#endregion
 
+
+
 app.listen(PORT, () => {
-  console.log("Server is running on port: %s (HTTP)", PORT)
+    console.log("Server is running on port: %s (HTTP)", PORT)
 })
 
 

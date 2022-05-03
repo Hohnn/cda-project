@@ -21,9 +21,9 @@ const doc = {
 	},
 	securityDefinitions: {
 		bearerAuth: {
-			type: 'http',
-			scheme: 'bearer',
-			bearerFormat: 'JWT'
+			type: 'apiKey',
+			name: 'Authorization',
+			in: 'header'
 		}
 	},
 	components: {
@@ -65,6 +65,10 @@ const doc = {
 				$name_cat: 'D',
 				$description_cat: 'les aéronefs utilisés pour un travail aérien d’une masse au décollage inférieure à 2 Kg (structure + charge)',
 				$key_cat: 1
+			},
+			login: {
+				$email: '',
+				$password: ''
 			}
 		}
 	}

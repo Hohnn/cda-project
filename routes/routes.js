@@ -5,41 +5,17 @@ import jwt from 'jsonwebtoken'
 import passport from 'passport'
 import { catchErrors } from '../helpers.js'
 import {
-    getRoles,
-    getRole,
-    addRole,
-    updateRole,
-    deleteRole
-} from '../controllers/roleControllers.js'
-import {
-    getUsers,
-    getUser,
-    addUser,
-    deleteUser,
-    updateUser
+    getUsers
 } from '../controllers/userControllers.js'
 import {
     getAllCategories,
-    getCategory,
-    addCategory,
-    deleteCategory,
-    updateCategory
+    getCategory
 } from '../controllers/categoryControllers.js'
 import {
-    addDrone,
     getAllDrones,
-    updateDrone,
-    deleteDrone,
     getDrone,
     getDroneByCategory
 } from '../controllers/droneControllers.js'
-import {
-    addOrder,
-    getAllOrders,
-    updateOrder,
-    deleteOrder,
-    getOrderById
-} from '../controllers/orderControllers.js'
 
 const router = express.Router()
 
@@ -122,31 +98,24 @@ router
 
 
     .post('/signup', passport.authenticate('signup', { session: false }),
-    async (req, res, next) => {
-        res.status(201).send({
-            message: 'Inscription réussie',
-            user: req.user
+        async (req, res, next) => {
+            res.status(201).send({
+                message: 'Inscription réussie',
+                user: req.user
+            })
         })
-    })
-    
-    
+
+
     .post('/login', (req, res, next) => {
         /*
             #swagger.tags = ['API root']
             #swagger.description = 'Endpoint to the API.'
-            #swagger.parameters[email] = { 
-            in: 'path', 
+            #swagger.parameters[login] = { 
             name: 'email', 
             description: 'The email of the user', 
+
             required: true, 
-            type: 'string' 
-        }
-            #swagger.parameters[password] = { 
-            in: 'path', 
-            name: 'password', 
-            description: 'The password of the user', 
-            required: true, 
-            type: 'string' 
+            type: 'object' 
         }
       */
         passport.authenticate('login', async (err, user) => {
@@ -173,13 +142,16 @@ router
                         siret_u: user.siret_u
                     }
                     const token = jwt.sign({ user: body }, process.env.JWT_SECRET)
-                    
-                    res.json({ token, user: body })
+
+                    res.json({ token, user: body, message: 'Connexion réussie' })
+
                 })
             } catch (error) {
                 return next(error)
             }
-        })(req, res, next)}
+
+        })(req, res, next)
+    }
     )
 
 

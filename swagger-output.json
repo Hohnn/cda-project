@@ -299,10 +299,10 @@
         "parameters": [],
         "responses": {
           "200": {
-            "description": "all users"
+            "description": "all roles"
           },
           "404": {
-            "description": "users not found"
+            "description": "roles not found"
           }
         },
         "security": [
@@ -318,7 +318,7 @@
         "description": "Endpoint to add a new role.",
         "parameters": [
           {
-            "name": "idrole",
+            "name": "Role",
             "in": "body",
             "description": "add a new role",
             "schema": {
@@ -857,20 +857,11 @@
         "parameters": [
           {
             "name": "email",
-            "in": "path",
             "description": "The email of the user",
             "required": true,
+            "in": "query",
             "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "password",
-            "in": "path",
-            "description": "The password of the user",
-            "required": true,
-            "schema": {
-              "type": "string"
+              "type": "object"
             }
           }
         ],
@@ -1060,13 +1051,31 @@
           "description_cat",
           "key_cat"
         ]
+      },
+      "login": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": ""
+          },
+          "password": {
+            "type": "string",
+            "example": ""
+          }
+        },
+        "required": [
+          "email",
+          "password"
+        ]
       }
     },
     "securitySchemes": {
       "bearerAuth": {
-        "type": "http",
+        "type": "apiKey",
         "scheme": "bearer",
-        "bearerFormat": "JWT"
+        "in": "url",
+        "name": "Authorization"
       }
     }
   },
