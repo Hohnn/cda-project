@@ -24,6 +24,9 @@ const doc = {
 			type: 'apiKey',
 			name: 'Authorization',
 			in: 'header'
+			/*
+			Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjYyMjdkZDQ4Y2FhMDA2MmMxY2NlNjE0ZiIsImVtYWlsIjoiZW1haWwyQGVtYWlsLmZyIiwiZmlyc3ROYW1lX3UiOiJmaXJzdG5hbWUiLCJsYXN0TmFtZV91IjoibGFzdG5hbWUiLCJrZXlfciI6MCwiY29tcGFueV91IjoiY29tcGFueVUiLCJwaG9uZV91IjoicGhvbmUiLCJhZGRyZXNzX3UiOiJhZGRyZXNzIiwic2lyZXRfdSI6InNpcmV0In0sImlhdCI6MTY1MTY3NDY2NH0.F-XWLN311xbqhMS5xXrEE_yFS9x2SQlETNXhoGUIdqg
+			*/
 		}
 	},
 	components: {
@@ -51,10 +54,9 @@ const doc = {
 				$drone_id: 'category_id',
 				$startAt_o: '2022-01-01',
 				$endAt_o: '2022-12-01',
-				$report_o: 'a report',
+				report_o: 'a report',
 				$createdBy_o: 'idUser',
-				$createdAt_o: '2020-01-01',
-				processState: 1
+				updateBy_o: 'idUser'
 			},
 			role: {
 				$name_r: 'administrator',
@@ -66,9 +68,8 @@ const doc = {
 				$description_cat: 'les aéronefs utilisés pour un travail aérien d’une masse au décollage inférieure à 2 Kg (structure + charge)',
 				$key_cat: 1
 			},
-			login: {
-				$email: '',
-				$password: ''
+			qrCodes: {
+				$base_url: "http://localhost:3000/api/v1/drones/61fa5c9665b3c0001671b770"
 			}
 		}
 	}

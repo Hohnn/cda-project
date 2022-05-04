@@ -16,6 +16,7 @@ import {
     getDrone,
     getDroneByCategory
 } from '../controllers/droneControllers.js'
+import { getQrCode, addQrCode, getAllQrCodes } from "../controllers/qrCodeController.js"
 
 const router = express.Router()
 
@@ -24,10 +25,7 @@ router
         /*
             #swagger.tags = ['The Users']
             #swagger.description = 'Endpoint to get a user.'
-            #swagger.security = [{
-                "bearerAuth": []
-            }]
-    
+            
             #swagger.responses[200] = { description: 'all users' }
             #swagger.responses[404] = { description: 'users not found' }
         */
@@ -95,8 +93,47 @@ router
             #swagger.responses[404] = { description: 'category not found'}
         */
     )
+    .get('/qrcodes', catchErrors(getAllQrCodes)
 
+        /*
+            #swagger.tags = ['The QR Codes']
+            #swagger.description = 'Endpoint to get all QR Codes.'
 
+            #swagger.responses[200] = { description: 'all QR Codes' }
+            #swagger.responses[404] = { description: 'QR Codes not found' }
+        */
+    )
+    .get('/qrcode/:idQrCode', catchErrors(getQrCode)
+        /*
+                #swagger.tags = ['The QR Codes']
+                #swagger.description = 'Endpoint to get a QR Code by id.'
+                #swagger.parameters[idQrCode] = { 
+                    in: 'path', 
+                    name: 'idQrCode', 
+                    description: 'The ID of The QR Codes', 
+                    required: true, 
+                    type: 'string' 
+                }
+                #swagger.responses[200] = { description: 'QR Code found'},
+                #swagger.responses[404] = { description: 'QR Code not found'}
+            */
+    )
+    .post('/qrcode', catchErrors(addQrCode)
+        /*
+                #swagger.tags = ['The QR Codes']
+                #swagger.description = 'Endpoint to add a new QR Code.'
+                #swagger.parameters['QrCode'] = { 
+                    name: 'QrCode',
+                    description: 'add a new QR Code', 
+                    required: true,
+                    schema: { $ref: "#/components/schemas/qrCodes" }
+                }
+                #swagger.responses[200] = { description: 'QR Code created'},
+                #swagger.responses[400] = { description: 'QR Code not created'}
+                
+                */
+    )
+    // #swagger.ignore = true
     .post('/signup', passport.authenticate('signup', { session: false }),
         async (req, res, next) => {
             res.status(201).send({
@@ -106,18 +143,8 @@ router
         })
 
 
+    // #swagger.ignore = true
     .post('/login', (req, res, next) => {
-        /*
-            #swagger.tags = ['API root']
-            #swagger.description = 'Endpoint to the API.'
-            #swagger.parameters[login] = { 
-            name: 'email', 
-            description: 'The email of the user', 
-
-            required: true, 
-            type: 'object' 
-        }
-      */
         passport.authenticate('login', async (err, user) => {
             try {
                 if (err || !user) {

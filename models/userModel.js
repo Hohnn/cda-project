@@ -45,19 +45,15 @@ const UserSchema = new mongoose.Schema({
         type: Schema.Types.ObjectId,
         ref: 'User'
     },
-    createAt_u: {
-        type: Date,
-        default: Date.now
-    },
     updateBy_id: {
         type: Schema.Types.ObjectId,
         ref: 'User'
     },
-    updateAt_u: {
-        type: Date,
-        default: Date.now
-    }
-})
+
+},
+    {
+        timestamps: true
+    })
 
 // Pré Hook - actions avant l'enregistrement dans la base de données MongoDB
 //hashage de mot de passe:
@@ -67,7 +63,7 @@ UserSchema.pre('save', async function (next) {
         user.password = await bcrypt.hash(user.password, 8)
     }
     next()
-} )
+})
 
 // Ajouter une méthode pour vérifier le mot de passe
 UserSchema.methods.isValidPassword = async function (password) {
@@ -94,8 +90,6 @@ UserSchema.statics.findByCredentials = async (email, password) => {
     }
     return user
 }
-
-
 
 const UserModel = mongoose.model('User', UserSchema)
 

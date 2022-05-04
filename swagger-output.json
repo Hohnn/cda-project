@@ -647,8 +647,9 @@
             }
           },
           {
-            "name": "Order Object",
+            "name": "Order",
             "in": "body",
+            "required": true,
             "description": "Update an existing order",
             "schema": {
               "$ref": "#/components/schemas/order"
@@ -714,12 +715,7 @@
           "404": {
             "description": "users not found"
           }
-        },
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ]
+        }
       }
     },
     "/api/v1/drones": {
@@ -837,40 +833,73 @@
         }
       }
     },
-    "/api/v1/signup": {
-      "post": {
-        "description": "",
+    "/api/v1/qrcodes": {
+      "get": {
+        "tags": [
+          "The QR Codes"
+        ],
+        "description": "Endpoint to get all QR Codes.",
         "parameters": [],
         "responses": {
-          "201": {
-            "description": "Created"
+          "200": {
+            "description": "all QR Codes"
+          },
+          "404": {
+            "description": "QR Codes not found"
           }
         }
       }
     },
-    "/api/v1/login": {
-      "post": {
+    "/api/v1/qrcode/{idQrCode}": {
+      "get": {
         "tags": [
-          "API root"
+          "The QR Codes"
         ],
-        "description": "Endpoint to the API.",
+        "description": "Endpoint to get a QR Code by id.",
         "parameters": [
           {
-            "name": "email",
-            "description": "The email of the user",
+            "name": "idQrCode",
+            "in": "path",
             "required": true,
-            "in": "query",
             "schema": {
-              "type": "object"
-            }
+              "type": "string"
+            },
+            "description": "The ID of The QR Codes"
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "QR Code found"
+          },
+          "404": {
+            "description": "QR Code not found"
+          }
+        }
+      }
+    },
+    "/api/v1/qrcode": {
+      "post": {
+        "tags": [
+          "The QR Codes"
+        ],
+        "description": "Endpoint to add a new QR Code.",
+        "parameters": [
+          {
+            "name": "QrCode",
+            "description": "add a new QR Code",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/qrCodes"
+            },
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "QR Code created"
           },
           "400": {
-            "description": "Bad Request"
+            "description": "QR Code not created"
           }
         }
       }
@@ -989,13 +1018,9 @@
             "type": "string",
             "example": "idUser"
           },
-          "createdAt_o": {
+          "updateBy_o": {
             "type": "string",
-            "example": "2020-01-01"
-          },
-          "processState": {
-            "type": "number",
-            "example": 1
+            "example": "idUser"
           }
         },
         "required": [
@@ -1003,9 +1028,7 @@
           "drone_id",
           "startAt_o",
           "endAt_o",
-          "report_o",
-          "createdBy_o",
-          "createdAt_o"
+          "createdBy_o"
         ]
       },
       "role": {
@@ -1052,30 +1075,24 @@
           "key_cat"
         ]
       },
-      "login": {
+      "qrCodes": {
         "type": "object",
         "properties": {
-          "email": {
+          "base_url": {
             "type": "string",
-            "example": ""
-          },
-          "password": {
-            "type": "string",
-            "example": ""
+            "example": "http://localhost:3000/api/v1/drones/61fa5c9665b3c0001671b770"
           }
         },
         "required": [
-          "email",
-          "password"
+          "base_url"
         ]
       }
     },
     "securitySchemes": {
       "bearerAuth": {
         "type": "apiKey",
-        "scheme": "bearer",
-        "in": "url",
-        "name": "Authorization"
+        "name": "Authorization",
+        "in": "header"
       }
     }
   },

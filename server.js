@@ -11,6 +11,9 @@ import { readFile } from 'fs/promises'
 import cors from 'cors'
 import privateRoutes from './routes/privateRoutes.js'
 
+import bodyparser from 'body-parser'
+import qrcode from 'qrcode'
+
 
 //#region Express
 dotenv.config()
@@ -20,6 +23,38 @@ const app = express()
 // Permet le traitement des json en POST
 app.use(express.json())
 
+//#endregion
+
+//#region QrCode
+
+//Use express package to set our template engine (view engine) 
+//and the body-parser middleware for parsing bodies 
+//from URL and JSON objects.
+
+app.set("view engine", "ejs")
+app.use(bodyparser.urlencoded({ extended: false }))
+app.use(bodyparser.json())
+
+// Simple routing to the index.ejs file
+/* #swagger.ignore = true*/
+// app.get("/qr", (req, res) => {
+//   res.render("index")
+// })
+
+// Blank input
+// Incase of blank in the index.ejs file, return error 
+// Error  - Empty Data!
+
+// app.post("/scan", (req, res) => {
+//   const url = req.body.url
+
+//   if (url.length === 0) res.send("Empty Data!")
+//   qrcode.toDataURL(url, (err, src) => {
+//     if (err) res.send("Error occured")
+
+//     res.render("scan", { src })
+//   })
+// })
 //#endregion
 
 //#region PORT
@@ -76,13 +111,13 @@ mongoose.connect(process.env.MONGODB, {
 //#region private routes
 
 app.use('/private', passport.authenticate('jwt', { session: false }),
-privateRoutes
+  privateRoutes
 )
 
 //#endregion
 
 //#region Swagger
-  
+
 const swaggerFile = JSON.parse(
   await readFile(
     new URL('./swagger-output.json', import.meta.url)
@@ -105,7 +140,7 @@ app.use(globalErrorHandler)
 
 
 app.listen(PORT, () => {
-    console.log("Server is running on port: %s (HTTP)", PORT)
+  console.log("Server is running on port: %s (HTTP)", PORT)
 })
 
 

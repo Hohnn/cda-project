@@ -13,7 +13,8 @@ const CategorySchema = new mongoose.Schema({
     },
     key_cat: {
         type: Number,
-        required: [true, 'Key category is required']    }
+        required: [true, 'Key category is required']
+    }
 })
 
 const CategoryModel = mongoose.model('Category', CategorySchema)

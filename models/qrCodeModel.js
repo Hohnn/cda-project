@@ -1,0 +1,21 @@
+import Mongoose from "mongoose"
+
+const qrCodeSchema = new Mongoose.Schema({
+    base_url: {
+        type: String,
+        unique: true,
+        required: [true, 'Url is required'],
+        trim: true
+    },
+    qr_code: {
+        type: String,
+        unique: true
+    }
+},
+    {
+        timestamps: true
+    }
+)
+
+const QrCodeModel = Mongoose.model('QrCode', qrCodeSchema)
+export default QrCodeModel

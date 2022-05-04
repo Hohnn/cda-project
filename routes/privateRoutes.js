@@ -5,7 +5,6 @@ import { getRoles, getRole, addRole, updateRole, deleteRole } from '../controlle
 import { getUsers, getUser, addUser, deleteUser, updateUser } from '../controllers/userControllers.js'
 import { addCategory, deleteCategory, updateCategory } from '../controllers/categoryControllers.js'
 import { addDrone, updateDrone, deleteDrone } from '../controllers/droneControllers.js'
-
 const router = express.Router()
 
 router
@@ -353,9 +352,10 @@ router
             #swagger.security = [{
                 "bearerAuth": []
             }]
-            #swagger.parameters['Order Object'] = { 
+            #swagger.parameters['Order'] = { 
                 in: 'body',
                 type: 'object',
+                required: true,
                 description: 'Update an existing order',
                 schema: { $ref: "#/components/schemas/order" }
             }
@@ -382,6 +382,6 @@ router
             #swagger.responses[404] = { description: 'order not found' }
         */
     )
-
+    
 
 export default router
