@@ -3,16 +3,12 @@ import mongoose from 'mongoose'
 const RoleSchema = new mongoose.Schema({
     name_r: {
         type: String,
-        required: [true, 'Name is required'],
-        lowercase: true
-    },
-    description_r: {
-        type: String,
-        required: [true, 'Description is required'],
-        lowercase: true
+        enum: ['admin', 'user', 'customer'],
+        required: [true, 'Name is required']
     },
     key_r: {
         type: Number,
+        enum: [1, 2, 3],
         required: [true, 'Key is required']
     }
 })

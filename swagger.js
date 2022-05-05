@@ -21,12 +21,9 @@ const doc = {
 	},
 	securityDefinitions: {
 		bearerAuth: {
-			type: 'apiKey',
-			name: 'Authorization',
-			in: 'header'
-			/*
-			Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjYyMjdkZDQ4Y2FhMDA2MmMxY2NlNjE0ZiIsImVtYWlsIjoiZW1haWwyQGVtYWlsLmZyIiwiZmlyc3ROYW1lX3UiOiJmaXJzdG5hbWUiLCJsYXN0TmFtZV91IjoibGFzdG5hbWUiLCJrZXlfciI6MCwiY29tcGFueV91IjoiY29tcGFueVUiLCJwaG9uZV91IjoicGhvbmUiLCJhZGRyZXNzX3UiOiJhZGRyZXNzIiwic2lyZXRfdSI6InNpcmV0In0sImlhdCI6MTY1MTY3NDY2NH0.F-XWLN311xbqhMS5xXrEE_yFS9x2SQlETNXhoGUIdqg
-			*/
+			type: 'http',
+			scheme: 'bearer',
+			bearerFormat: 'JWT'
 		}
 	},
 	components: {
@@ -56,11 +53,11 @@ const doc = {
 				$endAt_o: '2022-12-01',
 				report_o: 'a report',
 				$createdBy_o: 'idUser',
-				updateBy_o: 'idUser'
+				updateBy_o: 'idUser',
+				state_o: 'pending'
 			},
 			role: {
 				$name_r: 'administrator',
-				$description_r: 'Create Read Update Delete any data',
 				$key_r: 1
 			},
 			categories: {
@@ -68,8 +65,9 @@ const doc = {
 				$description_cat: 'les aéronefs utilisés pour un travail aérien d’une masse au décollage inférieure à 2 Kg (structure + charge)',
 				$key_cat: 1
 			},
-			qrCodes: {
-				$base_url: "http://localhost:3000/api/v1/drones/61fa5c9665b3c0001671b770"
+			qrCode: {
+				$src: "http://localhost:3000/api/v1/drones/61fa5c9665b3c0001671b770",
+				qr_code:''
 			}
 		}
 	}

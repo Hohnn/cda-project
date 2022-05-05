@@ -125,8 +125,10 @@ const swaggerFile = JSON.parse(
 )
 
 app.use('/api-doc', swaggerUi.serve, swaggerUi.setup(swaggerFile))
-//#endregion
 
+// app.use('/api-doc',passport.authenticate('swagger', { session: false }), swaggerUi.serve, swaggerUi.setup(swaggerFile))
+
+//#endregion
 //#region public routes
 app.use('/api/v1', routes)
 

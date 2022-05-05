@@ -1,10 +1,10 @@
 import Mongoose from "mongoose"
 
 const qrCodeSchema = new Mongoose.Schema({
-    base_url: {
+    src: {
         type: String,
         unique: true,
-        required: [true, 'Url is required'],
+        required: [true, 'Source in URL format is required'],
         trim: true
     },
     qr_code: {

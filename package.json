@@ -5,9 +5,8 @@
   "main": "server.js",
   "scripts": {
     "start": "node swagger.js && nodemon server.js",
-    "doc": "node swagger.js",
     "debug": "ndb server.js",
-    "test": "jest --forceExit --detectOpenHandles --verbose"
+    "test": "jest --forceExit --verbose"
   },
   "author": "CDA_Team",
   "license": "ISC",

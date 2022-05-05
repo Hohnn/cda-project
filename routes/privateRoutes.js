@@ -1,5 +1,5 @@
 import express from "express"
-import { addOrder, getAllOrders, updateOrder, deleteOrder, getOrderById } from '../controllers/orderControllers.js'
+import { getOrdersByUserId, addOrder, getAllOrders, updateOrder, deleteOrder, getOrderById } from '../controllers/orderControllers.js'
 import { catchErrors } from '../helpers.js'
 import { getRoles, getRole, addRole, updateRole, deleteRole } from '../controllers/roleControllers.js'
 import { getUsers, getUser, addUser, deleteUser, updateUser } from '../controllers/userControllers.js'
@@ -154,7 +154,18 @@ router
             #swagger.responses[400] = { description: 'drone already exists' }
         */
     )
-
+    .get('/orders/user/:idUser', catchErrors(getOrdersByUserId)
+    /*
+            #swagger.tags = ['The Orders']
+            #swagger.description = 'Endpoint to get all orders by user id.'
+            #swagger.security = [{
+                "bearerAuth": []
+            }]
+            #swagger.responses[200] = { description: 'orders found' }
+            #swagger.responses[400] = { description: 'error during recovering orders' }
+            #swagger.responses[404] = { description: 'orders not found' }
+        */
+    )
     .get('/roles', catchErrors(getRoles)
         /*
             #swagger.tags = ['The Roles']
@@ -382,6 +393,6 @@ router
             #swagger.responses[404] = { description: 'order not found' }
         */
     )
-    
+
 
 export default router

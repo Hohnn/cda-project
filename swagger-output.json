@@ -290,6 +290,40 @@
         ]
       }
     },
+    "/private/orders/user/{idUser}": {
+      "get": {
+        "tags": [
+          "The Orders"
+        ],
+        "description": "Endpoint to get all orders by user id.",
+        "parameters": [
+          {
+            "name": "idUser",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "orders found"
+          },
+          "400": {
+            "description": "error during recovering orders"
+          },
+          "404": {
+            "description": "orders not found"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
     "/private/roles": {
       "get": {
         "tags": [
@@ -701,23 +735,6 @@
         ]
       }
     },
-    "/api/v1/users": {
-      "get": {
-        "tags": [
-          "The Users"
-        ],
-        "description": "Endpoint to get a user.",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "all users"
-          },
-          "404": {
-            "description": "users not found"
-          }
-        }
-      }
-    },
     "/api/v1/drones": {
       "get": {
         "tags": [
@@ -885,11 +902,10 @@
         "description": "Endpoint to add a new QR Code.",
         "parameters": [
           {
-            "name": "QrCode",
+            "name": "qrCode",
             "description": "add a new QR Code",
-            "required": true,
             "schema": {
-              "$ref": "#/components/schemas/qrCodes"
+              "$ref": "#/components/schemas/qrCode"
             },
             "in": "query"
           }
@@ -1021,6 +1037,10 @@
           "updateBy_o": {
             "type": "string",
             "example": "idUser"
+          },
+          "state_o": {
+            "type": "string",
+            "example": "pending"
           }
         },
         "required": [
@@ -1075,24 +1095,28 @@
           "key_cat"
         ]
       },
-      "qrCodes": {
+      "qrCode": {
         "type": "object",
         "properties": {
-          "base_url": {
+          "src": {
             "type": "string",
             "example": "http://localhost:3000/api/v1/drones/61fa5c9665b3c0001671b770"
+          },
+          "qr_code": {
+            "type": "string",
+            "example": ""
           }
         },
         "required": [
-          "base_url"
+          "src"
         ]
       }
     },
     "securitySchemes": {
       "bearerAuth": {
-        "type": "apiKey",
-        "name": "Authorization",
-        "in": "header"
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
       }
     }
   },

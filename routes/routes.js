@@ -21,15 +21,6 @@ import { getQrCode, addQrCode, getAllQrCodes } from "../controllers/qrCodeContro
 const router = express.Router()
 
 router
-    .get('/users', catchErrors(getUsers)
-        /*
-            #swagger.tags = ['The Users']
-            #swagger.description = 'Endpoint to get a user.'
-            
-            #swagger.responses[200] = { description: 'all users' }
-            #swagger.responses[404] = { description: 'users not found' }
-        */
-    )
     .get('/drones', catchErrors(getAllDrones)
         /*
             #swagger.tags = ['The Drones']
@@ -122,11 +113,10 @@ router
         /*
                 #swagger.tags = ['The QR Codes']
                 #swagger.description = 'Endpoint to add a new QR Code.'
-                #swagger.parameters['QrCode'] = { 
-                    name: 'QrCode',
-                    description: 'add a new QR Code', 
-                    required: true,
-                    schema: { $ref: "#/components/schemas/qrCodes" }
+                #swagger.parameters['qrCode'] = { 
+                    name: 'qrCode',
+                    description: 'add a new QR Code',
+                    schema: { $ref: "#/components/schemas/qrCode" }
                 }
                 #swagger.responses[200] = { description: 'QR Code created'},
                 #swagger.responses[400] = { description: 'QR Code not created'}
@@ -142,6 +132,7 @@ router
             })
         })
 
+   
 
     // #swagger.ignore = true
     .post('/login', (req, res, next) => {

@@ -25,8 +25,10 @@ const DroneShema = new mongoose.Schema({
         trim: true,
         lowercase: true
     },
-    State:{
+    state:{
         type: String,
+        enum: ['Available', 'Unavailable'],
+        default: 'Available',
         require: [true, 'State is required']
     }
 })

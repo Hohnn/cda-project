@@ -75,6 +75,22 @@ passport.use(
     )
 )
 
+// JWT strategy for swagger
+passport.use('swagger',
+    new JWTStrategy({
+        secretOrKey: process.env.JWT_SECRET,
+        jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken('swagger_token')
+    },
+        async (swagger_token, done) => {
+            try {
+            return done(null, swagger_token);
+            } catch (error) {
+                return done(error);
+            }
+        }
+    )
+)
+
 
 
 export default passport;

@@ -59,7 +59,6 @@ export const getUserById = async (req, res, next, id) => {
         .populate('createBy_id')
         .populate('updateBy_id')
         .exec((err, user) => {
-            console.log(user)
             if (err || !user) {
                 return res.status(400).json({
                     error: "User not found"

@@ -32,6 +32,11 @@ const OrderShema = new mongoose.Schema({
     updateBy_o: {
         type: Schema.Types.ObjectId,
         ref: 'User'
+    },
+    state_o: {
+        type: String,
+        enum: ['pending', 'accepted', 'rejected', 'finished'],
+        default: 'pending'
     }
 },
     {
