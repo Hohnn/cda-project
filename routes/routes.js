@@ -3,7 +3,7 @@ import dotenv from 'dotenv'
 dotenv.config()
 import jwt from 'jsonwebtoken'
 import passport from 'passport'
-
+import AppError from '../utils/AppError.js'
 import { catchErrors } from '../helpers.js'
 import { getOrdersByUserId, addOrder, getAllOrders, updateOrder, deleteOrder, getOrderById } from '../controllers/orderControllers.js'
 import { getRoles, getRole, addRole, updateRole, deleteRole } from '../controllers/roleControllers.js'
@@ -13,15 +13,8 @@ import { getDronesByCategory, getDrone, getAllDrones, addDrone, updateDrone, del
 import { deleteQrCode, getQrCode, addQrCode, getAllQrCodes } from "../controllers/qrCodeController.js"
 
 const auth = {
-    signup: passport.authenticate('signup', {
-        session: false
-    }),
-    login: passport.authenticate('login', {
-        session: false
-    }),
-    jwt: passport.authenticate('jwt', {
-        session: false
-    })
+    signup: passport.authenticate('signup', { session: false }),
+    jwt: passport.authenticate('jwt', { session: false })
 }
 
 const router = express.Router()
@@ -456,7 +449,9 @@ router
             #swagger.responses[404] = { description: 'NOT FOUND' }
         */
     )
+
     /*====================PUBLIC ROUTES======================*/
+
     //#region PUBLIC ROUTES 
     .get('/drones', catchErrors(getAllDrones)
         /*
@@ -552,13 +547,10 @@ router
     //#endregion
 
     // #swagger.ignorePaths = ['/api/v1/signup']
-    .post('/signup', passport.authenticate('signup', { session: false }),
+    .post('/signup', auth.signup,
         async (req, res, next) => {
             if (!req.body) {
-                return res.status(400).json({
-                    success: false,
-                    message: 'User not created'
-                })
+                return next(new AppError('Une erreur est survenue', 400))
             }
             res.status(201).send({
                 message: 'Inscription réussie',
@@ -585,14 +577,12 @@ router
         passport.authenticate('login', async (err, user) => {
             try {
                 if (err || !user) {
-                    return res.status(400).send({
-                        message: 'Une erreur est survenue lors de la connexion',
-                        user: user
-                    }
-                    )
+                    return next(new AppError('Une erreur est survenue', 400))
                 }
                 req.login(user, { session: false }, async err => {
-                    if (err) { res.send(err) }
+                    if (err) {
+                        return next(new AppError('Une erreur est survenue', 400))
+                    }
 
                     const body = {
                         _id: user._id,
@@ -606,11 +596,11 @@ router
                         siret_u: user.siret_u
                     }
                     const token = jwt.sign({ user: body }, process.env.JWT_SECRET, { expiresIn: '30d' })
-                    res.json({ token, user: body, message: 'Connexion réussie' })
+                    res.send({ token, user: body, message: 'Connexion réussie' })
 
                 })
             } catch (error) {
-                return next(error)
+                return next(new AppError('Une erreur est survenue', 400))
             }
         })(req, res, next)
     }

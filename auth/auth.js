@@ -2,6 +2,7 @@ import passport from 'passport'
 import { Strategy } from 'passport-local'
 import UserModel from '../models/userModel.js'
 import JWT from 'passport-jwt'
+import AppError from '../utils/AppError.js'
 
 const { Strategy: JWTStrategy, ExtractJwt } = JWT
 
