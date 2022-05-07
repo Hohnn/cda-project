@@ -1,10 +1,10 @@
 import RoleModel from '../models/roleModel.js'
+import AppError from '../utils/AppError.js'
 
 export const getRoles = async (_, res) => {
     const roles = await RoleModel.find({})
     if(!roles) {
-        res.status(404).send({ message: 'Aucun rôle trouvé.'})
-        return
+       return next(new AppError(`Aucun rôle trouvé.`, 404))
     }
     res.send(roles)
 }
@@ -17,6 +17,9 @@ export const getRole = async (req, res) => {
 export const addRole = async (req, res) => {
     const roles = new RoleModel(req.body)
     await roles.save()
+    if(!roles) {
+        return next(new AppError(`Erreur lors de la création du rôle.`, 400))
+    }
     res.status(201).send({
         message: 'Rôle créé avec succès',
         roles: roles
@@ -32,8 +35,9 @@ export const updateRole = async (req, res) => {
 export const deleteRole = async (req, res) => {
   	const roles = await RoleModel.findByIdAndDelete(req.params.idRole)
   	if (!roles) {
-		res.status(400).send({ message: 'Aucun rôle trouvé.'})
-        return
+		return next(new AppError(`Aucun rôle ${req.params.idRole} trouvé.`, 404))
     }
-	res.send({ message: 'Rôle supprimé avec succès.' })
+	res.status(204).send({ 
+        message: 'Rôle supprimé avec succès.' 
+    })
 }

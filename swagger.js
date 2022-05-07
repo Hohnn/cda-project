@@ -12,8 +12,10 @@ const doc = {
 	produces: ['application/json'],
 	servers: [
 		{
-			url: 'https://skydrone-api.herokuapp.com/',
 			url: 'http://localhost:3000/'
+		},
+		{
+			url: 'https://skydrone-api.herokuapp.com/'
 		}
 	],
 	security: {
@@ -67,11 +69,16 @@ const doc = {
 			},
 			qrCode: {
 				$src: "http://localhost:3000/api/v1/drones/61fa5c9665b3c0001671b770",
-				qr_code:''
+				qr_code: ''
+			},
+			login: {
+				$email: 'test@skydrone.fr',
+				$password: 'password'
 			}
 		}
 	}
 }
+
 const outputFile = './swagger-output.json'
 const endpointFiles = ['./server.js']
 

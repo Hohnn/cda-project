@@ -1,23 +1,23 @@
 import qrCodeModel from '../models/qrCodeModel.js'
+import AppError from '../utils/AppError.js'
 import qrcode from 'qrcode'
 
 export const getQrCode = async (req, res) => {
     const qrCode = await qrCodeModel.findById(req.params.idQrCode)
     if (!qrCode) {
-        res.status(404).send({ message: 'QrCode not found.' })
-        return
+        return next(new AppError(`Aucun QrCode ${req.params.idQrCode} trouvé.`, 404))
     }
-    res.send(qrCode)
+    res.send({ qrCode })
 }
 
 export const addQrCode = async (req, res) => {
     const qrCode = new qrCodeModel(req.body)
     const url = req.body.src
 
-    qrcode.toDataURL(url, (err, src) => {
+    qrcode.toDataURL(url, (error, src) => {
         try {
-            if (err) {
-                throw err
+            if (error) {
+                throw error
             }
             qrCode.src = url
             qrCode.qr_code = src
@@ -29,21 +29,27 @@ export const addQrCode = async (req, res) => {
                     })
                 })
                 .catch(error => {
-                    res.status(400).send({
-                        message: 'QrCode not created',
-                        error: error
-                    })
+                    return next(new AppError(`Erreur lors de la création du QrCode.`, 400), error)
                 })
         } catch (error) {
-            res.status(400).send({
-                message: 'QrCode not created',
-                error: error
-            })
+            return next(new AppError(`Erreur lors de la création du QrCode.`, 400), error)
         }
     })
 }
 
+
 export const getAllQrCodes = async (req, res) => {
     const qrCodes = await qrCodeModel.find({})
     res.send(qrCodes)
+}
+
+export const deleteQrCode = async (req, res, next) => {
+    const qrCode = await qrCodeModel.findByIdAndDelete(req.params.idQrCode)
+    console.log(qrCode)
+    if (!qrCode || qrCode.length === 0 || qrCode === null || qrCode === undefined || qrCode === '') {
+        return next(new AppError(`Aucun QrCode ${req.params.idQrCode} trouvé.`, 404))
+    }
+    res.status(204).send({
+        message: `QR Code ${req.params.idQrCode} supprimé.`
+    })
 }

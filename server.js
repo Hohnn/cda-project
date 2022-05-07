@@ -4,16 +4,11 @@ import dotenv from 'dotenv'
 import './auth/auth.js'
 import AppError from './utils/AppError.js'
 import globalErrorHandler from './controllers/errorController.js'
-import passport from 'passport'
 import mongoose from 'mongoose'
 import swaggerUi from 'swagger-ui-express'
 import { readFile } from 'fs/promises'
 import cors from 'cors'
-import privateRoutes from './routes/privateRoutes.js'
-
 import bodyparser from 'body-parser'
-import qrcode from 'qrcode'
-
 
 //#region Express
 dotenv.config()
@@ -25,6 +20,7 @@ app.use(express.json())
 
 //#endregion
 
+//#region Cross Origin Ressource Sharing
 //#region QrCode
 
 //Use express package to set our template engine (view engine) 
@@ -63,10 +59,8 @@ const PORT = process.env.PORT || 3000
 
 //#endregion
 
-//#region Cross Origin Ressource Sharing
 
 app.use(cors())
-app.options('*', cors())
 
 //#endregion
 
@@ -108,14 +102,6 @@ mongoose.connect(process.env.MONGODB, {
 
 //#endregion
 
-//#region private routes
-
-app.use('/private', passport.authenticate('jwt', { session: false }),
-  privateRoutes
-)
-
-//#endregion
-
 //#region Swagger
 
 const swaggerFile = JSON.parse(
@@ -129,6 +115,7 @@ app.use('/api-doc', swaggerUi.serve, swaggerUi.setup(swaggerFile))
 // app.use('/api-doc',passport.authenticate('swagger', { session: false }), swaggerUi.serve, swaggerUi.setup(swaggerFile))
 
 //#endregion
+
 //#region public routes
 app.use('/api/v1', routes)
 
@@ -138,7 +125,6 @@ app.all('*', (req, res, next) => {
 
 app.use(globalErrorHandler)
 //#endregion
-
 
 
 app.listen(PORT, () => {

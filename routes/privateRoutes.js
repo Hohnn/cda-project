@@ -1,4 +1,5 @@
 import express from "express"
+import passport from 'passport'
 import { getOrdersByUserId, addOrder, getAllOrders, updateOrder, deleteOrder, getOrderById } from '../controllers/orderControllers.js'
 import { catchErrors } from '../helpers.js'
 import { getRoles, getRole, addRole, updateRole, deleteRole } from '../controllers/roleControllers.js'
@@ -8,7 +9,7 @@ import { addDrone, updateDrone, deleteDrone } from '../controllers/droneControll
 const router = express.Router()
 
 router
-    .get('/users', catchErrors(getUsers)
+    .get('/users', passport.authenticate('jwt', { session: false }), catchErrors(getUsers)
         /*
             #swagger.tags = ['The Users']
             #swagger.description = 'Endpoint to get a user.'

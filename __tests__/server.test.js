@@ -4,16 +4,15 @@ import dotenv from 'dotenv'
 import cors from 'cors'
 import request from 'supertest'
 import routes from '../routes/routes.js'
-import userModel from '../models/userModel'
-import droneModel from '../models/droneModel'
 import QrCodeModel from '../models/qrCodeModel'
+
 
 dotenv.config()
 
 const app = express()
 
 app.use(cors())
-app.options('*', cors());
+app.options('*', cors())
 
 app.use(express.json())
 
@@ -27,10 +26,10 @@ mongoose.connect(process.env.MONGODB, {
 app.get("/", (req, res) => {
 	res.send({
 		message: "Welcome to SkyDrone API."
-	});
-});
+	})
+})
 
-app.use("/api/v1", routes) 
+app.use("/api/v1", routes)
 
 
 describe('Test du serveur', () => {
@@ -40,8 +39,7 @@ describe('Test du serveur', () => {
 	})
 })
 
-
-describe('Test des routes', () => {
+describe('Test des routes non protégées', () => {
 
 	it('Affiche tous les drones', async () => {
 		const response = await request(app).get('/api/v1/drones')
@@ -50,10 +48,10 @@ describe('Test des routes', () => {
 	})
 
 	it('Affiche toutes les categories', async () => {
-			const response = await request(app).get('/api/v1/categories')
-			expect(response.statusCode).toBe(200)
-			expect(response.type).toEqual('application/json')
-		})
+		const response = await request(app).get('/api/v1/categories')
+		expect(response.statusCode).toBe(200)
+		expect(response.type).toEqual('application/json')
+	})
 
 	const TU_QR = {
 		src: 'http://localhost:3000/'
@@ -66,15 +64,14 @@ describe('Test des routes', () => {
 	})
 
 	it('crée un QR', async () => {
-		const response = await request(app).post('/api/v1/qrcode').send(TU_QR)
+		const response = await request(app).post('/api/v1/qrcodes').send(TU_QR)
 		expect(response.statusCode).toBe(201)
 		expect(response.type).toEqual('application/json')
 	})
 
-
 	afterAll(async () => {
-		await QrCodeModel.deleteMany({src: TU_QR.src});
-		await mongoose.disconnect()		
-		await new Promise(resolve => setTimeout(() => resolve(), 500));
-	});
-});
+		await QrCodeModel.deleteMany({ src: TU_QR.src })
+		await mongoose.disconnect()
+		await new Promise(resolve => setTimeout(() => resolve(), 500))
+	})
+})

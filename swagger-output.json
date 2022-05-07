@@ -8,6 +8,9 @@
   "servers": [
     {
       "url": "http://localhost:3000/"
+    },
+    {
+      "url": "https://skydrone-api.herokuapp.com/"
     }
   ],
   "paths": {
@@ -28,7 +31,7 @@
         }
       }
     },
-    "/private/users": {
+    "/api/v1/users": {
       "get": {
         "tags": [
           "The Users"
@@ -37,10 +40,13 @@
         "parameters": [],
         "responses": {
           "200": {
-            "description": "all users"
+            "description": "OK"
+          },
+          "401": {
+            "description": "NOT AUTHORIZED"
           },
           "404": {
-            "description": "users not found"
+            "description": "NOT FOUND"
           }
         },
         "security": [
@@ -58,6 +64,7 @@
           {
             "name": "idUser",
             "in": "body",
+            "required": true,
             "description": "add a new user",
             "schema": {
               "$ref": "#/components/schemas/user"
@@ -66,30 +73,23 @@
         ],
         "responses": {
           "201": {
-            "description": "user added"
+            "description": "OK"
           },
-          "400": {
-            "description": "user already exists"
+          "401": {
+            "description": "NOT AUTHORIZED"
+          },
+          "404": {
+            "description": "NOT FOUND"
           }
         },
         "security": [
           {
             "bearerAuth": []
           }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/user"
-              }
-            }
-          }
-        }
+        ]
       }
     },
-    "/private/users/{idUser}": {
+    "/api/v1/users/{idUser}": {
       "get": {
         "tags": [
           "The Users"
@@ -108,10 +108,13 @@
         ],
         "responses": {
           "200": {
-            "description": "user found"
+            "description": "OK"
+          },
+          "401": {
+            "description": "NOT AUTHORIZED"
           },
           "404": {
-            "description": "user not found"
+            "description": "NOT FOUND"
           }
         },
         "security": [
@@ -138,10 +141,13 @@
         ],
         "responses": {
           "204": {
-            "description": "user deleted"
+            "description": "DELETED"
+          },
+          "401": {
+            "description": "NOT AUTHORIZED"
           },
           "404": {
-            "description": "user not found"
+            "description": "NOT FOUND"
           }
         },
         "security": [
@@ -176,10 +182,13 @@
         ],
         "responses": {
           "200": {
-            "description": "user updated"
+            "description": "OK"
+          },
+          "401": {
+            "description": "NOT AUTHORIZED"
           },
           "404": {
-            "description": "user not found"
+            "description": "NOT FOUND"
           }
         },
         "security": [
@@ -189,7 +198,114 @@
         ]
       }
     },
-    "/private/drones/{idDrone}": {
+    "/api/v1/qrcodes/{idQrCode}": {
+      "delete": {
+        "tags": [
+          "The QR Codes"
+        ],
+        "description": "Endpoint to delete a QR Code.",
+        "parameters": [
+          {
+            "name": "idQrCode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "delete an existing QR Code"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "DELETED"
+          },
+          "401": {
+            "description": "NOT AUTHORIZED"
+          },
+          "404": {
+            "description": "NOT FOUND"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "get": {
+        "tags": [
+          "The QR Codes"
+        ],
+        "description": "Endpoint to get a QR Code by id.",
+        "parameters": [
+          {
+            "name": "idQrCode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID of The QR Codes"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "NOT FOUND"
+          }
+        }
+      }
+    },
+    "/api/v1/qrcodes": {
+      "post": {
+        "tags": [
+          "The QR Codes"
+        ],
+        "description": "Endpoint to add a new QR Code.",
+        "parameters": [
+          {
+            "name": "qrCode",
+            "required": true,
+            "description": "add a new QR Code",
+            "schema": {
+              "$ref": "#/components/schemas/qrCode"
+            },
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "CREATED"
+          },
+          "404": {
+            "description": "NOT FOUND"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "get": {
+        "tags": [
+          "The QR Codes"
+        ],
+        "description": "Endpoint to get all QR Codes.",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "NOT FOUND"
+          }
+        }
+      }
+    },
+    "/api/v1/drones/{idDrone}": {
       "delete": {
         "tags": [
           "The Drones"
@@ -208,10 +324,13 @@
         ],
         "responses": {
           "204": {
-            "description": "drone deleted"
+            "description": "DELETED"
+          },
+          "401": {
+            "description": "NOT AUTHORIZED"
           },
           "404": {
-            "description": "drone not found"
+            "description": "NOT FOUND"
           }
         },
         "security": [
@@ -246,10 +365,13 @@
         ],
         "responses": {
           "200": {
-            "description": "drone updated"
+            "description": "OK"
+          },
+          "401": {
+            "description": "NOT AUTHORIZED"
           },
           "404": {
-            "description": "drone not found"
+            "description": "NOT FOUND"
           }
         },
         "security": [
@@ -257,9 +379,37 @@
             "bearerAuth": []
           }
         ]
+      },
+      "get": {
+        "tags": [
+          "The Drones"
+        ],
+        "description": "Endpoint to get a drone by id.",
+        "parameters": [
+          {
+            "name": "idDrone",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The id of the drone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "NOT AUTHORIZED"
+          },
+          "404": {
+            "description": "NOT FOUND"
+          }
+        }
       }
     },
-    "/private/drones": {
+    "/api/v1/drones": {
       "post": {
         "tags": [
           "The Drones"
@@ -277,10 +427,13 @@
         ],
         "responses": {
           "201": {
-            "description": "drone added"
+            "description": "CREATED"
           },
-          "400": {
-            "description": "drone already exists"
+          "401": {
+            "description": "NOT AUTHORIZED"
+          },
+          "404": {
+            "description": "NOT FOUND"
           }
         },
         "security": [
@@ -288,9 +441,27 @@
             "bearerAuth": []
           }
         ]
+      },
+      "get": {
+        "tags": [
+          "The Drones"
+        ],
+        "description": "Endpoint to get a drone.",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "NOT AUTHORIZED"
+          },
+          "404": {
+            "description": "NOT FOUND"
+          }
+        }
       }
     },
-    "/private/orders/user/{idUser}": {
+    "/api/v1/orders/{idUser}/user": {
       "get": {
         "tags": [
           "The Orders"
@@ -308,13 +479,16 @@
         ],
         "responses": {
           "200": {
-            "description": "orders found"
+            "description": "OK"
           },
           "400": {
-            "description": "error during recovering orders"
+            "description": "ERROR"
+          },
+          "401": {
+            "description": "NOT AUTHORIZED"
           },
           "404": {
-            "description": "orders not found"
+            "description": "NOT FOUND"
           }
         },
         "security": [
@@ -324,7 +498,7 @@
         ]
       }
     },
-    "/private/roles": {
+    "/api/v1/roles": {
       "get": {
         "tags": [
           "The Roles"
@@ -333,10 +507,13 @@
         "parameters": [],
         "responses": {
           "200": {
-            "description": "all roles"
+            "description": "OK"
+          },
+          "401": {
+            "description": "NOT AUTHORIZED"
           },
           "404": {
-            "description": "roles not found"
+            "description": "NOT FOUND"
           }
         },
         "security": [
@@ -361,11 +538,14 @@
           }
         ],
         "responses": {
-          "201": {
-            "description": "role added"
+          "200": {
+            "description": "OK"
           },
-          "400": {
-            "description": "role already exists"
+          "401": {
+            "description": "NOT AUTHORIZED"
+          },
+          "404": {
+            "description": "NOT FOUND"
           }
         },
         "security": [
@@ -375,7 +555,7 @@
         ]
       }
     },
-    "/private/roles/{idRole}": {
+    "/api/v1/roles/{idRole}": {
       "get": {
         "tags": [
           "The Roles"
@@ -394,10 +574,13 @@
         ],
         "responses": {
           "200": {
-            "description": "role found"
+            "description": "OK"
+          },
+          "401": {
+            "description": "NOT AUTHORIZED"
           },
           "404": {
-            "description": "role not found"
+            "description": "NOT FOUND"
           }
         },
         "security": [
@@ -423,11 +606,14 @@
           }
         ],
         "responses": {
-          "204": {
-            "description": "role deleted"
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "NOT AUTHORIZED"
           },
           "404": {
-            "description": "role not found"
+            "description": "NOT FOUND"
           }
         },
         "security": [
@@ -461,10 +647,13 @@
         ],
         "responses": {
           "200": {
-            "description": "role updated"
+            "description": "OK"
+          },
+          "401": {
+            "description": "NOT AUTHORIZED"
           },
           "404": {
-            "description": "role not found"
+            "description": "NOT FOUND"
           }
         },
         "security": [
@@ -474,7 +663,7 @@
         ]
       }
     },
-    "/private/categories/{idCategory}": {
+    "/api/v1/categories/{idCategory}": {
       "delete": {
         "tags": [
           "The Categories"
@@ -493,10 +682,13 @@
         ],
         "responses": {
           "204": {
-            "description": "category deleted"
+            "description": "DELETED"
+          },
+          "401": {
+            "description": "NOT AUTHORIZED"
           },
           "404": {
-            "description": "category not found"
+            "description": "NOT FOUND"
           }
         },
         "security": [
@@ -530,10 +722,13 @@
         ],
         "responses": {
           "200": {
-            "description": "category updated"
+            "description": "OK"
+          },
+          "401": {
+            "description": "NOT AUTHORIZED"
           },
           "404": {
-            "description": "category not found"
+            "description": "NOT FOUND"
           }
         },
         "security": [
@@ -541,9 +736,34 @@
             "bearerAuth": []
           }
         ]
+      },
+      "get": {
+        "tags": [
+          "The Categories"
+        ],
+        "description": "Endpoint to get a category by id.",
+        "parameters": [
+          {
+            "name": "idCategory",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID of The category"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "NOT FOUND"
+          }
+        }
       }
     },
-    "/private/categories": {
+    "/api/v1/categories": {
       "post": {
         "tags": [
           "The Categories"
@@ -561,10 +781,13 @@
         ],
         "responses": {
           "201": {
-            "description": "category added"
+            "description": "CREATED"
           },
-          "400": {
-            "description": "category already exists"
+          "401": {
+            "description": "NOT AUTHORIZED"
+          },
+          "404": {
+            "description": "NOT FOUND"
           }
         },
         "security": [
@@ -572,9 +795,24 @@
             "bearerAuth": []
           }
         ]
+      },
+      "get": {
+        "tags": [
+          "The Categories"
+        ],
+        "description": "Endpoint to get a category.",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "NOT FOUND"
+          }
+        }
       }
     },
-    "/private/orders": {
+    "/api/v1/orders": {
       "get": {
         "tags": [
           "The Orders"
@@ -583,10 +821,13 @@
         "parameters": [],
         "responses": {
           "200": {
-            "description": "all orders"
+            "description": "OK"
+          },
+          "401": {
+            "description": "NOT AUTHORIZED"
           },
           "404": {
-            "description": "orders not found"
+            "description": "NOT FOUND"
           }
         },
         "security": [
@@ -612,10 +853,13 @@
         ],
         "responses": {
           "201": {
-            "description": "order added"
+            "description": "CREATED"
           },
-          "400": {
-            "description": "order already exists"
+          "401": {
+            "description": "NOT AUTHORIZED"
+          },
+          "404": {
+            "description": "NOT FOUND"
           }
         },
         "security": [
@@ -635,7 +879,7 @@
         }
       }
     },
-    "/private/orders/{idOrder}": {
+    "/api/v1/orders/{idOrder}": {
       "get": {
         "tags": [
           "The Orders"
@@ -654,10 +898,13 @@
         ],
         "responses": {
           "200": {
-            "description": "order found"
+            "description": "OK"
+          },
+          "401": {
+            "description": "NOT AUTHORIZED"
           },
           "404": {
-            "description": "order not found"
+            "description": "NOT FOUND"
           }
         },
         "security": [
@@ -692,10 +939,13 @@
         ],
         "responses": {
           "200": {
-            "description": "order updated"
+            "description": "OK"
+          },
+          "401": {
+            "description": "NOT AUTHORIZED"
           },
           "404": {
-            "description": "order not found"
+            "description": "NOT FOUND"
           }
         },
         "security": [
@@ -722,10 +972,13 @@
         ],
         "responses": {
           "204": {
-            "description": "order deleted"
+            "description": "DELETED"
+          },
+          "401": {
+            "description": "NOT AUTHORIZED"
           },
           "404": {
-            "description": "order not found"
+            "description": "NOT FOUND"
           }
         },
         "security": [
@@ -733,50 +986,6 @@
             "bearerAuth": []
           }
         ]
-      }
-    },
-    "/api/v1/drones": {
-      "get": {
-        "tags": [
-          "The Drones"
-        ],
-        "description": "Endpoint to get a drone.",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "all drones"
-          },
-          "404": {
-            "description": "drones not found"
-          }
-        }
-      }
-    },
-    "/api/v1/drones/{idDrone}": {
-      "get": {
-        "tags": [
-          "The Drones"
-        ],
-        "description": "Endpoint to get a drone by id.",
-        "parameters": [
-          {
-            "name": "idDrone",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "The id of the drone"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "drone found"
-          },
-          "404": {
-            "description": "drone not found"
-          }
-        }
       }
     },
     "/api/v1/drones/categories/{idCategory}": {
@@ -798,124 +1007,37 @@
         ],
         "responses": {
           "200": {
-            "description": "drone found"
+            "description": "OK"
           },
           "404": {
-            "description": "drone not found"
+            "description": "NOT FOUND"
           }
         }
       }
     },
-    "/api/v1/categories": {
-      "get": {
-        "tags": [
-          "The Categories"
-        ],
-        "description": "Endpoint to get a category.",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "all categories"
-          },
-          "404": {
-            "description": "categories not found"
-          }
-        }
-      }
-    },
-    "/api/v1/categories/{idCategory}": {
-      "get": {
-        "tags": [
-          "The Categories"
-        ],
-        "description": "Endpoint to get a category by id.",
-        "parameters": [
-          {
-            "name": "idCategory",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "The ID of The category"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "category found"
-          },
-          "404": {
-            "description": "category not found"
-          }
-        }
-      }
-    },
-    "/api/v1/qrcodes": {
-      "get": {
-        "tags": [
-          "The QR Codes"
-        ],
-        "description": "Endpoint to get all QR Codes.",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "all QR Codes"
-          },
-          "404": {
-            "description": "QR Codes not found"
-          }
-        }
-      }
-    },
-    "/api/v1/qrcode/{idQrCode}": {
-      "get": {
-        "tags": [
-          "The QR Codes"
-        ],
-        "description": "Endpoint to get a QR Code by id.",
-        "parameters": [
-          {
-            "name": "idQrCode",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "The ID of The QR Codes"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "QR Code found"
-          },
-          "404": {
-            "description": "QR Code not found"
-          }
-        }
-      }
-    },
-    "/api/v1/qrcode": {
+    "/api/v1/login": {
       "post": {
         "tags": [
-          "The QR Codes"
+          "Login"
         ],
-        "description": "Endpoint to add a new QR Code.",
+        "description": "Endpoint to login a user.",
         "parameters": [
           {
-            "name": "qrCode",
-            "description": "add a new QR Code",
+            "name": "Login",
+            "required": true,
+            "description": "Login with email and password",
             "schema": {
-              "$ref": "#/components/schemas/qrCode"
+              "$ref": "#/components/schemas/login"
             },
             "in": "query"
           }
         ],
         "responses": {
           "200": {
-            "description": "QR Code created"
+            "description": "OK"
           },
           "400": {
-            "description": "QR Code not created"
+            "description": "Bad Request"
           }
         }
       }
@@ -1058,10 +1180,6 @@
             "type": "string",
             "example": "administrator"
           },
-          "description_r": {
-            "type": "string",
-            "example": "Create Read Update Delete any data"
-          },
           "key_r": {
             "type": "number",
             "example": 1
@@ -1069,7 +1187,6 @@
         },
         "required": [
           "name_r",
-          "description_r",
           "key_r"
         ]
       },
@@ -1109,6 +1226,23 @@
         },
         "required": [
           "src"
+        ]
+      },
+      "login": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "test@skydrone.fr"
+          },
+          "password": {
+            "type": "string",
+            "example": "password"
+          }
+        },
+        "required": [
+          "email",
+          "password"
         ]
       }
     },

@@ -2,9 +2,8 @@ import passport from 'passport'
 import { Strategy } from 'passport-local'
 import UserModel from '../models/userModel.js'
 import JWT from 'passport-jwt'
-import AppError from '../utils/AppError.js'
 
-const { Strategy: JWTStrategy, ExtractJwt } = JWT;
+const { Strategy: JWTStrategy, ExtractJwt } = JWT
 
 //signup strategy
 passport.use(
@@ -14,18 +13,24 @@ passport.use(
         passwordField: 'password',
         passReqToCallback: true
     },
-    async (req, email, password, done) => {
-        try {
-            const user = await UserModel.findOne({ email });            
-            if (user) {
-                return done({ message: `Adresse ${user.email} deja utilisée.`})
+        async (req, email, password, done) => {
+            try {
+                const user = await UserModel.findOne({ email })
+                if (user) {
+                    return done({
+                        message: `Adresse ${user.email} deja utilisée.`
+                    })
+                }
+                const newUser = await UserModel.create({
+                    email,
+                    password,
+                    ...req.body
+                })
+                return done(null, newUser)
+            } catch (error) {
+                return done(error)
             }
-            const newUser = await UserModel.create({ email, password, ...req.body });
-            return done(null, newUser);
-        } catch (error) {
-            return done(error);
-        }
-    })
+        })
 )
 
 // login strategy
@@ -35,62 +40,46 @@ passport.use(
         usernameField: 'email',
         passwordField: 'password'
     },
-    async (email, password, done) => {
-        try {
-            const user = await UserModel.findOne({ email });
-            if (!user) {
-                return next(new AppError(`Email ${email} inconnu.`, 400))
+        async (email, password, done) => {
+            try {
+                const user = await UserModel.findOne({ email })
+                if (!user) {
+                    return next(new AppError(`Email ${email} inconnu.`, 400))
+                }
+                const details = {
+                    id: user._id,
+                    email: user.email,
+                    firstName: user.firstName_u,
+                    lastName: user.lastName_u
+                }
+                const validate = await user.isValidPassword(password)
+                if (!validate) {
+                    return next(new AppError(`Erreur de connexion.`, 400))
+                }
+                return done(null, user, {
+                    message: 'Connexion réussie.',
+                    details
+                })
+            } catch (error) {
+                return done(error)
             }
-            const details = {
-                id: user._id,
-                email: user.email,
-                firstName: user.firstName_u,
-                lastName: user.lastName_u
-            };
-            const validate = await user.isValidPassword(password);
-            if (!validate) {
-                return next(new AppError(`Erreur de connexion.`, 400))
-            }
-            return done(null, user, { message: 'Connexion réussie.', details });
-
-        } catch (error) {
-            return done(error);
-        }
-    })
+        })
 )
 
 // JWT strategy
 passport.use(
     new JWTStrategy({
         secretOrKey: process.env.JWT_SECRET,
-        jwtFromRequest: ExtractJwt.fromUrlQueryParameter('token')
+        jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
     },
         async (token, done) => {
             try {
-            return done(null, token.user);
+                return done(null, token.user)
             } catch (error) {
-                return done(error);
+                return done(error)
             }
         }
     )
 )
 
-// JWT strategy for swagger
-passport.use('swagger',
-    new JWTStrategy({
-        secretOrKey: process.env.JWT_SECRET,
-        jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken('swagger_token')
-    },
-        async (swagger_token, done) => {
-            try {
-            return done(null, swagger_token);
-            } catch (error) {
-                return done(error);
-            }
-        }
-    )
-)
-
-
-
-export default passport;
+export default passport

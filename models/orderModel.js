@@ -5,20 +5,20 @@ const OrderShema = new mongoose.Schema({
     user_id: {
         type: Schema.Types.ObjectId,
         ref: 'User',
-        required: [true, 'User _id is required'],
+        required: [true, 'User ID requis'],
     },
     drone_id: {
         type: Schema.Types.ObjectId,
         ref: 'Drone',
-        required: [true, 'Drone _id is required']
+        required: [true, 'Drone ID requis']
     },
     startAt_o: {
         type: Date,
-        required: [true, 'Order start date is required']
+        required: [true, 'Date de début de commande requise']
     },
     endAt_o: {
         type: Date,
-        required: true,
+        required: [true, 'Date de fin de commande requise'],
     },
     report_o: {
         type: String,
@@ -27,7 +27,7 @@ const OrderShema = new mongoose.Schema({
     createdBy_o: {
         type: Schema.Types.ObjectId,
         ref: 'User',
-        required: [true, 'User _id is required'],
+        required: [true, 'User ID requis']
     },
     updateBy_o: {
         type: Schema.Types.ObjectId,
@@ -35,8 +35,8 @@ const OrderShema = new mongoose.Schema({
     },
     state_o: {
         type: String,
-        enum: ['pending', 'accepted', 'rejected', 'finished'],
-        default: 'pending'
+        enum: ['En attente', 'Acceptée', 'Rejetée', 'Terminée'],
+        default: 'En attente'
     }
 },
     {

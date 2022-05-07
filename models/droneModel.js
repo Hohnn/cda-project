@@ -2,34 +2,33 @@ import mongoose from "mongoose"
 
 const Schema = mongoose.Schema
 const DroneShema = new mongoose.Schema({
-    name_d:{
+    name_d: {
         type: String,
-        require: [true, 'Name is required'],
+        require: [true, 'Nom requis'],
         trim: true,
         lowercase: true
     },
-    category_id:{
+    category_id: {
         type: Schema.Types.ObjectId,
-        require: [true, 'Category ID is required'],
+        require: [true, 'Category ID requis'],
         ref: 'Category'
     },
-    description_d:{
+    description_d: {
         type: String,
-        require: [true, 'Description is required'],
+        require: [true, 'Description requise'],
         trim: true,
         lowercase: true
     },
-    pricePerDay_d:{
+    pricePerDay_d: {
         type: Number,
-        require: [true, 'Price per day is required'],
+        require: [true, 'Prix par jour requis'],
         trim: true,
         lowercase: true
     },
-    state:{
+    state: {
         type: String,
-        enum: ['Available', 'Unavailable'],
-        default: 'Available',
-        require: [true, 'State is required']
+        enum: ['Disponible', 'Indisponible'],
+        default: 'Disponible'
     }
 })
 
