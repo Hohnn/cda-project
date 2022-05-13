@@ -29,7 +29,7 @@ export const getOrderById = async (req, res, next) => {
             }
             res.send({
                 message: `Commande ${req.params.idOrder} trouvée`,
-                order
+                order: order
             })
         })
 }
@@ -70,7 +70,7 @@ export const updateOrder = async (req, res, next) => {
     })
 }
 
-export const deleteOrder = async (req, res) => {
+export const deleteOrder = async (req, res, next) => {
     const order = await OrderModel.findByIdAndDelete(req.params.idOrder)
     if (!order) {
         return next(new AppError(`Aucune commande ${req.params.idOrder} trouvée.`, 404))

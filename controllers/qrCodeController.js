@@ -2,7 +2,7 @@ import qrCodeModel from '../models/qrCodeModel.js'
 import AppError from '../utils/AppError.js'
 import qrcode from 'qrcode'
 
-export const getQrCode = async (req, res) => {
+export const getQrCode = async (req, res, next) => {
     const qrCode = await qrCodeModel.findById(req.params.idQrCode)
     if (!qrCode) {
         return next(new AppError(`Aucun QrCode ${req.params.idQrCode} trouvé.`, 404))
@@ -10,7 +10,7 @@ export const getQrCode = async (req, res) => {
     res.send({ qrCode })
 }
 
-export const addQrCode = async (req, res) => {
+export const addQrCode = async (req, res, next) => {
     const qrCode = new qrCodeModel(req.body)
     const url = req.body.src
 
@@ -40,6 +40,9 @@ export const addQrCode = async (req, res) => {
 
 export const getAllQrCodes = async (req, res) => {
     const qrCodes = await qrCodeModel.find({})
+    if(!qrCodes || qrCodes.length === 0 || qrCodes === null || qrCodes === undefined || qrCodes === ''){
+        return next(new AppError(`Aucun QrCode trouvé.`, 404))
+    }
     res.send(qrCodes)
 }
 

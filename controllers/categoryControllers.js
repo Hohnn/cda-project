@@ -42,7 +42,7 @@ export const updateCategory = async (req, res, next) => {
     })
 }
 
-export const deleteCategory = async (req, res) => {
+export const deleteCategory = async (req, res, next) => {
     const category = await CategoryModel.findByIdAndDelete(req.params.idCategory)
     if (!category || category === null || category === undefined || category === '') {
         return next(new AppError(`Aucune catégorie ${category.name_cat} trouvée.`, 404))

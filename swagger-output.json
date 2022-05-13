@@ -279,6 +279,9 @@
           "201": {
             "description": "CREATED"
           },
+          "401": {
+            "description": "NOT AUTHORIZED"
+          },
           "404": {
             "description": "NOT FOUND"
           }
@@ -461,7 +464,7 @@
         }
       }
     },
-    "/api/v1/orders/{idUser}/user": {
+    "/api/v1/orders/user/{idUser}": {
       "get": {
         "tags": [
           "The Orders"
@@ -1035,9 +1038,6 @@
         "responses": {
           "200": {
             "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
           }
         }
       }

@@ -30,13 +30,13 @@ export const addUser = async (req, res, next) => {
     const user = new userModel(req.body)
     const userExist = await userModel.findOne({ email })
 
-    await user.save()
     if (!user || user === null || user === undefined || user === '') {
         return next(new AppError(`Erreur lors de la création de l'utilisateur.`, 400))
     }
     if (userExist) {
         return next(new AppError(`Adresse ${userExist.email} deja utilisée.`, 400))
     }
+    await user.save()
     res.status(201).send(user)
 }
 
@@ -70,13 +70,14 @@ export const getUserById = async (req, res, next) => {
         .populate('updateBy_id')
         .exec((err, user) => {
             if (err || !user) {
-                return res.status(400).json({
-                    error: "User not found"
-                })
+                return next(new AppError(`Aucun utilisateur ${req.params.idUser} trouvé.`, 404))
             }
-            // console.log('The author is %s', user.role_id.key_r)
-            // on ajoute l'objet profile contenant les infos de l'utilisateur dans la requête
-            req.profile = user
-            next()
         })
+    // console.log('The author is %s', user.role_id.key_r)
+    // on ajoute l'objet profile contenant les infos de l'utilisateur dans la requête
+    req.profile = user
+    res.status(200).send({
+        message: `Utilisateur ${req.params.idUser} trouvé`,
+        user: user
+    })
 }
