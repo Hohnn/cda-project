@@ -1,14 +1,15 @@
 import express from 'express'
 import routes from './routes/routes.js'
-import dotenv from 'dotenv'
 import './auth/auth.js'
+import cors from 'cors'
+import bodyparser from 'body-parser'
+import { readFile } from 'fs/promises'
+import dotenv from 'dotenv'
 import AppError from './utils/AppError.js'
 import globalErrorHandler from './controllers/errorController.js'
 import mongoose from 'mongoose'
 import swaggerUi from 'swagger-ui-express'
-import { readFile } from 'fs/promises'
-import cors from 'cors'
-import bodyparser from 'body-parser'
+
 
 //#region Express
 dotenv.config()
@@ -21,6 +22,15 @@ app.use(express.json())
 //#endregion
 
 //#region Cross Origin Ressource Sharing
+
+app.use(cors({
+  origin: '*',
+  options: 'GET,POST,PATCH,DELETE',
+  allowedHeaders: 'Content-type,Authorization',
+  credentials: true
+})
+)
+
 //#region QrCode
 
 //Use express package to set our template engine (view engine) 
@@ -53,6 +63,7 @@ app.use(bodyparser.json())
 // })
 //#endregion
 
+
 //#region PORT
 
 const PORT = process.env.PORT || 3000
@@ -61,6 +72,15 @@ const PORT = process.env.PORT || 3000
 
 
 app.use(cors())
+
+//#endregion
+
+//#region Upload
+
+app.use(bodyparser.json())
+app.use(bodyparser.urlencoded({ extended: true }))
+
+app.use('/images', express.static('images'))
 
 //#endregion
 
@@ -78,10 +98,6 @@ app.get("/", (_, res) => {
   #swagger.responses[500] = { description: "Internal server error." }
   */
 })
-
-// middleware pour les fichiers statiques 
-//( les fichiers de build seront accessibles depuis la racine du serveur)
-app.use(express.static('client/build'))
 
 //#endregion
 
@@ -112,18 +128,17 @@ const swaggerFile = JSON.parse(
 
 app.use('/api-doc', swaggerUi.serve, swaggerUi.setup(swaggerFile))
 
-// app.use('/api-doc',passport.authenticate('swagger', { session: false }), swaggerUi.serve, swaggerUi.setup(swaggerFile))
-
 //#endregion
 
-//#region public routes
+//#region routes
 app.use('/api/v1', routes)
 
-app.all('*', (req, res, next) => {
+//error route handler
+app.all('*', (req, _res, next) => {
   next(new AppError(`Cette adresse : ${req.originalUrl} n'est pas disponible sur ce serveur.`, 404))
 })
-
 app.use(globalErrorHandler)
+
 //#endregion
 
 
@@ -131,4 +146,4 @@ app.listen(PORT, () => {
   console.log("Server is running on port: %s (HTTP)", PORT)
 })
 
-
+export default app

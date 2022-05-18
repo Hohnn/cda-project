@@ -31,6 +31,45 @@
         }
       }
     },
+    "/api/v1/upload": {
+      "post": {
+        "description": "",
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/api/v1/images/{filename:}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "filename:",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/api/v1/images/{idImage}": {
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "idImage",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {}
+      }
+    },
     "/api/v1/users": {
       "get": {
         "tags": [

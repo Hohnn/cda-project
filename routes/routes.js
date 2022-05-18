@@ -11,6 +11,7 @@ import { getUsers, getUser, addUser, deleteUser, updateUser } from '../controlle
 import { getCategory, getAllCategories, addCategory, deleteCategory, updateCategory } from '../controllers/categoryControllers.js'
 import { getDronesByCategory, getDrone, getAllDrones, addDrone, updateDrone, deleteDrone } from '../controllers/droneControllers.js'
 import { deleteQrCode, getQrCode, addQrCode, getAllQrCodes } from "../controllers/qrCodeController.js"
+import { uploadImage, getImage, deleteImage } from '../controllers/fileController.js'
 
 const auth = {
     signup: passport.authenticate('signup', { session: false }),
@@ -20,6 +21,10 @@ const auth = {
 const router = express.Router()
 
 router
+//upload file test
+.post("/upload", catchErrors(uploadImage))
+.get("/images/:filename:", catchErrors(getImage))
+.delete("/images/:idImage", catchErrors(deleteImage))
     .get('/users', auth.jwt, catchErrors(getUsers)
         /*
             #swagger.tags = ['The Users']
