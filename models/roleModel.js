@@ -11,7 +11,7 @@ const RoleSchema = new mongoose.Schema({
         enum: [1, 2, 3, 99],
         required: [true, 'Clé requise']
     }
-})
+}, { versionKey: false, timestamps: true })
 
 const RoleModel = mongoose.model('Role', RoleSchema)
 

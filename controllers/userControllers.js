@@ -32,12 +32,12 @@ export const addUser = async (req, res, next) => {
 
     if (!user || user === null || user === undefined || user === '') {
         return next(new AppError(`Erreur lors de la création de l'utilisateur.`, 400))
-    }
-    if (userExist) {
+    } else if (userExist) {
         return next(new AppError(`Adresse ${userExist.email} deja utilisée.`, 400))
+    } else {
+        user.save()
+        res.status(201).send(user)
     }
-    await user.save()
-    res.status(201).send(user)
 }
 
 export const updateUser = async (req, res, next) => {
@@ -73,9 +73,8 @@ export const getUserById = async (req, res, next) => {
                 return next(new AppError(`Aucun utilisateur ${req.params.idUser} trouvé.`, 404))
             }
         })
-    // console.log('The author is %s', user.role_id.key_r)
-    // on ajoute l'objet profile contenant les infos de l'utilisateur dans la requête
-    req.profile = user
+    // on ajoute l'objet profil contenant les infos de l'utilisateur dans la requête
+    req.profil = user
     res.status(200).send({
         message: `Utilisateur ${req.params.idUser} trouvé`,
         user: user

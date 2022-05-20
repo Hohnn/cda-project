@@ -1,5 +1,6 @@
 import express from 'express'
 import mongoose from 'mongoose'
+import bodyparser from 'body-parser'
 import dotenv from 'dotenv'
 import cors from 'cors'
 import request from 'supertest'
@@ -9,6 +10,7 @@ import DroneModel from '../models/droneModel'
 import UserModel from '../models/userModel'
 import OrderModel from '../models/orderModel'
 import RoleModel from '../models/roleModel'
+import CategoryModel from '../models/categoryModel.js'
 
 dotenv.config()
 
@@ -18,7 +20,8 @@ app.use(cors())
 app.options('*', cors())
 
 app.use(express.json())
-
+app.use(bodyparser.urlencoded({ extended: false }))
+app.use(bodyparser.json())
 mongoose.connect(process.env.MONGODB, {
 	useNewUrlParser: true,
 	useUnifiedTopology: true,
@@ -62,7 +65,13 @@ describe('Test des routes', () => {
 			.send(TU_User)
 		return response.body._id
 	}
-
+	
+	it('GET /api/v1/users', async () => {
+		const response = await request(app).get('/api/v1/users')
+		expect(response.statusCode).toBe(200)
+		expect(response.type).toEqual('application/json')
+	})
+	
 	it('PATCH /api/v1/users/:idUser', async () => {
 		const response = await request(app).patch(`/api/v1/users/${await TU_UserId()}`)
 			.send({
@@ -72,13 +81,6 @@ describe('Test des routes', () => {
 		expect(response.statusCode).toBe(200)
 		expect(response.type).toEqual('application/json')
 	})
-
-	it('GET /api/v1/users', async () => {
-		const response = await request(app).get('/api/v1/users')
-		expect(response.statusCode).toBe(200)
-		expect(response.type).toEqual('application/json')
-	})
-
 	//#endregion
 
 	//#region QrCode
@@ -106,14 +108,40 @@ describe('Test des routes', () => {
 
 	//#endregion
 
+	//#region Category
+
+	const TU_Category = {
+		name_cat: 'Testeur',
+		description_cat: 'Testeur',
+		max_weight: 999,
+		max_altitude: 9999,
+		fly_type: "Testeur",
+		key: 99
+	}
+
+	const TU_CategoryId = async () => {
+		const response = await request(app).post('/api/v1/categories')
+			.send(TU_Category)
+		console.log(response.body)
+		return response.body.category._id
+	}
+
+
+	it('GET /api/v1/categories', async () => {
+		const response = await request(app).get('/api/v1/categories')
+		expect(response.statusCode).toBe(200)
+		expect(response.type).toEqual('application/json')
+	})
+
+	//#endregion
+
 	//#region Drone
 
 	const TU_Drone = {
 		name_d: 'jestdrone',
-		category_id: '62798a82eefdb95f6551271b',
+		category_id: '62798a4aeefdb95f65512719',
 		description_d: 'JestDescription',
-		pricePerDay_d: 100,
-		state: 'Disponible'
+		pricePerDay_d: 100
 	}
 
 	const TU_DroneId = async () => {
@@ -128,7 +156,13 @@ describe('Test des routes', () => {
 		expect(response.type).toEqual('application/json')
 	})
 
-	it('PATCH /api/v1/drones/:droneID', async () => {
+	it('GET /api/v1/drones/:idDrone', async () => {
+		const response = await request(app).get(`/api/v1/drones/${await TU_DroneId()}`)
+		expect(response.statusCode).toBe(200)
+		expect(response.type).toEqual('application/json')
+	})
+
+	it('PATCH /api/v1/drones/:idDrone', async () => {
 		const response = await request(app).patch(`/api/v1/drones/${await TU_DroneId()}`)
 			.send({
 				pricePerDay_d: 100
@@ -137,10 +171,11 @@ describe('Test des routes', () => {
 		expect(response.type).toEqual('application/json')
 	})
 
-	it('DELETE /api/v1/drones/:droneID', async () => {
+	it('DELETE /api/v1/drones/:idDrone', async () => {
 		const response = await request(app).delete(`/api/v1/drones/${await TU_DroneId()}`)
 		expect(response.statusCode).toBe(204)
 	})
+
 
 	//#endregion
 
@@ -209,20 +244,13 @@ describe('Test des routes', () => {
 
 	//#endregion
 
-	//#region Category
 
-	it('GET /api/v1/categories', async () => {
-		const response = await request(app).get('/api/v1/categories')
-		expect(response.statusCode).toBe(200)
-		expect(response.type).toEqual('application/json')
-	})
-
-	//#endregion
 
 	afterAll(async () => {
 		await QrCodeModel.deleteMany({ src: TU_QR.src })
 		await UserModel.deleteMany({ email: TU_User.email })
 		await OrderModel.deleteMany({ createdBy_o: TU_Order.createdBy_o })
+		await CategoryModel.deleteMany({ name_cat: TU_Order.name_cat })
 		await DroneModel.deleteMany({ name_d: TU_Drone.name_d })
 		await RoleModel.deleteMany({ name_r: TU_Role.name_r })
 		await mongoose.disconnect()

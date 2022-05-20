@@ -61,7 +61,7 @@ export const updateOrder = async (req, res, next) => {
     if (!drone || drone === null || drone === undefined || drone === '') {
         return next(new AppError(`Aucun drone ${order.drone_id} trouvé.`, 404))
     }
-    drone.state = 'Indisponible'
+    
     await drone.save()
     res.send({
         message: `Commande ${req.params.idOrder} modifiée avec succès`,

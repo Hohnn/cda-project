@@ -19,14 +19,18 @@ export const getRole = async (req, res, next) => {
 
 export const addRole = async (req, res, next) => {
     const roles = new RoleModel(req.body)
+    const isAlreadyExist = await RoleModel.findOne({ name_r: roles.name_r })
     if (!roles) {
         return next(new AppError(`Erreur lors de la création du rôle.`, 400))
+    } else if (isAlreadyExist) {
+        return next(new AppError(`Ce rôle existe déjà.`, 400))
+    } else {
+        roles.save()
+        res.status(201).send({
+            message: 'Rôle créé avec succès',
+            roles: roles
+        })
     }
-    await roles.save()
-    res.status(201).send({
-        message: 'Rôle créé avec succès',
-        roles: roles
-    })
 }
 
 export const updateRole = async (req, res, next) => {

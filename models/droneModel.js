@@ -27,10 +27,10 @@ const DroneShema = new mongoose.Schema({
     },
     state: {
         type: String,
-        enum: ['Disponible', 'Indisponible'],
-        default: 'Disponible'
+        enum: ['En Stock', 'SAV', 'En Location'],
+        default: 'En Stock'
     }
-})
+}, { versionKey: false, timestamps: true })
 
 const Drone = mongoose.model('Drone', DroneShema)
 

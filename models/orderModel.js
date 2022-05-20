@@ -21,6 +21,7 @@ const OrderShema = new mongoose.Schema({
         required: [true, 'Date de fin de commande requise'],
     },
     report_o: {
+        
         type: String,
         trim: true
     },
@@ -38,10 +39,7 @@ const OrderShema = new mongoose.Schema({
         enum: ['En attente', 'Acceptée', 'Rejetée', 'Terminée'],
         default: 'En attente'
     }
-},
-    {
-        timestamps: true
-    }
+}, { versionKey: false, timestamps: true }
 )
 
 const Order = mongoose.model('Order', OrderShema)

@@ -11,10 +11,7 @@ const qrCodeSchema = new Mongoose.Schema({
         type: String,
         unique: true
     }
-},
-    {
-        timestamps: true
-    }
+}, { versionKey: false, timestamps: true }
 )
 
 const QrCodeModel = Mongoose.model('QrCode', qrCodeSchema)

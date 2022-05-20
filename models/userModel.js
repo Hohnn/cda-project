@@ -50,10 +50,7 @@ const UserSchema = new mongoose.Schema({
         ref: 'User'
     },
 
-},
-    {
-        timestamps: true
-    })
+}, { versionKey: false, timestamps: true })
 
 // Pré Hook - actions avant l'enregistrement dans la base de données MongoDB
 //hashage de mot de passe:

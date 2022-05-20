@@ -27,9 +27,9 @@ app.use(express.json())
 //and the body-parser middleware for parsing bodies 
 //from URL and JSON objects.
 
-app.set("view engine", "ejs")
-app.use(bodyparser.urlencoded({ extended: false }))
-app.use(bodyparser.json())
+// app.set("view engine", "ejs")
+// app.use(bodyparser.urlencoded({ extended: true }))
+
 
 // Simple routing to the index.ejs file
 /* #swagger.ignore = true*/

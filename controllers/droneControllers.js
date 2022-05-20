@@ -39,7 +39,6 @@ export const getDrone = async (req, res, next) => {
 export const getDronesByCategory = async (req, res, next) => {
     const drone = await DroneModel.find({ category_id: req.params.idCategory })
         .populate('category_id')
-        .populate('state')
         .exec()
     if (!drone || drone.length === 0 || drone === null || drone === undefined || drone === '') {
         return next(new AppError(`Aucun drone trouvé pour la catégorie ${req.params.idCategory}.`, 404))
