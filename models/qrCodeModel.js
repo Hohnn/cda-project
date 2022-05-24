@@ -1,6 +1,7 @@
-import Mongoose from "mongoose"
+import mongoose from "mongoose"
 
-const qrCodeSchema = new Mongoose.Schema({
+const Schema = mongoose.Schema
+const qrCodeSchema = new mongoose.Schema({
     src: {
         type: String,
         unique: true,
@@ -14,5 +15,5 @@ const qrCodeSchema = new Mongoose.Schema({
 }, { versionKey: false, timestamps: true }
 )
 
-const QrCodeModel = Mongoose.model('QrCode', qrCodeSchema)
+const QrCodeModel = mongoose.model('QrCode', qrCodeSchema)
 export default QrCodeModel

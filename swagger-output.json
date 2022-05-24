@@ -31,6 +31,35 @@
         }
       }
     },
+    "/images": {
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {}
+      },
+      "post": {
+        "description": "",
+        "parameters": [],
+        "responses": {},
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "example": "any"
+                  },
+                  "desc": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/users": {
       "get": {
         "tags": [
@@ -1038,6 +1067,9 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "400": {
+            "description": "BAD REQUEST"
           }
         }
       }
@@ -1178,7 +1210,7 @@
         "properties": {
           "name_r": {
             "type": "string",
-            "example": "administrator"
+            "example": "Administrateur"
           },
           "key_r": {
             "type": "number",

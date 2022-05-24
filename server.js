@@ -1,13 +1,17 @@
 import express from 'express'
+import cors from 'cors'
 import routes from './routes/routes.js'
 import dotenv from 'dotenv'
-import './auth/auth.js'
+import mongoose from 'mongoose'
 import AppError from './utils/AppError.js'
 import globalErrorHandler from './controllers/errorController.js'
-import mongoose from 'mongoose'
+import './auth/auth.js'
 import swaggerUi from 'swagger-ui-express'
 import { readFile } from 'fs/promises'
-import cors from 'cors'
+import path from 'path'
+import fs from 'fs'
+import multer from 'multer'
+import ImageModel from './models/imageModel.js'
 
 //#region Express
 
@@ -15,6 +19,7 @@ dotenv.config()
 const app = express()
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
+app.set("view engine", "ejs");
 
 //#endregion
 
@@ -74,15 +79,63 @@ app.get("/", (_, res) => {
 
 app.use('/api/v1', routes)
 
-app.all('*', (req, res, next) => {
-  next(new AppError(`Cette adresse : ${req.originalUrl} n'est pas disponible sur ce serveur.`, 404))
-})
+
 
 app.use(globalErrorHandler)
 
 //#endregion
 
+//#region upload
 
+
+ 
+// var storage = multer.diskStorage({
+//     destination: (req, file, cb) => {
+//         cb(null, 'uploads')
+//     },
+//     filename: (req, file, cb) => {
+//         cb(null, file.fieldname + '-' + Date.now())
+//     }
+// });
+ 
+// var upload = multer({ storage: storage });
+
+// app.get('/images', (req, res, next) => {
+//   ImageModel.find({}, (err, items) => {
+//       if (err) {
+//           console.log(err);
+//           return next(new AppError(err.message, 500), err);
+//       }
+//       else {
+//           res.render('imagesPage', { items: items });
+//       }
+//   });
+// });
+
+// app.post('/images', upload.single('image'), (req, res, next) => {
+//   var obj = {
+//       name: req.body.name,
+//       desc: req.body.desc,
+//       img: {
+//           data: fs.readFileSync(path.join(__dirname + '/uploads/' + req.file.filename)),
+//           contentType: 'image/png'
+//       }
+//   }
+//   ImageModel.create(obj, (err, item) => {
+//       if (err) {
+//           console.log(err);
+//       }
+//       else {
+//           item.save();
+//           res.redirect('/');
+//       }
+//   });
+// });
+
+//#endregion
+app.all('*', (req, res, next) => {
+  next(new AppError(`Cette adresse : ${req.originalUrl} n'est pas disponible sur ce serveur.`, 404))
+})
 app.listen(PORT, () => {
   console.log("Server is running on port: %s (HTTP)", PORT)
 })
