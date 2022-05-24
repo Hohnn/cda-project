@@ -54,9 +54,12 @@ export const updateUser = async (req, res, next) => {
 
 export const deleteUser = async (req, res, next) => {
     const user = await userModel.findByIdAndDelete(req.params.idUser)
+    const roleUser = await userModel.findOne(user.key_r)
     if (!user || user === null || user === undefined || user === '') {
         return next(new AppError(`Aucun utilisateur ${req.params.idUser} trouvé.`, 404))
     }
+    if(roleUser > 2)
+        return next(new AppError(`Vous n'avez pas les droits necessaires.`, 403))
     res.status(200).send({
         message: `Utilisateur ${user.firstname} ${user.lastname} ${user._id} supprimé.`
     })
