@@ -9,7 +9,7 @@ const RoleSchema = new mongoose.Schema({
     },
     key_r: {
         type: Number,
-        enum: [1, 2, 3, 99],
+        enum: [1, 2, 3, 0],
         required: [true, 'Clé requise']
     }
 }, { versionKey: false, timestamps: true })
