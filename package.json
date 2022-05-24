@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node swagger.js && nodemon server.js",
     "debug": "ndb server.js",
-    "test": "jest --forceExit --verbose --onlyFailures --all --setTimeout=15000"
+    "test": "jest --forceExit --verbose --onlyFailures --all"
   },
   "author": "CDA_Team",
   "license": "ISC",

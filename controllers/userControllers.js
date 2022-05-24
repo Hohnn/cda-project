@@ -57,7 +57,7 @@ export const deleteUser = async (req, res, next) => {
     if (!user || user === null || user === undefined || user === '') {
         return next(new AppError(`Aucun utilisateur ${req.params.idUser} trouvé.`, 404))
     }
-    res.status(204).send({
+    res.status(200).send({
         message: `Utilisateur ${user.firstname} ${user.lastname} ${user._id} supprimé.`
     })
 }

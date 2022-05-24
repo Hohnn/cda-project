@@ -20,8 +20,8 @@ app.use(cors())
 app.options('*', cors())
 
 app.use(express.json())
-app.use(bodyparser.urlencoded({ extended: false }))
-app.use(bodyparser.json())
+app.use(express.urlencoded({ extended: false }))
+
 mongoose.connect(process.env.MONGODB, {
 	useNewUrlParser: true,
 	useUnifiedTopology: true,

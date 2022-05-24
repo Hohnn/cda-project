@@ -8,80 +8,24 @@ import mongoose from 'mongoose'
 import swaggerUi from 'swagger-ui-express'
 import { readFile } from 'fs/promises'
 import cors from 'cors'
-import bodyparser from 'body-parser'
 
 //#region Express
-dotenv.config()
 
-// création de l'application express
+dotenv.config()
 const app = express()
-// Permet le traitement des json en POST
 app.use(express.json())
+app.use(express.urlencoded({ extended: false }))
 
 //#endregion
 
 //#region Cross Origin Ressource Sharing
-//#region QrCode
-
-//Use express package to set our template engine (view engine) 
-//and the body-parser middleware for parsing bodies 
-//from URL and JSON objects.
-
-// app.set("view engine", "ejs")
-// app.use(bodyparser.urlencoded({ extended: true }))
-
-
-// Simple routing to the index.ejs file
-/* #swagger.ignore = true*/
-// app.get("/qr", (req, res) => {
-//   res.render("index")
-// })
-
-// Blank input
-// Incase of blank in the index.ejs file, return error 
-// Error  - Empty Data!
-
-// app.post("/scan", (req, res) => {
-//   const url = req.body.url
-
-//   if (url.length === 0) res.send("Empty Data!")
-//   qrcode.toDataURL(url, (err, src) => {
-//     if (err) res.send("Error occured")
-
-//     res.render("scan", { src })
-//   })
-// })
+app.use(cors())
+app.options('*', cors())
 //#endregion
 
 //#region PORT
 
 const PORT = process.env.PORT || 3000
-
-//#endregion
-
-
-app.use(cors())
-
-//#endregion
-
-//#region routes by default
-
-app.get("/", (_, res) => {
-  res.send({
-    message: "Welcome to SkyDrone API."
-  })
-  /*
-  #swagger.tags = ['API root']
-  #swagger.description = 'Endpoint to the API.'
-  
-  #swagger.responses[200] = { description: "Welcome to SkyDrone API." }
-  #swagger.responses[500] = { description: "Internal server error." }
-  */
-})
-
-// middleware pour les fichiers statiques 
-//( les fichiers de build seront accessibles depuis la racine du serveur)
-app.use(express.static('client/build'))
 
 //#endregion
 
@@ -112,11 +56,22 @@ const swaggerFile = JSON.parse(
 
 app.use('/api-doc', swaggerUi.serve, swaggerUi.setup(swaggerFile))
 
-// app.use('/api-doc',passport.authenticate('swagger', { session: false }), swaggerUi.serve, swaggerUi.setup(swaggerFile))
-
 //#endregion
 
-//#region public routes
+//#region routes
+app.get("/", (_, res) => {
+  res.send({
+    message: "Welcome to SkyDrone API."
+  })
+  /*
+  #swagger.tags = ['API root']
+  #swagger.description = 'Endpoint to the API.'
+  
+  #swagger.responses[200] = { description: "Welcome to SkyDrone API." }
+  #swagger.responses[500] = { description: "Internal server error." }
+  */
+})
+
 app.use('/api/v1', routes)
 
 app.all('*', (req, res, next) => {
@@ -124,6 +79,7 @@ app.all('*', (req, res, next) => {
 })
 
 app.use(globalErrorHandler)
+
 //#endregion
 
 

@@ -35,10 +35,10 @@ export const addRole = async (req, res, next) => {
 
 export const updateRole = async (req, res, next) => {
     const roles = await RoleModel.findByIdAndUpdate(req.params.idRole, req.body)
+    await roles.save()
     if (!roles || roles.length === 0 || roles === null || roles === undefined || roles === '') {
         return next(new AppError(`Aucun rôle trouvé.`, 404))
     }
-    await roles.save()
     res.send({ message: 'Rôle mis à jour avec succès', role: roles })
 }
 
@@ -47,7 +47,7 @@ export const deleteRole = async (req, res, next) => {
     if (!roles || roles.length === 0 || roles === null || roles === undefined || roles === '') {
         return next(new AppError(`Aucun rôle ${req.params.idRole} trouvé.`, 404))
     }
-    res.status(204).send({
+    res.status(200).send({
         message: 'Rôle supprimé avec succès.'
     })
 }

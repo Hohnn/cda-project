@@ -53,7 +53,7 @@ export const deleteCategory = async (req, res, next) => {
     if (!category || category === null || category === undefined || category === '') {
         return next(new AppError(`Aucune catégorie trouvée.`, 404))
     } else {
-        res.status(204).send({
+        res.status(200).send({
             message: `Catégorie ${category.name_cat} supprimée avec succès.`
         })
     }

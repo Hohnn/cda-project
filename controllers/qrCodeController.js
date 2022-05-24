@@ -52,7 +52,7 @@ export const deleteQrCode = async (req, res, next) => {
     if (!qrCode || qrCode.length === 0 || qrCode === null || qrCode === undefined || qrCode === '') {
         return next(new AppError(`Aucun QrCode ${req.params.idQrCode} trouvé.`, 404))
     }
-    res.status(204).send({
+    res.status(200).send({
         message: `QR Code ${req.params.idQrCode} supprimé.`
     })
 }

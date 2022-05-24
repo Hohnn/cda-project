@@ -63,7 +63,7 @@ export const deleteDrone = async (req, res, next) => {
     if (!drone || drone.length === 0 || drone === null || drone === undefined || drone === '') {
         return next(new AppError(`Aucun drone ${req.params.idDrone} trouvé.`, 404))
     }
-    res.status(204).send({
+    res.status(200).send({
         message: `Drone ${drone.name_d} supprimé.`
     })
 }

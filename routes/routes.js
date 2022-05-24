@@ -515,7 +515,7 @@ router
             type: 'string' 
           }
           #swagger.responses[200] = { description: 'OK' }
-            #swagger.responses[404] = { description: 'NOT FOUND' }
+          #swagger.responses[404] = { description: 'NOT FOUND' }
           */
     )
     .get('/qrcodes', catchErrors(getAllQrCodes)
@@ -568,8 +568,8 @@ router
                description: 'Signin with usual pattern',
                schema: { $ref: "#/components/schemas/signup" }
            }      
-              #swagger.responses[201] = { description: 'User created'},
-                #swagger.responses[400] = { description: 'User not created'}
+              #swagger.responses[201] = { description: 'CREATED'},
+              #swagger.responses[400] = { description: 'BAD REQUEST'}
            */
     )
 
@@ -612,7 +612,9 @@ router
                 required: true,
                 description: 'Login with email and password',
                 schema: { $ref: "#/components/schemas/login" }
-            }                        
+            }       
+            #swagger.responses[200] = { description: 'OK'},
+            #swagger.responses[400] = { description: 'BAD REQUEST'}
             */
     )
 

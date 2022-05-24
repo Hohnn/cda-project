@@ -59,7 +59,7 @@ const doc = {
 				state_o: 'pending'
 			},
 			role: {
-				$name_r: 'administrator',
+				$name_r: 'Administrateur',
 				$key_r: 1
 			},
 			categories: {

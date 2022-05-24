@@ -75,7 +75,7 @@ export const deleteOrder = async (req, res, next) => {
     if (!order) {
         return next(new AppError(`Aucune commande ${req.params.idOrder} trouvée.`, 404))
     }
-    res.status(204).send({
+    res.status(200).send({
         message: `Commande ${req.params.idOrder} supprimee.`
     })
 }
