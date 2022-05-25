@@ -30,6 +30,7 @@ router
         
             #swagger.responses[200] = { description: 'OK' }
             #swagger.responses[401] = { description: 'NOT AUTHORIZED' }
+            #swagger.responses[403] = { description: 'FORBIDDEN' }
             #swagger.responses[404] = { description: 'NOT FOUND' }
             */
     )
@@ -49,6 +50,7 @@ router
             }
             #swagger.responses[200] = { description: 'OK' }
             #swagger.responses[401] = { description: 'NOT AUTHORIZED' }
+            #swagger.responses[403] = { description: 'FORBIDDEN' }
             #swagger.responses[404] = { description: 'NOT FOUND' }
         */
     )
@@ -68,6 +70,7 @@ router
             }
             #swagger.responses[204] = { description: 'DELETED' }
             #swagger.responses[401] = { description: 'NOT AUTHORIZED' }
+            #swagger.responses[403] = { description: 'FORBIDDEN' }
             #swagger.responses[404] = { description: 'NOT FOUND' }
         */
     )
@@ -85,6 +88,7 @@ router
         }
             #swagger.responses[200] = { description: 'OK' }
             #swagger.responses[401] = { description: 'NOT AUTHORIZED' }
+            #swagger.responses[403] = { description: 'FORBIDDEN' }
             #swagger.responses[404] = { description: 'NOT FOUND' }
         */
     )
@@ -103,6 +107,7 @@ router
         }
             #swagger.responses[201] = { description: 'OK' }
             #swagger.responses[401] = { description: 'NOT AUTHORIZED' }
+            #swagger.responses[403] = { description: 'FORBIDDEN' }
             #swagger.responses[404] = { description: 'NOT FOUND' }
         */
     )
@@ -119,6 +124,7 @@ router
             }
             #swagger.responses[204] = { description: 'DELETED' }
             #swagger.responses[401] = { description: 'NOT AUTHORIZED' }
+            #swagger.responses[403] = { description: 'FORBIDDEN' }
             #swagger.responses[404] = { description: 'NOT FOUND' }
                 */
     )
@@ -137,6 +143,7 @@ router
             }
             #swagger.responses[201] = { description: 'CREATED' }
             #swagger.responses[401] = { description: 'NOT AUTHORIZED' }
+            #swagger.responses[403] = { description: 'FORBIDDEN' }
             #swagger.responses[404] = { description: 'NOT FOUND' }
                 */
     )
@@ -156,6 +163,7 @@ router
             }
             #swagger.responses[204] = { description: 'DELETED' }
             #swagger.responses[401] = { description: 'NOT AUTHORIZED' }
+            #swagger.responses[403] = { description: 'FORBIDDEN' }
             #swagger.responses[404] = { description: 'NOT FOUND' }
         */
     )
@@ -174,6 +182,7 @@ router
         
             #swagger.responses[200] = { description: 'OK' }
             #swagger.responses[401] = { description: 'NOT AUTHORIZED' }
+            #swagger.responses[403] = { description: 'FORBIDDEN' }
             #swagger.responses[404] = { description: 'NOT FOUND' }
         */
     )
@@ -193,6 +202,7 @@ router
         
             #swagger.responses[201] = { description: 'CREATED' }
             #swagger.responses[401] = { description: 'NOT AUTHORIZED' }
+            #swagger.responses[403] = { description: 'FORBIDDEN' }
             #swagger.responses[404] = { description: 'NOT FOUND' }
         */
     )
@@ -206,6 +216,7 @@ router
             #swagger.responses[200] = { description: 'OK' }
             #swagger.responses[400] = { description: 'ERROR' }
             #swagger.responses[401] = { description: 'NOT AUTHORIZED' }
+            #swagger.responses[403] = { description: 'FORBIDDEN' }
             #swagger.responses[404] = { description: 'NOT FOUND' }
         */
     )
@@ -218,6 +229,7 @@ router
             }]
             #swagger.responses[200] = { description: 'OK' }
             #swagger.responses[401] = { description: 'NOT AUTHORIZED' }
+            #swagger.responses[403] = { description: 'FORBIDDEN' }
             #swagger.responses[404] = { description: 'NOT FOUND' }
         */
     )
@@ -236,7 +248,8 @@ router
                 type: 'string' 
             }
             #swagger.responses[200] = { description: 'OK' }
-            #swagger.responses[401] = { description: 'NOT AUTHORIZED' }
+            #swagger.responses[401] = { description: 'NOT AUTHORIZED'}
+            #swagger.responses[403] = { description: 'FORBIDDEN' }
             #swagger.responses[404] = { description: 'NOT FOUND' }
         */
     )
@@ -256,6 +269,7 @@ router
             }
             #swagger.responses[200] = { description: 'OK' }
             #swagger.responses[401] = { description: 'NOT AUTHORIZED' }
+            #swagger.responses[403] = { description: 'FORBIDDEN' }
             #swagger.responses[404] = { description: 'NOT FOUND' }
         */
     )
@@ -274,6 +288,7 @@ router
         
             #swagger.responses[200] = { description: 'OK' }
             #swagger.responses[401] = { description: 'NOT AUTHORIZED' }
+            #swagger.responses[403] = { description: 'FORBIDDEN' }
             #swagger.responses[404] = { description: 'NOT FOUND' }
         */
     )
@@ -292,6 +307,7 @@ router
         
             #swagger.responses[200] = { description: 'OK' }
             #swagger.responses[401] = { description: 'NOT AUTHORIZED' }
+            #swagger.responses[403] = { description: 'FORBIDDEN' }
             #swagger.responses[404] = { description: 'NOT FOUND' }
             */
     )
@@ -311,6 +327,7 @@ router
             }
             #swagger.responses[204] = { description: 'DELETED' }
             #swagger.responses[401] = { description: 'NOT AUTHORIZED' }
+            #swagger.responses[403] = { description: 'FORBIDDEN' }
             #swagger.responses[404] = { description: 'NOT FOUND' }
         */
     )
@@ -329,6 +346,7 @@ router
         
             #swagger.responses[200] = { description: 'OK' }
             #swagger.responses[401] = { description: 'NOT AUTHORIZED' }
+            #swagger.responses[403] = { description: 'FORBIDDEN' }
             #swagger.responses[404] = { description: 'NOT FOUND' }
         */
     )
@@ -347,6 +365,7 @@ router
         
             #swagger.responses[201] = { description: 'CREATED' }
             #swagger.responses[401] = { description: 'NOT AUTHORIZED' }
+            #swagger.responses[403] = { description: 'FORBIDDEN' }
             #swagger.responses[404] = { description: 'NOT FOUND' }
         */
     )
@@ -359,6 +378,7 @@ router
             }]
             #swagger.responses[200] = { description: 'OK' }
             #swagger.responses[401] = { description: 'NOT AUTHORIZED' }
+            #swagger.responses[403] = { description: 'FORBIDDEN' }
             #swagger.responses[404] = { description: 'NOT FOUND' }
         */
     )
@@ -378,6 +398,7 @@ router
             }]
             #swagger.responses[200] = { description: 'OK' }
             #swagger.responses[401] = { description: 'NOT AUTHORIZED' }
+            #swagger.responses[403] = { description: 'FORBIDDEN' }
             #swagger.responses[404] = { description: 'NOT FOUND' }
         */
     )
@@ -407,6 +428,7 @@ router
         
             #swagger.responses[201] = { description: 'CREATED' }
             #swagger.responses[401] = { description: 'NOT AUTHORIZED' }
+            #swagger.responses[403] = { description: 'FORBIDDEN' }
             #swagger.responses[404] = { description: 'NOT FOUND' }
         */
     )
@@ -427,6 +449,7 @@ router
         
             #swagger.responses[200] = { description: 'OK' }
             #swagger.responses[401] = { description: 'NOT AUTHORIZED' }
+            #swagger.responses[403] = { description: 'FORBIDDEN' }
             #swagger.responses[404] = { description: 'NOT FOUND' }
         */
     )
@@ -446,6 +469,39 @@ router
             }]
             #swagger.responses[204] = { description: 'DELETED' }
             #swagger.responses[401] = { description: 'NOT AUTHORIZED' }
+            #swagger.responses[403] = { description: 'FORBIDDEN' }
+            #swagger.responses[404] = { description: 'NOT FOUND' }
+        */
+    )
+    .get('/qrcodes', auth.jwt, catchErrors(getAllQrCodes)
+
+        /*
+            #swagger.tags = ['The QR Codes']
+            #swagger.description = 'Endpoint to get all QR Codes.'
+            #swagger.security = [{
+                "bearerAuth": []
+            }]
+            #swagger.responses[200] = { description: 'OK' }
+            #swagger.responses[404] = { description: 'NOT FOUND' }
+            #swagger.responses[403] = { description: 'FORBIDDEN' }
+        */
+    )
+    .get('/qrcodes/:idQrCode', auth.jwt, catchErrors(getQrCode)
+        /*
+            #swagger.tags = ['The QR Codes']
+            #swagger.description = 'Endpoint to get a QR Code by id.'
+            #swagger.security = [{
+                "bearerAuth": []
+            }]
+            #swagger.parameters[idQrCode] = { 
+                in: 'path', 
+                name: 'idQrCode', 
+                description: 'The ID of The QR Codes', 
+                required: true, 
+                type: 'string' 
+            }
+            #swagger.responses[200] = { description: 'OK' }
+            #swagger.responses[403] = { description: 'FORBIDDEN' }
             #swagger.responses[404] = { description: 'NOT FOUND' }
         */
     )
@@ -459,7 +515,6 @@ router
             #swagger.description = 'Endpoint to get a drone.'
         
             #swagger.responses[200] = { description: 'OK' }
-            #swagger.responses[401] = { description: 'NOT AUTHORIZED' }
             #swagger.responses[404] = { description: 'NOT FOUND' }
         */
     )
@@ -475,7 +530,6 @@ router
                 type: 'string' 
             }
             #swagger.responses[200] = { description: 'OK' }
-            #swagger.responses[401] = { description: 'NOT AUTHORIZED' }
             #swagger.responses[404] = { description: 'NOT FOUND' }
             */
     )
@@ -489,10 +543,10 @@ router
                 description: 'The id of The Categories', 
                 required: true, 
                 type: 'string' 
-         }
+            }
             #swagger.responses[200] = { description: 'OK' }
             #swagger.responses[404] = { description: 'NOT FOUND' }
-         */
+            */
     )
     .get('/categories', catchErrors(getAllCategories)
         /*
@@ -518,31 +572,6 @@ router
           #swagger.responses[404] = { description: 'NOT FOUND' }
           */
     )
-    .get('/qrcodes', catchErrors(getAllQrCodes)
-
-        /*
-        #swagger.tags = ['The QR Codes']
-        #swagger.description = 'Endpoint to get all QR Codes.'
-        
-        #swagger.responses[200] = { description: 'OK' }
-            #swagger.responses[404] = { description: 'NOT FOUND' }
-        */
-    )
-    .get('/qrcodes/:idQrCode', catchErrors(getQrCode)
-        /*
-        #swagger.tags = ['The QR Codes']
-                     #swagger.description = 'Endpoint to get a QR Code by id.'
-                     #swagger.parameters[idQrCode] = { 
-                         in: 'path', 
-                         name: 'idQrCode', 
-                         description: 'The ID of The QR Codes', 
-                         required: true, 
-                         type: 'string' 
-                     }
-                     #swagger.responses[200] = { description: 'OK' }
-            #swagger.responses[404] = { description: 'NOT FOUND' }
-                 */
-    )
 
     //#endregion
 
@@ -552,6 +581,7 @@ router
             if (!req.body) {
                 return next(new AppError('Une erreur est survenue', 400))
             }
+
             res.status(201).send({
                 message: 'Inscription réussie',
                 user: req.user
@@ -600,7 +630,7 @@ router
 
                 })
             } catch (error) {
-                return next(new AppError('Une erreur est survenue', 400))
+                return next(new AppError(`Une erreur est survenue: ${error}`, 400))
             }
         })(req, res, next)
     }

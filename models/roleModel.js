@@ -1,10 +1,9 @@
 import mongoose from 'mongoose'
 
-const Schema = mongoose.Schema
 const RoleSchema = new mongoose.Schema({
     name_r: {
         type: String,
-        enum: ['Administrateur', 'Utilisateur', 'Client Web', 'Testeur'],
+        enum: ['Directeur', 'Support Technique', 'Client Web', 'Testeur'],
         required: [true, 'Nom requis']
     },
     key_r: {

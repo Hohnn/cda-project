@@ -81,8 +81,6 @@ app.use('/api/v1', routes)
 
 
 
-app.use(globalErrorHandler)
-
 //#endregion
 
 //#region upload
@@ -136,6 +134,9 @@ app.use(globalErrorHandler)
 app.all('*', (req, res, next) => {
   next(new AppError(`Cette adresse : ${req.originalUrl} n'est pas disponible sur ce serveur.`, 404))
 })
+
+app.use(globalErrorHandler)
+
 app.listen(PORT, () => {
   console.log("Server is running on port: %s (HTTP)", PORT)
 })

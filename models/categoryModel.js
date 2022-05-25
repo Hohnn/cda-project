@@ -4,8 +4,7 @@ const Schema = mongoose.Schema
 const CategorySchema = new mongoose.Schema({
     name_cat: {
         type: String,
-        enum: ['C0', 'C1', 'C2', 'C3', 'C4', 'Testeur'],
-        required: [true, 'Nom de la catégorie requis']
+        enum: ['C0', 'C1', 'C2', 'C3', 'C4', 'Testeur']
     },
     description_cat: {
         type: String,
@@ -16,7 +15,7 @@ const CategorySchema = new mongoose.Schema({
             "Catégorie Ouverte A3, vol a distance minimum de 150 m des zones peuplées, commerciales, industrielles ou récréatives.",
             "Catégorie Ouverte A3, vol a distance minimum de 150 m des zones peuplées, commerciales, industrielles ou récréatives.",
             "Testeur"
-        ],
+        ]
     },
     max_weight: {
         type: Number,

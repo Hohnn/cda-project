@@ -11,7 +11,7 @@ const UserSchema = new mongoose.Schema({
     password: {
         type: String,
         required: [true, 'Mot de passe requis'],
-        minlength: [8, 'Password must be at least 8 characters long']
+        minlength: [8, 'Le mot de passe doit contenir au moins 8 caractères'],
     },
     firstName_u: {
         type: String,
@@ -26,8 +26,7 @@ const UserSchema = new mongoose.Schema({
         required: [true, 'Entreprise requis']
     },
     key_r: {
-        type: Number,
-        required: [true, 'Key role requis']
+        type: Number
     },
     siret_u: {
         type: String,
@@ -68,25 +67,6 @@ UserSchema.methods.isValidPassword = async function (password) {
     return await bcrypt.compare(password, this.password) //return true or false
 }
 
-UserSchema.methods.toJSON = function () {
-    const user = this
-    const userObject = user.toObject()
-    delete userObject.password
-    delete userObject.passwordConfirm
-    return userObject
-}
-
-UserSchema.statics.findByCredentials = async (email, password) => {
-    const user = await User.findOne({ email })
-    if (!user) {
-        throw new Error('Impossible de se connecter')
-    }
-    const isMatch = await user.isValidPassword(password)
-    if (!isMatch) {
-        throw new Error('Impossible de se connecter')
-    }
-    return user
-}
 
 const UserModel = mongoose.model('User', UserSchema)
 

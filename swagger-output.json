@@ -31,35 +31,6 @@
         }
       }
     },
-    "/images": {
-      "get": {
-        "description": "",
-        "parameters": [],
-        "responses": {}
-      },
-      "post": {
-        "description": "",
-        "parameters": [],
-        "responses": {},
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "example": "any"
-                  },
-                  "desc": {
-                    "example": "any"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/api/v1/users": {
       "get": {
         "tags": [
@@ -73,6 +44,9 @@
           },
           "401": {
             "description": "NOT AUTHORIZED"
+          },
+          "403": {
+            "description": "FORBIDDEN"
           },
           "404": {
             "description": "NOT FOUND"
@@ -106,6 +80,9 @@
           },
           "401": {
             "description": "NOT AUTHORIZED"
+          },
+          "403": {
+            "description": "FORBIDDEN"
           },
           "404": {
             "description": "NOT FOUND"
@@ -142,6 +119,9 @@
           "401": {
             "description": "NOT AUTHORIZED"
           },
+          "403": {
+            "description": "FORBIDDEN"
+          },
           "404": {
             "description": "NOT FOUND"
           }
@@ -174,6 +154,9 @@
           },
           "401": {
             "description": "NOT AUTHORIZED"
+          },
+          "403": {
+            "description": "FORBIDDEN"
           },
           "404": {
             "description": "NOT FOUND"
@@ -216,6 +199,9 @@
           "401": {
             "description": "NOT AUTHORIZED"
           },
+          "403": {
+            "description": "FORBIDDEN"
+          },
           "404": {
             "description": "NOT FOUND"
           }
@@ -251,6 +237,9 @@
           "401": {
             "description": "NOT AUTHORIZED"
           },
+          "403": {
+            "description": "FORBIDDEN"
+          },
           "404": {
             "description": "NOT FOUND"
           }
@@ -281,10 +270,18 @@
           "200": {
             "description": "OK"
           },
+          "403": {
+            "description": "FORBIDDEN"
+          },
           "404": {
             "description": "NOT FOUND"
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
     "/api/v1/qrcodes": {
@@ -311,6 +308,9 @@
           "401": {
             "description": "NOT AUTHORIZED"
           },
+          "403": {
+            "description": "FORBIDDEN"
+          },
           "404": {
             "description": "NOT FOUND"
           }
@@ -331,10 +331,18 @@
           "200": {
             "description": "OK"
           },
+          "403": {
+            "description": "FORBIDDEN"
+          },
           "404": {
             "description": "NOT FOUND"
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
     "/api/v1/drones/{idDrone}": {
@@ -360,6 +368,9 @@
           },
           "401": {
             "description": "NOT AUTHORIZED"
+          },
+          "403": {
+            "description": "FORBIDDEN"
           },
           "404": {
             "description": "NOT FOUND"
@@ -402,6 +413,9 @@
           "401": {
             "description": "NOT AUTHORIZED"
           },
+          "403": {
+            "description": "FORBIDDEN"
+          },
           "404": {
             "description": "NOT FOUND"
           }
@@ -432,9 +446,6 @@
           "200": {
             "description": "OK"
           },
-          "401": {
-            "description": "NOT AUTHORIZED"
-          },
           "404": {
             "description": "NOT FOUND"
           }
@@ -464,6 +475,9 @@
           "401": {
             "description": "NOT AUTHORIZED"
           },
+          "403": {
+            "description": "FORBIDDEN"
+          },
           "404": {
             "description": "NOT FOUND"
           }
@@ -483,9 +497,6 @@
         "responses": {
           "200": {
             "description": "OK"
-          },
-          "401": {
-            "description": "NOT AUTHORIZED"
           },
           "404": {
             "description": "NOT FOUND"
@@ -519,6 +530,9 @@
           "401": {
             "description": "NOT AUTHORIZED"
           },
+          "403": {
+            "description": "FORBIDDEN"
+          },
           "404": {
             "description": "NOT FOUND"
           }
@@ -543,6 +557,9 @@
           },
           "401": {
             "description": "NOT AUTHORIZED"
+          },
+          "403": {
+            "description": "FORBIDDEN"
           },
           "404": {
             "description": "NOT FOUND"
@@ -575,6 +592,9 @@
           },
           "401": {
             "description": "NOT AUTHORIZED"
+          },
+          "403": {
+            "description": "FORBIDDEN"
           },
           "404": {
             "description": "NOT FOUND"
@@ -611,6 +631,9 @@
           "401": {
             "description": "NOT AUTHORIZED"
           },
+          "403": {
+            "description": "FORBIDDEN"
+          },
           "404": {
             "description": "NOT FOUND"
           }
@@ -643,6 +666,9 @@
           },
           "401": {
             "description": "NOT AUTHORIZED"
+          },
+          "403": {
+            "description": "FORBIDDEN"
           },
           "404": {
             "description": "NOT FOUND"
@@ -684,6 +710,9 @@
           "401": {
             "description": "NOT AUTHORIZED"
           },
+          "403": {
+            "description": "FORBIDDEN"
+          },
           "404": {
             "description": "NOT FOUND"
           }
@@ -718,6 +747,9 @@
           },
           "401": {
             "description": "NOT AUTHORIZED"
+          },
+          "403": {
+            "description": "FORBIDDEN"
           },
           "404": {
             "description": "NOT FOUND"
@@ -758,6 +790,9 @@
           },
           "401": {
             "description": "NOT AUTHORIZED"
+          },
+          "403": {
+            "description": "FORBIDDEN"
           },
           "404": {
             "description": "NOT FOUND"
@@ -818,6 +853,9 @@
           "401": {
             "description": "NOT AUTHORIZED"
           },
+          "403": {
+            "description": "FORBIDDEN"
+          },
           "404": {
             "description": "NOT FOUND"
           }
@@ -858,6 +896,9 @@
           "401": {
             "description": "NOT AUTHORIZED"
           },
+          "403": {
+            "description": "FORBIDDEN"
+          },
           "404": {
             "description": "NOT FOUND"
           }
@@ -889,6 +930,9 @@
           },
           "401": {
             "description": "NOT AUTHORIZED"
+          },
+          "403": {
+            "description": "FORBIDDEN"
           },
           "404": {
             "description": "NOT FOUND"
@@ -935,6 +979,9 @@
           "401": {
             "description": "NOT AUTHORIZED"
           },
+          "403": {
+            "description": "FORBIDDEN"
+          },
           "404": {
             "description": "NOT FOUND"
           }
@@ -976,6 +1023,9 @@
           "401": {
             "description": "NOT AUTHORIZED"
           },
+          "403": {
+            "description": "FORBIDDEN"
+          },
           "404": {
             "description": "NOT FOUND"
           }
@@ -1008,6 +1058,9 @@
           },
           "401": {
             "description": "NOT AUTHORIZED"
+          },
+          "403": {
+            "description": "FORBIDDEN"
           },
           "404": {
             "description": "NOT FOUND"

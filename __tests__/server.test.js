@@ -29,7 +29,7 @@ mongoose.connect(process.env.MONGODB, {
 	useCreateIndex: true
 })
 
-app.get("/", (req, res) => {
+app.get("/", (req, res, next) => {
 	res.send({
 		message: "Welcome to SkyDrone API."
 	})
