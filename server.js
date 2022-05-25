@@ -11,8 +11,10 @@ import { readFile } from 'fs/promises'
 import path from 'path'
 import fs from 'fs'
 import multer from 'multer'
-import ImageModel from './models/imageModel.js'
-
+import Image from './models/imageModel.js'
+import { fileURLToPath } from 'url';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 //#region Express
 
 dotenv.config()
@@ -85,50 +87,49 @@ app.use('/api/v1', routes)
 
 //#region upload
 
-
  
-// var storage = multer.diskStorage({
-//     destination: (req, file, cb) => {
-//         cb(null, 'uploads')
-//     },
-//     filename: (req, file, cb) => {
-//         cb(null, file.fieldname + '-' + Date.now())
-//     }
-// });
+var storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'images')
+    },
+    filename: (req, file, cb) => {
+        cb(null, file.fieldname + '-' + Date.now())
+    }
+});
  
-// var upload = multer({ storage: storage });
+var upload = multer({ storage: storage });
 
-// app.get('/images', (req, res, next) => {
-//   ImageModel.find({}, (err, items) => {
-//       if (err) {
-//           console.log(err);
-//           return next(new AppError(err.message, 500), err);
-//       }
-//       else {
-//           res.render('imagesPage', { items: items });
-//       }
-//   });
-// });
+app.get('/images', (req, res, next) => {
+  Image.find({}, (err, items) => {
+      if (err) {
+          console.log(err);
+          return next(new AppError(err.message, 500), err);
+      }
+      else {
+          res.render('imagePage.ejs', { items: items });
+      }
+  });
+});
 
-// app.post('/images', upload.single('image'), (req, res, next) => {
-//   var obj = {
-//       name: req.body.name,
-//       desc: req.body.desc,
-//       img: {
-//           data: fs.readFileSync(path.join(__dirname + '/uploads/' + req.file.filename)),
-//           contentType: 'image/png'
-//       }
-//   }
-//   ImageModel.create(obj, (err, item) => {
-//       if (err) {
-//           console.log(err);
-//       }
-//       else {
-//           item.save();
-//           res.redirect('/');
-//       }
-//   });
-// });
+app.post('/images', upload.single('image'), (req, res, next) => {
+  var obj = {
+      name: req.body.name,
+      desc: req.body.desc,
+      img: {
+          data: fs.readFileSync(path.join(__dirname + '/images/' + req.file.filename)),
+          contentType: 'image/png'
+      }
+  }
+  Image.create(obj, (err, item) => {
+      if (err) {
+          console.log(err);
+      }
+      else {
+          item.save();
+          res.redirect('/images');
+      }
+  });
+});
 
 //#endregion
 app.all('*', (req, res, next) => {

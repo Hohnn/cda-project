@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 
-const Schema = mongoose.Schema
+
 const ImageSchema = new mongoose.Schema({
     name: String,
     desc: String,
@@ -10,6 +10,7 @@ const ImageSchema = new mongoose.Schema({
         contentType: String
     }
 }, { versionKey: false, timestamps: true })
+
 const Image = mongoose.model('Image', ImageSchema)
 
 export default Image
