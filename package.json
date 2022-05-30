@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node swagger.js && nodemon server.js",
     "debug": "ndb server.js",
-    "test": "jest --forceExit --verbose --detectOpenHandles"
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --detectOpenHandles --forceExit "
   },
   "author": "CDA_Team",
   "license": "ISC",

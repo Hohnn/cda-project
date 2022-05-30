@@ -60,6 +60,38 @@
         }
       }
     },
+    "images/{idImage}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "idImage",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/images/{id}": {
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {}
+      }
+    },
     "/api/v1/users": {
       "get": {
         "tags": [
@@ -1164,52 +1196,41 @@
         "properties": {
           "email": {
             "type": "string",
-            "example": "api@skydrone.com"
+            "example": "test@skydrone.fr"
           },
           "password": {
             "type": "string",
-            "example": "encrypted"
+            "example": "password"
           },
           "firstName_u": {
             "type": "string",
-            "example": "Sky"
+            "example": "firstname"
           },
           "lastName_u": {
             "type": "string",
-            "example": "Drone"
+            "example": "lastname"
           },
           "company_u": {
             "type": "string",
-            "example": "SkyDrone Inc"
-          },
-          "key_r": {
-            "type": "number",
-            "example": 1
-          },
-          "siret_u": {
-            "type": "string",
-            "example": "FR0123456789"
-          },
-          "address_u": {
-            "type": "string",
-            "example": "21 Rue Des Ailes"
+            "example": "company"
           },
           "phone_u": {
             "type": "string",
-            "example": "+33000000000"
+            "example": "phone"
+          },
+          "address_u": {
+            "type": "string",
+            "example": "address"
+          },
+          "key_r": {
+            "type": "number",
+            "example": 3
+          },
+          "siret_u": {
+            "type": "string",
+            "example": "siret"
           }
-        },
-        "required": [
-          "email",
-          "password",
-          "firstName_u",
-          "lastName_u",
-          "company_u",
-          "key_r",
-          "siret_u",
-          "address_u",
-          "phone_u"
-        ]
+        }
       },
       "drone": {
         "type": "object",

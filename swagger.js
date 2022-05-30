@@ -31,15 +31,15 @@ const doc = {
 	components: {
 		schemas: {
 			user: {
-				$email: 'api@skydrone.com',
-				$password: 'encrypted',
-				$firstName_u: 'Sky',
-				$lastName_u: 'Drone',
-				$company_u: 'SkyDrone Inc',
-				$key_r: 1,
-				$siret_u: 'FR0123456789',
-				$address_u: '21 Rue Des Ailes',
-				$phone_u: '+33000000000'
+				"email": "test@skydrone.fr",
+				"password": "password",
+				"firstName_u": "firstname",
+				"lastName_u": "lastname",
+				"company_u": "company",
+				"phone_u": "phone",
+				"address_u": "address",
+				"key_r": 3,
+				"siret_u": "siret"
 			},
 			drone: {
 				$name_d: 'Model A',

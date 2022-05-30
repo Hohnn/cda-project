@@ -20,16 +20,16 @@ export const getUser = async (req, res, next) => {
     const user = await userModel.findById(req.params.idUser)
 
         .populate('role_id')
-    .exec((err, user) => {
-        if (!user || user === null || user === undefined || user === '') {
-            return next(new AppError(`Aucun utilisateur ${req.params.idUser} trouvé.`, 404))
+        .exec((err, user) => {
+            if (!user || user === null || user === undefined || user === '') {
+                return next(new AppError(`Aucun utilisateur ${req.params.idUser} trouvé.`, 404))
 
-        }
-        res.send({
-            message: `Utilisateur ${req.params.idUser} trouvé`,
-            user: user
+            }
+            res.send({
+                message: `Utilisateur ${req.params.idUser} trouvé`,
+                user: user
+            })
         })
-    })
 }
 
 
@@ -76,7 +76,7 @@ export const deleteUser = async (req, res, next) => {
         return next(new AppError(`Aucun utilisateur ${req.params.idUser} trouvé.`, 404))
     }
     res.status(200).send({
-        message: `Utilisateur ${user.firstname} ${user.lastname} ${user._id} supprimé.`
+        message: `Utilisateur ${user._id} supprimé.`
     })
 }
 

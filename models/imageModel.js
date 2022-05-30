@@ -3,7 +3,6 @@ import mongoose from 'mongoose'
 
 const ImageSchema = new mongoose.Schema({
     name: String,
-    desc: String,
     img:
     {
         data: Buffer,
