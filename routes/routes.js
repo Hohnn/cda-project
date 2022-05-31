@@ -5,12 +5,14 @@ import jwt from 'jsonwebtoken'
 import passport from 'passport'
 import AppError from '../utils/AppError.js'
 import { catchErrors } from '../helpers.js'
+import upload from '../utils/multer.js'
 import { getOrdersByUserId, addOrder, getAllOrders, updateOrder, deleteOrder, getOrderById } from '../controllers/orderControllers.js'
 import { getRoles, getRole, addRole, updateRole, deleteRole } from '../controllers/roleControllers.js'
 import { getUsers, getUser, addUser, deleteUser, updateUser } from '../controllers/userControllers.js'
 import { getCategory, getAllCategories, addCategory, deleteCategory, updateCategory } from '../controllers/categoryControllers.js'
 import { getDronesByCategory, getDrone, getAllDrones, addDrone, updateDrone, deleteDrone } from '../controllers/droneControllers.js'
 import { deleteQrCode, getQrCode, addQrCode, getAllQrCodes } from "../controllers/qrCodeController.js"
+import { getImages, getImage, addImage, deleteImage } from "../controllers/imageController.js"
 
 const auth = {
     signup: passport.authenticate('signup', { session: false }),
@@ -20,6 +22,49 @@ const auth = {
 const router = express.Router()
 
 router
+    .get('/images', catchErrors(getImages)
+        /*
+            #swagger.tags = ['The Images']
+            #swagger.description = 'The images of the drones'
+            #swagger.responses[200] = { description: 'OK' }
+            #swagger.responses[404] = { description: 'NOT FOUND' }
+        */)
+
+    .get('/images/:idImage', catchErrors(getImage)
+        /*
+            #swagger.tags = ['The Images']
+            #swagger.description = 'The images of the drones'
+            #swagger.responses[200] = { description: 'OK' }
+            #swagger.responses[404] = { description: 'NOT FOUND' }
+        */)
+
+    .post('/images', auth.jwt, upload.single('image'), catchErrors(addImage)
+        /*
+            #swagger.tags = ['The Images']
+            #swagger.description = 'The images of the drones'
+            #swagger.responses[200] = { description: 'OK' }
+            #swagger.security = [{
+                    "bearerAuth": []
+                }]
+            #swagger.responses[401] = { description: 'NOT AUTHORIZED' }
+            #swagger.responses[403] = { description: 'FORBIDDEN' }
+            #swagger.responses[404] = { description: 'NOT FOUND' }
+        */
+    )
+
+    .delete('/images/:idImage', auth.jwt, catchErrors(deleteImage)
+        /*
+            #swagger.tags = ['The Images']
+            #swagger.description = 'The images of the drones'
+            #swagger.security = [{
+                    "bearerAuth": []
+                }]
+            #swagger.responses[200] = { description: 'OK' }
+                #swagger.responses[401] = { description: 'NOT AUTHORIZED' }
+                #swagger.responses[403] = { description: 'FORBIDDEN' }
+                #swagger.responses[404] = { description: 'NOT FOUND' }
+        */
+    )
     .get('/users', auth.jwt, catchErrors(getUsers)
         /*
             #swagger.tags = ['The Users']

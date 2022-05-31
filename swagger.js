@@ -74,6 +74,9 @@ const doc = {
 			login: {
 				$email: 'test@skydrone.fr',
 				$password: 'password'
+			},
+			images: {
+				$name: 'image'
 			}
 		}
 	}

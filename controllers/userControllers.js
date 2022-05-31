@@ -34,9 +34,9 @@ export const getUser = async (req, res, next) => {
 
 
 export const addUser = async (req, res, next) => {
-    if (req.user.key_r > 1) {
-        return next(new AppError(`Vous n'etes pas autorisé à effectuer cette action.`, 403))
-    }
+    // if (req.user.key_r > 1) {
+    //     return next(new AppError(`Vous n'etes pas autorisé à effectuer cette action.`, 403))
+    // }
     const email = req.body.email
     const user = new userModel(req.body)
     const userExist = await userModel.findOne({ email })

@@ -8,13 +8,7 @@ import globalErrorHandler from './controllers/errorController.js'
 import './auth/auth.js'
 import swaggerUi from 'swagger-ui-express'
 import { readFile } from 'fs/promises'
-import path from 'path'
-import fs from 'fs'
-import multer from 'multer'
-import Image from './models/imageModel.js'
-import { fileURLToPath } from 'url'
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
+
 //#region Express
 
 dotenv.config()
@@ -82,113 +76,12 @@ app.get("/", (_, res) => {
 app.use('/api/v1', routes)
 
 
-
-//#endregion
-
-//#region upload
-
-// Multer configuration
-const maxSize = 8 * 1024 * 1024 // 8MB
-
-const MIME_TYPES = {
-  'image/jpeg': 'jpg',
-  'image/png': 'png'
-}
-const upload = multer({
-  storage: multer.diskStorage({
-    destination: (req, file, cb) => {
-      cb(null, './images')
-    },
-    filename: (req, file, cb) => {
-      const name = file.originalname.split(".").join("_")
-      cb(null, `${Date.now()}-${name}.${MIME_TYPES[file.mimetype]}`)
-    }
-  }),
-  fileFilter: (req, file, cb) => {
-    if (file.mimetype.startsWith('image/')) {
-      cb(null, true)
-    } else {
-      cb(new AppError('Ce n\'est pas une image!', 400), false)
-    }
-  },
-  limits: {
-    fileSize: maxSize
-  }
-})
-
-
-app.get('/images', (req, res, next) => {
-  Image.find({}, (err, images) => {
-    if (err) {
-      return next(new AppError(err.message, 500), err)
-    }
-    res.send(
-      images.map(image => {
-        return {
-          id: image._id,
-          name: image.name,
-          img: image.img
-        }
-      })
-    )
-  })
-})
-
-app.get('/images/:idImage', (req, res, next) => {
-  Image.findById(req.params.idImage, (err, item) => {
-    if (err) {
-      return next(new AppError(err.message, 500), err)
-    }
-    res.send(item)
-  })
-})
-
-app.post('/images', upload.single('image'), (req, res, next) => {
-  var obj = {
-    name: req.file.filename,
-    img: {
-      data: fs.readFileSync(path.join(__dirname + '/images/' + req.file.filename)),
-      contentType: req.file.mimetype
-    }
-  }
-  Image.create(obj, (err, item) => {
-    if (err) {
-      return next(new AppError(err.message, 500), err)
-    }
-    item.save()
-    res.status(201).send({
-      message: "Image uploaded successfully",
-      id: item._id,
-      name: item.name
-    })
-  })
-})
-
-app.delete('/images/:id', (req, res, next) => {
-  Image.findByIdAndRemove(req.params.id, (err, item) => {
-    console.log(item)
-    if (!item || err) {
-      return next(new AppError('Une erreur est survenue', 400))
-    }
-    res.send({
-      message: 'Image supprimée!'
-    })
-    fs.unlink(path.join(__dirname + '/images/' + item.name), (err) => {
-      if (err) {
-        console.log(`Erreur de suppression de l\'image: ${err}`)
-      }
-    })
-  })
-})
-
-
-
-//#endregion
 app.all('*', (req, res, next) => {
   next(new AppError(`Cette adresse : ${req.originalUrl} n'est pas disponible sur ce serveur.`, 404))
 })
 
 app.use(globalErrorHandler)
+//#endregion
 
 app.listen(PORT, () => {
   console.log("Server is running on port: %s (HTTP)", PORT)

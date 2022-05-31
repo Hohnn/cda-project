@@ -31,38 +31,55 @@
         }
       }
     },
-    "/images": {
+    "/api/v1/images": {
       "get": {
-        "description": "",
+        "tags": [
+          "The Images"
+        ],
+        "description": "The images of the drones",
         "parameters": [],
-        "responses": {}
-      },
-      "post": {
-        "description": "",
-        "parameters": [],
-        "responses": {},
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "example": "any"
-                  },
-                  "desc": {
-                    "example": "any"
-                  }
-                }
-              }
-            }
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "NOT FOUND"
           }
         }
+      },
+      "post": {
+        "tags": [
+          "The Images"
+        ],
+        "description": "The images of the drones",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "NOT AUTHORIZED"
+          },
+          "403": {
+            "description": "FORBIDDEN"
+          },
+          "404": {
+            "description": "NOT FOUND"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
-    "images/{idImage}": {
+    "/api/v1/images/{idImage}": {
       "get": {
-        "description": "",
+        "tags": [
+          "The Images"
+        ],
+        "description": "The images of the drones",
         "parameters": [
           {
             "name": "idImage",
@@ -73,15 +90,23 @@
             }
           }
         ],
-        "responses": {}
-      }
-    },
-    "/images/{id}": {
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "NOT FOUND"
+          }
+        }
+      },
       "delete": {
-        "description": "",
+        "tags": [
+          "The Images"
+        ],
+        "description": "The images of the drones",
         "parameters": [
           {
-            "name": "id",
+            "name": "idImage",
             "in": "path",
             "required": true,
             "schema": {
@@ -89,7 +114,25 @@
             }
           }
         ],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "NOT AUTHORIZED"
+          },
+          "403": {
+            "description": "FORBIDDEN"
+          },
+          "404": {
+            "description": "NOT FOUND"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
     "/api/v1/users": {
@@ -1378,6 +1421,18 @@
         "required": [
           "email",
           "password"
+        ]
+      },
+      "images": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "image"
+          }
+        },
+        "required": [
+          "name"
         ]
       }
     },

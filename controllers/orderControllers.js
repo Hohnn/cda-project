@@ -45,7 +45,9 @@ export const getOrderById = async (req, res, next) => {
 }
 
 export const getOrdersByUserId = async (req, res, next) => {
-    if (req.user.key_r) {
+    console.log(req.user._id)
+    console.log(req.user.key_r)
+    if (req.user.key_r >= 0) {
         if (req.user.key_r === 3 && req.user._id !== req.params.idUser) {
             return next(new AppError(`Vous n'êtes pas autorisé à effectuer cette action.`, 403))
         }
