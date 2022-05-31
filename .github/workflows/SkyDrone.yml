@@ -34,4 +34,5 @@ jobs:
       - name: Run test with MongoDB
         env:
           MONGODB: ${{ secrets.MONGODB }}
+          TOKEN: ${{ secrets.TOKEN }}
         run: npm test
