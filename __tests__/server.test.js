@@ -3,7 +3,7 @@ import mongoose from 'mongoose'
 import dotenv from 'dotenv'
 import cors from 'cors'
 import request from 'supertest'
-import routes from '../routes/routes4tests.js'
+import routes from '../routes/routes.js'
 import UserModel from '../models/userModel'
 
 dotenv.config()
