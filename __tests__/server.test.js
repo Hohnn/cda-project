@@ -56,35 +56,35 @@ describe('Test des routes', () => {
 		"siret_u": "123456"
 	}
 
-	it('Inscription d\'un utilisateur : POST api/v1/signup', async () => {
-		const response = await request(app).post('/api/v1/signup')
-			.send(TU_User)
-		expect(response.status).toBe(404)
-	})
+// 	it('Inscription d\'un utilisateur : POST api/v1/signup', async () => {
+// 		const response = await request(app).post('/api/v1/signup')
+// 			.send(TU_User)
+// 		expect(response.status).toBe(404)
+// 	})
 
-	it('Inscription d\'utilisateur avec mauvais password : POST api/v1/signup', async () => {
-		const response = await request(app).post('/api/v1/signup').send({
-			"email": "testeur",
-			"password": "123456",
-			"lastName_u": "POSTMAN",
-			"firstName_u": "test",
-			"company_u": "SKYDRONE",
-			"phone_u": "0235102030",
-			"address_u": "10 Place Léon Meyer",
-			"siret_u": "123456"
-		})
-		expect(response.status).toBe(404)
-	})
+// 	it('Inscription d\'utilisateur avec mauvais password : POST api/v1/signup', async () => {
+// 		const response = await request(app).post('/api/v1/signup').send({
+// 			"email": "testeur",
+// 			"password": "123456",
+// 			"lastName_u": "POSTMAN",
+// 			"firstName_u": "test",
+// 			"company_u": "SKYDRONE",
+// 			"phone_u": "0235102030",
+// 			"address_u": "10 Place Léon Meyer",
+// 			"siret_u": "123456"
+// 		})
+// 		expect(response.status).toBe(404)
+// 	})
 
-	it('Se connecte au site', async () => {
-		const response = await request(app).post('/api/v1/login')
-			.send({
-				"email": TU_User.email,
-				"password": TU_User.password
-			})
+// 	it('Se connecte au site', async () => {
+// 		const response = await request(app).post('/api/v1/login')
+// 			.send({
+// 				"email": TU_User.email,
+// 				"password": TU_User.password
+// 			})
 
-		expect(response.status).toBe(404)
-	})
+// 		expect(response.status).toBe(404)
+// 	})
 
 	it('Peux parcourir les drones : GET /api/v1/drones', async () => {
 		const response = await request(app).get('/api/v1/drones')
@@ -99,7 +99,7 @@ describe('Test des routes', () => {
 	})
 
 	afterAll(async () => {
-		await UserModel.deleteMany({ email: TU_User.email })
+// 		await UserModel.deleteMany({ email: TU_User.email })
 		await mongoose.disconnect()
 		await new Promise(resolve => setTimeout(() => resolve(), 500))
 	})
