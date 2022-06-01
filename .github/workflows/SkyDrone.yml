@@ -35,4 +35,5 @@ jobs:
         env:
           MONGODB: ${{ secrets.MONGODB }}
           TOKEN: ${{ secrets.TOKEN }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
         run: npm test
