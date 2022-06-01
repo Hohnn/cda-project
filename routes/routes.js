@@ -22,6 +22,7 @@ const auth = {
 const router = express.Router()
 
 router
+  //#swagger.ignore = true
     .get('/images', catchErrors(getImages)
         /*
             #swagger.tags = ['The Images']
@@ -29,7 +30,7 @@ router
             #swagger.responses[200] = { description: 'OK' }
             #swagger.responses[404] = { description: 'NOT FOUND' }
         */)
-
+  //#swagger.ignore = true
     .get('/images/:idImage', catchErrors(getImage)
         /*
             #swagger.tags = ['The Images']
@@ -37,7 +38,7 @@ router
             #swagger.responses[200] = { description: 'OK' }
             #swagger.responses[404] = { description: 'NOT FOUND' }
         */)
-
+  //#swagger.ignore = true
     .post('/images', auth.jwt, upload.single('image'), catchErrors(addImage)
         /*
             #swagger.tags = ['The Images']
@@ -51,7 +52,7 @@ router
             #swagger.responses[404] = { description: 'NOT FOUND' }
         */
     )
-
+  //#swagger.ignore = true
     .delete('/images/:idImage', auth.jwt, catchErrors(deleteImage)
         /*
             #swagger.tags = ['The Images']

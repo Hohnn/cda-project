@@ -12,10 +12,10 @@ const doc = {
 	produces: ['application/json'],
 	servers: [
 		{
-			url: 'http://localhost:3000/'
+			url: 'https://skydrone-api.herokuapp.com/'
 		},
 		{
-			url: 'https://skydrone-api.herokuapp.com/'
+			url: 'http://localhost:3000/'
 		}
 	],
 	security: {
@@ -31,15 +31,14 @@ const doc = {
 	components: {
 		schemas: {
 			user: {
-				"email": "test@skydrone.fr",
-				"password": "password",
-				"firstName_u": "firstname",
-				"lastName_u": "lastname",
-				"company_u": "company",
-				"phone_u": "phone",
-				"address_u": "address",
-				"key_r": 3,
-				"siret_u": "siret"
+				$email: "test@skydrone.fr",
+				$password: "password",
+				$firstName_u: "firstname",
+				$lastName_u: "lastname",
+				$company_u: "company",
+				$phone_u: "phone",
+				$address_u: "address",
+				$siret_u: "siret"
 			},
 			drone: {
 				$name_d: 'Model A',

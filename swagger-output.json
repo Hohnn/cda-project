@@ -7,10 +7,10 @@
   },
   "servers": [
     {
-      "url": "http://localhost:3000/"
+      "url": "https://skydrone-api.herokuapp.com/"
     },
     {
-      "url": "https://skydrone-api.herokuapp.com/"
+      "url": "http://localhost:3000/"
     }
   ],
   "paths": {
@@ -29,110 +29,6 @@
             "description": "Internal server error."
           }
         }
-      }
-    },
-    "/api/v1/images": {
-      "get": {
-        "tags": [
-          "The Images"
-        ],
-        "description": "The images of the drones",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "404": {
-            "description": "NOT FOUND"
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "The Images"
-        ],
-        "description": "The images of the drones",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "401": {
-            "description": "NOT AUTHORIZED"
-          },
-          "403": {
-            "description": "FORBIDDEN"
-          },
-          "404": {
-            "description": "NOT FOUND"
-          }
-        },
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ]
-      }
-    },
-    "/api/v1/images/{idImage}": {
-      "get": {
-        "tags": [
-          "The Images"
-        ],
-        "description": "The images of the drones",
-        "parameters": [
-          {
-            "name": "idImage",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "404": {
-            "description": "NOT FOUND"
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "The Images"
-        ],
-        "description": "The images of the drones",
-        "parameters": [
-          {
-            "name": "idImage",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "401": {
-            "description": "NOT AUTHORIZED"
-          },
-          "403": {
-            "description": "FORBIDDEN"
-          },
-          "404": {
-            "description": "NOT FOUND"
-          }
-        },
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ]
       }
     },
     "/api/v1/users": {
@@ -1265,15 +1161,21 @@
             "type": "string",
             "example": "address"
           },
-          "key_r": {
-            "type": "number",
-            "example": 3
-          },
           "siret_u": {
             "type": "string",
             "example": "siret"
           }
-        }
+        },
+        "required": [
+          "email",
+          "password",
+          "firstName_u",
+          "lastName_u",
+          "company_u",
+          "phone_u",
+          "address_u",
+          "siret_u"
+        ]
       },
       "drone": {
         "type": "object",
