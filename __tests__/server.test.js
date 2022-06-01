@@ -154,7 +154,6 @@ describe('Test des routes', () => {
 			.post('/api/v1/orders', auth.jwt)
 			.set({ TOKEN })
 			.send(TU_Order)
-			console.log(TU_Order)
 			.expect(201)
 	})
 
