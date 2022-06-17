@@ -2,9 +2,9 @@ import DroneModel from '../models/droneModel.js'
 import AppError from '../utils/AppError.js'
 
 export const addDrone = async (req, res, next) => {
-    if (req.user.key_r > 2) {
-        return next(new AppError(`Vous n'êtes pas autorisé à effectuer cette action.`, 403))
-    }
+    // if (req.user.key_r > 2) {
+//        return next(new AppError(`Vous n'êtes // pas autorisé à effectuer cette action.`, 403))
+//     }
     
     const drone = new DroneModel(req.body)
     await drone.save()
@@ -49,9 +49,9 @@ export const getDronesByCategory = async (req, res, next) => {
 }
 
 export const updateDrone = async (req, res, next) => {
-    if (req.user.key_r > 2) {
-        return next(new AppError(`Vous n'êtes pas autorisé à effectuer cette action.`, 403))
-    }
+    // if (req.user.key_r > 2) {
+//        return next(new AppError(`Vous n'êtes // pas autorisé à effectuer cette action.`, 403))
+//     }
 
     const drone = await DroneModel.findByIdAndUpdate(req.params.idDrone, req.body)
     if (!drone || drone.length === 0 || drone === null || drone === undefined || drone === '') {
@@ -65,9 +65,9 @@ export const updateDrone = async (req, res, next) => {
 }
 
 export const deleteDrone = async (req, res, next) => {
-    if (req.user.key_r > 2) {
-        return next(new AppError(`Vous n'êtes pas autorisé à effectuer cette action.`, 403))
-    }
+    // if (req.user.key_r > 2) {
+//        return next(new AppError(`Vous n'êtes // pas autorisé à effectuer cette action.`, 403))
+//     }
 
     const drone = await DroneModel.findByIdAndDelete(req.params.idDrone)
     if (!drone || drone.length === 0 || drone === null || drone === undefined || drone === '') {

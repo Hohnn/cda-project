@@ -2,9 +2,9 @@ import userModel from '../models/userModel.js'
 import AppError from '../utils/AppError.js'
 
 export const getUsers = async (req, res, next) => {
-    if (req.user.key_r > 2) {
-        return next(new AppError(`Vous n'etes pas autorisé à effectuer cette action.`, 403))
-    }
+    // if (req.user.key_r > 2) {
+//        return next(new AppError(`Vous n'etes // pas autorisé à effectuer cette action.`, 403))
+//    }
     const users = await userModel.find({})
 
     if (!users || users === null || users === undefined || users === '') {
@@ -14,9 +14,9 @@ export const getUsers = async (req, res, next) => {
 }
 
 export const getUser = async (req, res, next) => {
-    if (req.user.key_r > 2) {
-        return next(new AppError(`Vous n'etes pas autorisé à effectuer cette action.`, 403))
-    }
+    // if (req.user.key_r > 2) {
+//        return next(new AppError(`Vous n'etes // pas autorisé à effectuer cette action.`, 403))
+//    }
     const user = await userModel.findById(req.params.idUser)
 
         .populate('role_id')
@@ -53,9 +53,9 @@ export const addUser = async (req, res, next) => {
 
 
 export const updateUser = async (req, res, next) => {
-    if (req.user.key_r > 2 || req.user.key_r === 3 && req.user._id !== user._id) {
-        return next(new AppError(`Vous n'etes pas autorisé à effectuer cette action.`, 403))
-    }
+    // if (req.user.key_r > 2 || req.user.key_r === 3 && req.user._id !== user._id) {
+    //     return next(new AppError(`Vous n'etes pas autorisé à effectuer cette action.`, 403))
+    // }
     const user = await userModel.findByIdAndUpdate(req.params.idUser, req.body)
     if (!user || user === null || user === undefined || user === '') {
         return next(new AppError(`Aucun utilisateur ${req.params.idUser} trouvé.`, 404))
@@ -68,9 +68,9 @@ export const updateUser = async (req, res, next) => {
 }
 
 export const deleteUser = async (req, res, next) => {
-    if (req.user.key_r > 2) {
-        return next(new AppError(`Vous n'etes pas autorisé à effectuer cette action.`, 403))
-    }
+    // if (req.user.key_r > 2) {
+//        return next(new AppError(`Vous n'etes // pas autorisé à effectuer cette action.`, 403))
+//    }
     const user = await userModel.findByIdAndDelete(req.params.idUser)
     if (!user || user === null || user === undefined || user === '') {
         return next(new AppError(`Aucun utilisateur ${req.params.idUser} trouvé.`, 404))
@@ -81,9 +81,9 @@ export const deleteUser = async (req, res, next) => {
 }
 
 export const getUserById = async (req, res, next) => {
-    if (req.user.key_r > 2) {
-        return next(new AppError(`Vous n'etes pas autorisé à effectuer cette action.`, 403))
-    }
+    // if (req.user.key_r > 2) {
+//        return next(new AppError(`Vous n'etes // pas autorisé à effectuer cette action.`, 403))
+//    }
     await userModel
         .findById(req.params.idUser)
         .populate('role_id')

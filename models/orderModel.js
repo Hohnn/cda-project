@@ -21,7 +21,7 @@ const OrderShema = new mongoose.Schema({
         required: [true, 'Date de fin de commande requise'],
     },
     report_o: {
-        
+
         type: String,
         trim: true
     },
@@ -36,8 +36,8 @@ const OrderShema = new mongoose.Schema({
     },
     state_o: {
         type: String,
-        enum: ['En attente', 'Acceptée', 'Rejetée', 'Terminée'],
-        default: 'En attente'
+        enum: ['En attente de validation', 'Acceptée', 'Rejetée', 'En cours' , 'Terminée'],
+        default: 'En attente de validation'
     }
 }, { versionKey: false, timestamps: true }
 )

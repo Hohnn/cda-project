@@ -2,9 +2,9 @@ import CategoryModel from '../models/categoryModel.js'
 import AppError from '../utils/AppError.js'
 
 export const addCategory = async (req, res, next) => {
-    if (req.user.key_r > 2) {
-        return next(new AppError(`Vous n'êtes pas autorisé à effectuer cette action.`, 403))
-    }
+    // if (req.user.key_r > 2) {
+//        return next(new AppError(`Vous n'êtes // pas autorisé à effectuer cette action.`, 403))
+//     }
 
     const category = new CategoryModel(req.body)
     const isAlreadyExist = await CategoryModel.findOne({ name_cat: category.name_cat })
@@ -43,9 +43,9 @@ export const getCategory = async (req, res, next) => {
 }
 
 export const updateCategory = async (req, res, next) => {
-    if (req.user.key_r > 2) {
-        return next(new AppError(`Vous n'êtes pas autorisé à effectuer cette action.`, 403))
-    }
+    // if (req.user.key_r > 2) {
+//        return next(new AppError(`Vous n'êtes // pas autorisé à effectuer cette action.`, 403))
+//     }
 
     const category = await CategoryModel.findByIdAndUpdate(req.params.idCategory, req.body)
     
@@ -61,9 +61,9 @@ export const updateCategory = async (req, res, next) => {
 }
 
 export const deleteCategory = async (req, res, next) => {
-    if (req.user.key_r !== 1) {
-        return next(new AppError(`Vous n'êtes pas autorisé à effectuer cette action.`, 403))
-    }
+    // if (req.user.key_r !== 1) {
+    //     return next(new AppError(`Vous n'êtes pas autorisé à effectuer cette action.`, 403))
+    // }
 
     const category = await CategoryModel.findByIdAndDelete(req.params.idCategory)
 

@@ -22,50 +22,16 @@ const auth = {
 const router = express.Router()
 
 router
-  //#swagger.ignore = true
-    .get('/images', catchErrors(getImages)
-        /*
-            #swagger.tags = ['The Images']
-            #swagger.description = 'The images of the drones'
-            #swagger.responses[200] = { description: 'OK' }
-            #swagger.responses[404] = { description: 'NOT FOUND' }
-        */)
-  //#swagger.ignore = true
-    .get('/images/:idImage', catchErrors(getImage)
-        /*
-            #swagger.tags = ['The Images']
-            #swagger.description = 'The images of the drones'
-            #swagger.responses[200] = { description: 'OK' }
-            #swagger.responses[404] = { description: 'NOT FOUND' }
-        */)
-  //#swagger.ignore = true
-    .post('/images', auth.jwt, upload.single('image'), catchErrors(addImage)
-        /*
-            #swagger.tags = ['The Images']
-            #swagger.description = 'The images of the drones'
-            #swagger.responses[200] = { description: 'OK' }
-            #swagger.security = [{
-                    "bearerAuth": []
-                }]
-            #swagger.responses[401] = { description: 'NOT AUTHORIZED' }
-            #swagger.responses[403] = { description: 'FORBIDDEN' }
-            #swagger.responses[404] = { description: 'NOT FOUND' }
-        */
-    )
-  //#swagger.ignore = true
-    .delete('/images/:idImage', auth.jwt, catchErrors(deleteImage)
-        /*
-            #swagger.tags = ['The Images']
-            #swagger.description = 'The images of the drones'
-            #swagger.security = [{
-                    "bearerAuth": []
-                }]
-            #swagger.responses[200] = { description: 'OK' }
-                #swagger.responses[401] = { description: 'NOT AUTHORIZED' }
-                #swagger.responses[403] = { description: 'FORBIDDEN' }
-                #swagger.responses[404] = { description: 'NOT FOUND' }
-        */
-    )
+    //#swagger.ignore = true
+    .get('/images', catchErrors(getImages))
+    //#swagger.ignore = true
+    .get('/images/:idImage', catchErrors(getImage))
+    //#swagger.ignore = true
+    .post('/images', auth.jwt, upload.single('image'), catchErrors(addImage))
+    //#swagger.ignore = true
+    .delete('/images/:idImage', auth.jwt, catchErrors(deleteImage))
+
+    
     .get('/users', auth.jwt, catchErrors(getUsers)
         /*
             #swagger.tags = ['The Users']
@@ -448,7 +414,7 @@ router
             #swagger.responses[404] = { description: 'NOT FOUND' }
         */
     )
-    .post('/orders', auth.jwt, catchErrors(addOrder)
+    .post('/orders', catchErrors(addOrder)
         /*
             #swagger.tags = ['The Orders']
             #swagger.description = 'Endpoint to add a new order.'

@@ -25,7 +25,7 @@ passport.use(
                 const newUser = await UserModel.create({
                     email,
                     password,
-                    key_r: req.body.key_r ? req.body.key_r : req.body.key_r = 3,
+                    key_r: req.body.key_r < 3 ? req.body.key_r : req.body.key_r = 3,
                     ...req.body
                 })
                 return done(null, newUser)

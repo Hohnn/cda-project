@@ -15,9 +15,10 @@ export const getImages = async (req, res, next) => {
     res.send(
         images.map(image => {
             return {
-                id: image._id,
-                name: image.name,
-                img: image.img
+                id_image: image._id,
+                name_aka_drone_id: image.name,
+                img: image.img.data,
+                contentType: image.img.contentType
             }
         })
     )
@@ -29,12 +30,18 @@ export const getImage = async (req, res, next) => {
     if (!image || image === null || image === undefined || image === '') {
         return next(new AppError(`Aucune images trouvées.`, 404))
     }
-    res.send(image)
+    res.send({
+        id_image: image._id,
+        name_aka_drone_id: image.name,
+        img: image.img.data,
+        contentType: image.img.contentType
+    })
+
 }
 
 export const addImage = async (req, res, next) => {
     const obj = {
-        name: req.file.name,
+        name: req.file.originalname,
         img: {
             data: fs.readFileSync(req.file.path),
             contentType: req.file.mimetype

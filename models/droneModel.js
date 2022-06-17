@@ -27,7 +27,7 @@ const DroneShema = new mongoose.Schema({
     },
     state: {
         type: String,
-        enum: ['En Stock', 'SAV', 'En Location'],
+        enum: ['En Stock', 'SAV', 'En Location', 'Épuisé'],
         default: 'En Stock'
     }
 }, { versionKey: false, timestamps: true })

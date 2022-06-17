@@ -3,9 +3,9 @@ import AppError from '../utils/AppError.js'
 import qrcode from 'qrcode'
 
 export const getQrCode = async (req, res, next) => {
-    if (req.user.key_r > 2) {
-        return next(new AppError(`Vous n'êtes pas autorisé à effectuer cette action.`, 403))
-    }
+    // if (req.user.key_r > 2) {
+//        return next(new AppError(`Vous n'êtes // pas autorisé à effectuer cette action.`, 403))
+//     }
 
     const qrCode = await qrCodeModel.findById(req.params.idQrCode)
     if (!qrCode) {
@@ -15,9 +15,9 @@ export const getQrCode = async (req, res, next) => {
 }
 
 export const addQrCode = async (req, res, next) => {
-    if (req.user.key_r > 2) {
-        return next(new AppError(`Vous n'êtes pas autorisé à effectuer cette action.`, 403))
-    }
+    // if (req.user.key_r > 2) {
+//        return next(new AppError(`Vous n'êtes // pas autorisé à effectuer cette action.`, 403))
+//     }
 
     const qrCode = new qrCodeModel(req.body)
     const url = req.body.src
@@ -47,9 +47,9 @@ export const addQrCode = async (req, res, next) => {
 
 
 export const getAllQrCodes = async (req, res, next) => {
-    if (req.user.key_r > 2) {
-        return next(new AppError(`Vous n'êtes pas autorisé à effectuer cette action.`, 403))
-    }
+    // if (req.user.key_r > 2) {
+//        return next(new AppError(`Vous n'êtes // pas autorisé à effectuer cette action.`, 403))
+//     }
     const qrCodes = await qrCodeModel.find({})
     if (!qrCodes || qrCodes.length === 0 || qrCodes === null || qrCodes === undefined || qrCodes === '')
         return next(new AppError(`Aucun QrCode trouvé.`, 404))
@@ -58,9 +58,9 @@ export const getAllQrCodes = async (req, res, next) => {
 }
 
 export const deleteQrCode = async (req, res, next) => {
-    if (req.user.key_r > 2) {
-        return next(new AppError(`Vous n'êtes pas autorisé à effectuer cette action.`, 403))
-    }
+    // if (req.user.key_r > 2) {
+//        return next(new AppError(`Vous n'êtes // pas autorisé à effectuer cette action.`, 403))
+//     }
 
     const qrCode = await qrCodeModel.findByIdAndDelete(req.params.idQrCode)
 

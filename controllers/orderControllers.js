@@ -3,10 +3,14 @@ import DroneModel from '../models/droneModel.js'
 import AppError from '../utils/AppError.js'
 
 export const addOrder = async (req, res, next) => {
-    if (!req.user.key_r) {
-        return next(new AppError(`Vous n'êtes pas autorisé à effectuer cette action.`, 403))
-    }
     const order = new OrderModel(req.body)
+    if(req.body.drone_id){
+        const drone = await DroneModel.findById(req.body.drone_id)
+        if(!drone || drone === null || drone === undefined || drone === ''){
+            return next(new AppError(`Aucun drone ${req.body.drone_id} trouvé.`, 404))
+        }
+        drone.status = 'En Location'
+    }
     await order.save()
     res.status(201).send({
         message: 'Commande créée avec succès',
@@ -15,9 +19,9 @@ export const addOrder = async (req, res, next) => {
 }
 
 export const getAllOrders = async (req, res, next) => {
-    if (req.user.key_r > 2) {
-        return next(new AppError(`Vous n'êtes pas autorisé à effectuer cette action.`, 403))
-    }
+    // if (req.user.key_r > 2) {
+    //        return next(new AppError(`Vous n'êtes // pas autorisé à effectuer cette action.`, 403))
+    //     }
     const orders = await OrderModel.find({})
     res.send(orders)
 }
@@ -45,34 +49,30 @@ export const getOrderById = async (req, res, next) => {
 }
 
 export const getOrdersByUserId = async (req, res, next) => {
-    console.log(req.user._id)
-    console.log(req.user.key_r)
-    if (req.user.key_r >= 0) {
-        if (req.user.key_r === 3 && req.user._id !== req.params.idUser) {
-            return next(new AppError(`Vous n'êtes pas autorisé à effectuer cette action.`, 403))
-        }
+    // if (req.user.key_r >= 0) {
+    //     if (req.user.key_r === 3 && req.user._id !== req.params.idUser) {
+    //         return next(new AppError(`Vous n'êtes pas autorisé à effectuer cette action.`, 403))
+    //     }
 
-        const order = await OrderModel.find({ user_id: req.params.idUser })
-            .populate('drone_id')
-            .exec((err, order) => {
-                if (err) {
-                    return next(new AppError('Erreur lors de la récupération de la commande', 400))
-                }
-                if (!order || order === null || order === undefined || order === '' || order.length === 0) {
-                    return next(new AppError(`Vous n'avez pas de commandes en cours.`, 404))
-                }
-                res.status(200).send({
-                    message: `Voici vos commandes : `,
-                    order
-                })
-            })
-    }
+    const order = await OrderModel.find({ user_id: req.params.idUser })
+        .populate('drone_id')
+        .exec((err, order) => {
+            if (err) {
+                return next(new AppError('Erreur lors de la récupération de la commande', 400))
+            }
+            if (!order || order === null || order === undefined || order === '' || order.length === 0) {
+                return next(new AppError(`Vous n'avez pas de commandes en cours.`, 404))
+            }
+            res.status(200).send(order)
+        })
 }
 
+
 export const updateOrder = async (req, res, next) => {
-    if (req.user.key_r > 2) {
-        return next(new AppError(`Vous n'êtes pas autorisé à effectuer cette action.`, 403))
-    }
+    console.log(req.user.key_r)
+    // if (req.user.key_r > 2) {
+    //        return next(new AppError(`Vous n'êtes // pas autorisé à effectuer cette action.`, 403))
+    //     }
 
     const order = await OrderModel.findByIdAndUpdate(req.params.idOrder, req.body)
     if (!order || order === null || order === undefined || order === '') {
@@ -92,9 +92,9 @@ export const updateOrder = async (req, res, next) => {
 }
 
 export const deleteOrder = async (req, res, next) => {
-    if (req.user.key_r !== 1) {
-        return next(new AppError(`Vous n'êtes pas autorisé à effectuer cette action.`, 403))
-    }
+    // if (req.user.key_r !== 1) {
+    //     return next(new AppError(`Vous n'êtes pas autorisé à effectuer cette action.`, 403))
+    // }
 
     const order = await OrderModel.findByIdAndDelete(req.params.idOrder)
     if (!order || order === null || order === undefined || order === '') {
