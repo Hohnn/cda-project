@@ -16,7 +16,7 @@ export const getImages = async (req, res, next) => {
         images.map(image => {
             return {
                 id_image: image._id,
-                name_aka_drone_id: image.name,
+                id_drone: image.name,
                 img: image.img.data,
                 contentType: image.img.contentType
             }
@@ -26,16 +26,19 @@ export const getImages = async (req, res, next) => {
 
 export const getImage = async (req, res, next) => {
 
-    const image = await ImageModel.findById(req.params.idImage)
+    const image = await ImageModel.find({name: req.params.idDrone})
     if (!image || image === null || image === undefined || image === '') {
         return next(new AppError(`Aucune images trouvées.`, 404))
     }
-    res.send({
-        id_image: image._id,
-        name_aka_drone_id: image.name,
-        img: image.img.data,
-        contentType: image.img.contentType
-    })
+
+    res.send(image.map(image => {
+        return {
+            id_image: image._id,
+            id_drone: image.name,
+            img: image.img.data,
+            contentType: image.img.contentType
+            }
+            }))
 
 }
 
