@@ -44,10 +44,10 @@ export const getImage = async (req, res, next) => {
 
 export const addImage = async (req, res, next) => {
     const obj = {
-        name: req.file.originalname,
+        name: req.file.name,
         img: {
             data: fs.readFileSync(req.file.path),
-            contentType: req.file.mimetype
+            contentType: req.file.type
         }
     }
     const image = await ImageModel.create(obj)
