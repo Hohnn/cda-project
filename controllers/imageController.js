@@ -34,7 +34,7 @@ export const getImage = async (req, res, next) => {
     res.send(image.map(image => {
         return {
             id_image: image._id,
-            id_drone: image.name,
+            id_drone: image.id_drone,
             img: image.img.data,
             contentType: image.img.contentType
             }
@@ -45,11 +45,11 @@ export const getImage = async (req, res, next) => {
 export const addImage = async (req, res, next) => {
     console.log(req)
     const obj = {
-        id_drone: req.file.id_drone,
-        name: req.file.name,
+        id_drone: req.file.originalname,
+        name: req.file.filename,
         img: {
             data: fs.readFileSync(req.file.path),
-            contentType: req.file.type
+            contentType: req.file.mimetype
         }
     }
     const image = await ImageModel.create(obj)
