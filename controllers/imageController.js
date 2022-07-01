@@ -43,6 +43,7 @@ export const getImage = async (req, res, next) => {
 }
 
 export const addImage = async (req, res, next) => {
+    console.log(req)
     const obj = {
         id_drone: req.file.id_drone,
         name: req.file.name,
