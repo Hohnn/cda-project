@@ -16,7 +16,7 @@ export const getImages = async (req, res, next) => {
         images.map(image => {
             return {
                 id_image: image._id,
-                id_drone: image.name,
+                id_drone: image.id_drone,
                 img: image.img.data,
                 contentType: image.img.contentType
             }
