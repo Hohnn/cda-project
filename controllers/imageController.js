@@ -44,6 +44,7 @@ export const getImage = async (req, res, next) => {
 
 export const addImage = async (req, res, next) => {
     const obj = {
+        id_drone: req.file.id_drone,
         name: req.file.name,
         img: {
             data: fs.readFileSync(req.file.path),
