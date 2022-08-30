@@ -26,7 +26,9 @@ export const getImages = async (req, res, next) => {
 
 export const getImage = async (req, res, next) => {
 
-    const image = await ImageModel.find({id_drone: req.params.idDrone})
+    const image = await ImageModel.find(
+        { $or: [{id_drone: req.params.idDrone}], [{name: req.params.idDrone}]}
+    )
     if (!image || image === null || image === undefined || image === '') {
         return next(new AppError(`Aucune images trouvées.`, 404))
     }
