@@ -27,7 +27,7 @@ router
     //#swagger.ignore = true
     .get('/images/:idDrone', catchErrors(getImage))
     //#swagger.ignore = true
-    .post('/images', auth.jwt, upload.single('image'), catchErrors(addImage))
+    .post('/images/:idDrone', auth.jwt, upload.single('image'), catchErrors(addImage))
     //#swagger.ignore = true
     .delete('/images/:idImage', auth.jwt, catchErrors(deleteImage))
 
