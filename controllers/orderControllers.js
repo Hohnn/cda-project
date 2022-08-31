@@ -27,7 +27,6 @@ export const getAllOrders = async (req, res, next) => {
 }
 
 export const getOrderById = async (req, res, next) => {
-
     if (!req.user.key_r) {
         return next(new AppError(`Vous n'êtes pas autorisé à effectuer cette action.`, 403))
     }
@@ -61,7 +60,7 @@ export const getOrdersByUserId = async (req, res, next) => {
                 return next(new AppError('Erreur lors de la récupération de la commande', 400))
             }
             if (!order || order === null || order === undefined || order === '' || order.length === 0) {
-                return next(new AppError(`Vous n'avez pas de commandes en cours.`, 404))
+                return next(new AppError(`Vous n'avez pas de commandes en cours.`, 200))
             }
             res.status(200).send(order)
         })

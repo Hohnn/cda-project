@@ -28,7 +28,7 @@ export const addCategory = async (req, res, next) => {
 export const getAllCategories = async (req, res, next) => {
     const categories = await CategoryModel.find({})
     if (!categories || categories === null || categories === undefined || categories === '') {
-        return next(new AppError(`Aucune catégories trouvées.`, 404))
+        return next(new AppError(`Aucune catégories trouvées.`, 200))
     }
     res.send(categories)
 }
@@ -37,7 +37,7 @@ export const getCategory = async (req, res, next) => {
     const category = await CategoryModel.findById(req.params.idCategory)
 
     if (!category || category === null || category === undefined || category === '') {
-        return next(new AppError(`Aucune catégorie trouvée.`, 404))
+        return next(new AppError(`Aucune catégorie trouvée.`, 200))
     }
     res.send(category)
 }
@@ -50,7 +50,7 @@ export const updateCategory = async (req, res, next) => {
     const category = await CategoryModel.findByIdAndUpdate(req.params.idCategory, req.body)
     
     if (!category || category === null || category === undefined || category === '') {
-        return next(new AppError(`Aucune catégorie trouvée.`, 404))
+        return next(new AppError(`Aucune catégorie trouvée.`, 200))
     }
     
     await category.save()
@@ -68,7 +68,7 @@ export const deleteCategory = async (req, res, next) => {
     const category = await CategoryModel.findByIdAndDelete(req.params.idCategory)
 
     if (!category || category === null || category === undefined || category === '') {
-        return next(new AppError(`Aucune catégorie trouvée.`, 404))
+        return next(new AppError(`Aucune catégorie trouvée.`, 200))
     } else {
         res.status(200).send({
             message: `Catégorie ${category.name_cat} supprimée avec succès.`

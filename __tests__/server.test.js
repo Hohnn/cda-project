@@ -6,8 +6,6 @@ import request from 'supertest'
 import routes from '../routes/routes.js'
 import passport from '../auth/auth.js'
 import UserModel from '../models/userModel.js'
-// import DroneModel from '../models/droneModel.js'
-// import OrderModel from '../models/orderModel.js'
 
 const auth = {
 	signup: passport.authenticate('signup', { session: false }),
@@ -82,9 +80,9 @@ describe('Test des routes', () => {
 	})
 
 
-	it('Inscription d\'utilisateur avec mauvais password : POST api/v1/signup', async () => {
+	it('Inscription d\'utilisateur avec password non conforme : POST api/v1/signup', async () => {
 		request(app)
-			.post('/api/v1/signup', auth.jwt)
+			.post('/api/v1/signup')
 			.send({
 				"email": "testeur",
 				"password": "123456",
@@ -120,48 +118,15 @@ describe('Test des routes', () => {
 			.expect(200)
 	})
 
-	it('Peux consulter les commandes : GET /api/v1/orders', async () => {
+	it('Ne peux pas consulter les commandes sans etre authentifié : GET /api/v1/orders', async () => {
 		await request(app)
-			.get('/api/v1/orders', auth.jwt)
+			.get('/api/v1/orders')
 			.expect(401)
 	})
 
-	// const TU_Drone = {
-	// 	"name_d": "DRONETEST",
-	// 	"category_id": "62798a4aeefdb95f65512719",
-	// 	"description_d": "DRONETEST",
-	// 	"pricePerDay_d": 100
-	// }
-	// const TU_DroneId = async () => {
-	// 	const response = await request(app)
-	// 		.post('/api/v1/drones', auth.jwt)
-	// 		.send(TU_Drone)
-	// 	return response.body._id
-	// }
-
-	// const TU_Order = {
-	// 	"state_o": "En attente",
-	// 	"user_id": TU_UserId(),
-	// 	"drone_id": TU_DroneId(),
-	// 	"startAt_o": "2022-04-08T00:00:00.000Z",
-	// 	"endAt_o": "2022-04-18T00:00:00.000Z",
-	// 	"createdBy_o": TU_UserId(),
-	// 	"report_o": "TESTJEST"
-	// }
-
-	// it('Peux créer une commande : POST /api/v1/orders', async () => {
-	// 	const response = await request(app)
-	// 		.post('/api/v1/orders', auth.jwt)
-	// 		.set({ TOKEN })
-	// 		.send(TU_Order)
-	// 		expect(response.statusCode).toBe(200)
-	// 		console.log(response)
-	// })
 
 	afterAll(async () => {
 		await UserModel.deleteMany({ email: TU_User.email })
-		// await DroneModel.deleteMany({ name_d: TU_Drone.name_d })
-		// await OrderModel.deleteMany({ report_o: TU_Order.report_o })
 		await mongoose.disconnect()
 		await new Promise(resolve => setTimeout(() => resolve(), 500))
 	})
