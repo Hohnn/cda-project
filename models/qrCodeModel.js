@@ -11,6 +11,10 @@ const qrCodeSchema = new mongoose.Schema({
     qr_code: {
         type: String,
         unique: true
+    },
+    drone_id: {
+        type: String,
+        required: [true, 'Drone_id is required'],
     }
 }, { versionKey: false, timestamps: true }
 )

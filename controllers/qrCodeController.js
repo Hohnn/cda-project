@@ -15,12 +15,11 @@ export const getQrCode = async (req, res, next) => {
 }
 
 export const addQrCode = async (req, res, next) => {
-    // if (req.user.key_r > 2) {
-//        return next(new AppError(`Vous n'êtes // pas autorisé à effectuer cette action.`, 403))
-//     }
 
     const qrCode = new qrCodeModel(req.body)
     const url = req.body.src
+    const drone_id = req.body.drone_id
+
 
     qrcode.toDataURL(url, (error, src) => {
         try {
@@ -29,6 +28,8 @@ export const addQrCode = async (req, res, next) => {
             }
             qrCode.src = url
             qrCode.qr_code = src
+            qrCode.drone_id = drone_id
+            console.log(qrCode);
             qrCode.save()
                 .then(() => {
                     res.status(201).send({
@@ -53,7 +54,7 @@ export const getAllQrCodes = async (req, res, next) => {
     const qrCodes = await qrCodeModel.find({})
     if (!qrCodes || qrCodes.length === 0 || qrCodes === null || qrCodes === undefined || qrCodes === '')
         return next(new AppError(`Aucun QrCode trouvé.`, 404))
-
+    
     res.send(qrCodes)
 }
 

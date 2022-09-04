@@ -27,7 +27,7 @@ export const getImages = async (req, res, next) => {
 export const getImage = async (req, res, next) => {
 
     const image = await ImageModel.find(
-        { $or: [{id_drone: req.params.idDrone}, {name: req.params.idDrone}]}
+        { $or: [{ id_drone: req.params.idDrone }, { name: req.params.idDrone }] }
     )
     if (!image || image === null || image === undefined || image === '') {
         return next(new AppError(`Aucune images trouvées.`, 404))
@@ -39,13 +39,12 @@ export const getImage = async (req, res, next) => {
             id_drone: image.id_drone,
             img: image.img.data,
             contentType: image.img.contentType
-            }
-            }))
+        }
+    }))
 
 }
 
 export const addImage = async (req, res, next) => {
-    console.log(req)
     const obj = {
         id_drone: req.params.idDrone,
         name: req.file.filename,
