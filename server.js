@@ -20,8 +20,12 @@ app.set("view engine", "ejs")
 //#endregion
 
 //#region Cross Origin Ressource Sharing
-app.use(cors())
-app.options('*', cors())
+app.use(cors({
+	origin: '*',
+	options: 'GET,POST,PATCH,DELETE',
+	allowedHeaders: 'Content-type,Authorization,token',
+	credentials: true
+}))
 //#endregion
 
 //#region PORT
