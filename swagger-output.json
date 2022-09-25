@@ -1073,41 +1073,6 @@
         ]
       }
     },
-    "/api/v1/qrcodes/drone/{idDrone}": {
-      "get": {
-        "tags": [
-          "The QR Codes"
-        ],
-        "description": "Endpoint to get a QR Code for a specific drone.",
-        "parameters": [
-          {
-            "name": "idDrone",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "The id of the specific drone"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "403": {
-            "description": "FORBIDDEN"
-          },
-          "404": {
-            "description": "NOT FOUND"
-          }
-        },
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ]
-      }
-    },
     "/api/v1/drones/categories/{idCategory}": {
       "get": {
         "tags": [
@@ -1196,6 +1161,14 @@
             "type": "string",
             "example": "address"
           },
+          "zipCode_u": {
+            "type": "number",
+            "example": 76600
+          },
+          "country_u": {
+            "type": "string",
+            "example": "pays"
+          },
           "siret_u": {
             "type": "string",
             "example": "siret"
@@ -1209,6 +1182,8 @@
           "company_u",
           "phone_u",
           "address_u",
+          "zipCode_u",
+          "country_u",
           "siret_u"
         ]
       },
@@ -1381,6 +1356,7 @@
       }
     }
   },
+  "basepath": "/",
   "security": {
     "bearerAuth": []
   }

@@ -11,7 +11,7 @@ import { getRoles, getRole, addRole, updateRole, deleteRole } from '../controlle
 import { getUsers, getUser, addUser, deleteUser, updateUser } from '../controllers/userControllers.js'
 import { getCategory, getAllCategories, addCategory, deleteCategory, updateCategory } from '../controllers/categoryControllers.js'
 import { getDronesByCategory, getDrone, getAllDrones, addDrone, updateDrone, deleteDrone } from '../controllers/droneControllers.js'
-import { deleteQrCode, getQrCode, addQrCode, getAllQrCodes, getQrCodeWithDroneId } from "../controllers/qrCodeController.js"
+import { deleteQrCode, getQrCode, addQrCode, getAllQrCodes } from "../controllers/qrCodeController.js"
 import { getImages, getImage, addImage, deleteImage } from "../controllers/imageController.js"
 
 const auth = {
@@ -517,25 +517,6 @@ router
             #swagger.responses[404] = { description: 'NOT FOUND' }
         */
     )
-    .get('/qrcodes/drone/:idDrone', auth.jwt, catchErrors(getQrCodeWithDroneId)
-            /*
-            #swagger.tags = ['The QR Codes']
-            #swagger.description = 'Endpoint to get a QR Code for a specific drone.'
-            #swagger.security = [{
-                "bearerAuth": []
-            }]
-            #swagger.parameters[idDrone] = { 
-                in: 'path', 
-                name: 'idDrone', 
-                description: 'The id of the specific drone', 
-                required: true, 
-                type: 'string' 
-            }
-            #swagger.responses[200] = { description: 'OK' }
-            #swagger.responses[403] = { description: 'FORBIDDEN' }
-            #swagger.responses[404] = { description: 'NOT FOUND' }
-        */
-    )
 
     /*====================PUBLIC ROUTES======================*/
 
@@ -654,6 +635,8 @@ router
                         company_u: user.company_u,
                         phone_u: user.phone_u,
                         address_u: user.address_u,
+                        zipCode_u: user.zipCode_u,
+                        country_u: user.country_u,
                         siret_u: user.siret_u
                     }
                     const token = jwt.sign({ user: body }, process.env.JWT_SECRET, { expiresIn: '30d' })

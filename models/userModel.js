@@ -36,6 +36,14 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Adresse requise']
     },
+    zipCode_u: {
+        type: Number,
+        required: [true, 'Code Postale requis']
+    },
+    country_u: {
+        type: String,
+        required: [true, 'Pays requis']
+    },
     phone_u: {
         type: String,
         required: [true, 'Téléphone requis']
