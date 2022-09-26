@@ -11,7 +11,7 @@ import { getRoles, getRole, addRole, updateRole, deleteRole } from '../controlle
 import { getUsers, getUser, addUser, deleteUser, updateUser } from '../controllers/userControllers.js'
 import { getCategory, getAllCategories, addCategory, deleteCategory, updateCategory } from '../controllers/categoryControllers.js'
 import { getDronesByCategory, getDrone, getAllDrones, addDrone, updateDrone, deleteDrone } from '../controllers/droneControllers.js'
-import { deleteQrCode, getQrCode, addQrCode, getAllQrCodes } from "../controllers/qrCodeController.js"
+import { deleteQrCode, getQrCode, addQrCode, getAllQrCodes, getQrCodeWithDroneId } from "../controllers/qrCodeController.js"
 import { getImages, getImage, addImage, deleteImage } from "../controllers/imageController.js"
 
 const auth = {
