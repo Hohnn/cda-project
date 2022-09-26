@@ -518,6 +518,26 @@ router
         */
     )
 
+    .get('/qrcodes/drone/:idDrone', auth.jwt, catchErrors(getQrCodeWithDroneId)
+            /*
+            #swagger.tags = ['The QR Codes']
+            #swagger.description = 'Endpoint to get a QR Code for a specific drone.'
+            #swagger.security = [{
+                "bearerAuth": []
+            }]
+            #swagger.parameters[idDrone] = { 
+                in: 'path', 
+                name: 'idDrone', 
+                description: 'The id of the specific drone', 
+                required: true, 
+                type: 'string' 
+            }
+            #swagger.responses[200] = { description: 'OK' }
+            #swagger.responses[403] = { description: 'FORBIDDEN' }
+            #swagger.responses[404] = { description: 'NOT FOUND' }
+        */
+    )
+
     /*====================PUBLIC ROUTES======================*/
 
     //#region PUBLIC ROUTES 
