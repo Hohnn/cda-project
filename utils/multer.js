@@ -7,17 +7,17 @@ const MIME_TYPES = {
   'image/png': 'png'
 }
 const upload = multer({
-  storage: multer.diskStorage({
+  //storage: multer.diskStorage({
     //sauvegarde dans le dossier images
-    destination: (req, file, cb) => {
-      cb(null, 'images')
-    },
+    //destination: (req, file, cb) => {
+      //cb(null, 'images')
+    //},
     //renomme le fichier
-    filename: (req, file, cb) => {
-      const name = file.originalname.split(".").join("_")
-      cb(null, `${Date.now()}-${name}.${MIME_TYPES[file.mimetype]}`)
-    }
-  }),
+    //filename: (req, file, cb) => {
+      //const name = file.originalname.split(".").join("_")
+      //cb(null, `${Date.now()}-${name}.${MIME_TYPES[file.mimetype]}`)
+    //}
+  //}),
   //verifie le type de fichier
   fileFilter: (req, file, cb) => {
     if (file.mimetype.startsWith('image/') && MIME_TYPES[file.mimetype]) {
