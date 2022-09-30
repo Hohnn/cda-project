@@ -38,6 +38,8 @@ const doc = {
 				$company_u: "company",
 				$phone_u: "phone",
 				$address_u: "address",
+				$zipCode_u: 76600,
+				$country_u: "pays",
 				$siret_u: "siret"
 			},
 			drone: {

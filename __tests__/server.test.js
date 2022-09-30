@@ -60,6 +60,8 @@ describe('Test des routes', () => {
 		"key_r": 0,
 		"phone_u": "0235102030",
 		"address_u": "10 Place Léon Meyer",
+		"zipCode_u": 76600,
+		"country_u": "France",
 		"siret_u": "123456"
 	}
 
@@ -91,6 +93,8 @@ describe('Test des routes', () => {
 				"company_u": "SKYDRONE",
 				"phone_u": "0235102030",
 				"address_u": "10 Place Léon Meyer",
+				"zipCode_u": 76600,
+				"country_u": "France",
 				"siret_u": "123456"
 			})
 			.expect(400)
@@ -123,6 +127,33 @@ describe('Test des routes', () => {
 			.get('/api/v1/orders')
 			.expect(401)
 	})
+
+	it('Ne peux pas consulter les users sans etre authentifié : GET /api/v1/users', async () => {
+		await request(app)
+			.get('/api/v1/users')
+			.expect(401)
+	})
+
+	// it('Peux consulter les users avec le token : GET /api/v1/users', async () => {
+	// 	await request(app)
+	// 		.get('/api/v1/users')
+	// 		.set({ TOKEN })
+	// 		.expect(200)
+	// })
+
+	// it('Peux consulter l\'id d\'un user avec le token : GET /api/v1/users/:idUser', async () => {
+	// 	await request(app)
+	// 		.get('/api/v1/users/:idUser')
+	// 		.set({ TOKEN })
+	// 		.expect(200)
+	// })
+
+	// it('Peux consulter les oders avec le token : GET /api/v1/orders', async () => {
+	// 	await request(app)
+	// 		.get('/api/v1/orders')
+	// 		.set({ TOKEN })
+	// 		.expect(200)
+	// })
 
 
 	afterAll(async () => {
