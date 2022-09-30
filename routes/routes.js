@@ -13,6 +13,7 @@ import { getCategory, getAllCategories, addCategory, deleteCategory, updateCateg
 import { getDronesByCategory, getDrone, getAllDrones, addDrone, updateDrone, deleteDrone } from '../controllers/droneControllers.js'
 import { deleteQrCode, getQrCode, addQrCode, getAllQrCodes, getQrCodeWithDroneId } from "../controllers/qrCodeController.js"
 import { getImages, getImage, addImage, deleteImage } from "../controllers/imageController.js"
+// import { limiter, accountLimiter } from '../utils/rateLimit.js'
 
 const auth = {
     signup: passport.authenticate('signup', { session: false }),
@@ -31,7 +32,7 @@ router
     //#swagger.ignore = true
     .delete('/images/:idImage', auth.jwt, catchErrors(deleteImage))
 
-    
+
     .get('/users', auth.jwt, catchErrors(getUsers)
         /*
             #swagger.tags = ['The Users']
@@ -518,23 +519,23 @@ router
         */
     )
     .get('/qrcodes/drone/:idDrone', auth.jwt, catchErrors(getQrCodeWithDroneId)
-            /*
-            #swagger.tags = ['The QR Codes']
-            #swagger.description = 'Endpoint to get a QR Code for a specific drone.'
-            #swagger.security = [{
-                "bearerAuth": []
-            }]
-            #swagger.parameters[idDrone] = { 
-                in: 'path', 
-                name: 'idDrone', 
-                description: 'The id of the specific drone', 
-                required: true, 
-                type: 'string' 
-            }
-            #swagger.responses[200] = { description: 'OK' }
-            #swagger.responses[403] = { description: 'FORBIDDEN' }
-            #swagger.responses[404] = { description: 'NOT FOUND' }
-        */
+        /*
+        #swagger.tags = ['The QR Codes']
+        #swagger.description = 'Endpoint to get a QR Code for a specific drone.'
+        #swagger.security = [{
+            "bearerAuth": []
+        }]
+        #swagger.parameters[idDrone] = { 
+            in: 'path', 
+            name: 'idDrone', 
+            description: 'The id of the specific drone', 
+            required: true, 
+            type: 'string' 
+        }
+        #swagger.responses[200] = { description: 'OK' }
+        #swagger.responses[403] = { description: 'FORBIDDEN' }
+        #swagger.responses[404] = { description: 'NOT FOUND' }
+    */
     )
 
     /*====================PUBLIC ROUTES======================*/
@@ -607,7 +608,7 @@ router
     //#endregion
 
     // #swagger.ignorePaths = ['/api/v1/signup']
-    .post('/signup', auth.signup,
+    .post('/signup', /*accountLimiter,*/ auth.signup,
         async (req, res, next) => {
             if (!req.body) {
                 return next(new AppError('Une erreur est survenue', 400))
