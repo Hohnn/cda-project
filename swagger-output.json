@@ -1165,9 +1165,9 @@
             "type": "number",
             "example": 76600
           },
-          "country_u": {
+          "city_u": {
             "type": "string",
-            "example": "pays"
+            "example": "ville"
           },
           "siret_u": {
             "type": "string",
@@ -1183,7 +1183,7 @@
           "phone_u",
           "address_u",
           "zipCode_u",
-          "country_u",
+          "city_u",
           "siret_u"
         ]
       },

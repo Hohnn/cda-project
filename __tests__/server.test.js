@@ -61,7 +61,7 @@ describe('Test des routes', () => {
 		"phone_u": "0235102030",
 		"address_u": "10 Place Léon Meyer",
 		"zipCode_u": 76600,
-		"country_u": "France",
+		"city_u": "Le Havre",
 		"siret_u": "123456"
 	}
 
@@ -94,7 +94,7 @@ describe('Test des routes', () => {
 				"phone_u": "0235102030",
 				"address_u": "10 Place Léon Meyer",
 				"zipCode_u": 76600,
-				"country_u": "France",
+				"city_u": "France",
 				"siret_u": "123456"
 			})
 			.expect(400)

@@ -40,9 +40,9 @@ const UserSchema = new mongoose.Schema({
         type: Number,
         required: [true, 'Code Postale requis']
     },
-    country_u: {
+    city_u: {
         type: String,
-        required: [true, 'Pays requis']
+        required: [true, 'Ville requise']
     },
     phone_u: {
         type: String,
